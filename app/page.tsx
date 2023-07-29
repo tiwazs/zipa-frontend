@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import MainOptionCard from './mainOptionCard'
 
 export default function Home() {
@@ -15,8 +13,9 @@ export default function Home() {
         <MainOptionCard title="General" description="General description for battle, units spells and combat rules" link="/general" />
         <MainOptionCard title="Factions" description="Playable factions, their cultures, traits, units and more" link="/factions" />
         <MainOptionCard title="Units" description="All playable units for all factions" link="/units" />
-        <MainOptionCard title="Habilities" description="All The available abilities" link="/abilities" />
+        <MainOptionCard title="Abilities" description="All The available abilities" link="/abilities" />
         <MainOptionCard title="Items" description="All the available items" link="/items" />
+        <MainOptionCard title="Effects" description="All the available Effecs" link="/effects" />
       </div>
     </main>
   )

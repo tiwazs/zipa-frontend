@@ -1,0 +1,53 @@
+import React from 'react'
+import EffectOption from './EffectOption';
+
+const getEffects = async () => {
+    try{
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/`, {
+            method: 'GET',
+        });
+
+        return await response.json();
+    }catch(e){
+        console.log(`Error: ${e}`);
+        return [];
+    }
+}
+
+export default async function EffectList() {
+    const effects = await getEffects();
+
+    return (
+        <>
+            {effects.map((effect: any) => (
+                <EffectOption 
+                    id={effect.id}
+                    name={effect.name}
+                    description={effect.description}
+                    magic_effectiveness={effect.magic_effectiveness}
+                    physical_damage={effect.physical_damage}
+                    magical_damage={effect.magical_damage}
+                    healing={effect.healing}
+                    vitality_recovery={effect.vitality_recovery}
+                    essence_recovery={effect.essence_recovery}
+                    vitality={effect.vitality}
+                    range={effect.range}
+                    damage={effect.damage}
+                    armor={effect.armor}
+                    magic_armor={effect.magic_armor}
+                    essence={effect.essence}
+                    agility={effect.agility}
+                    hit_chance={effect.hit_chance}
+                    evasion={effect.evasion}
+                    hit_rate={effect.hit_rate}
+                    movement={effect.movement}
+                    ammo={effect.ammo}
+                    shield={effect.shield}
+                    barrier={effect.barrier}
+                    max_stack={effect.max_stack} 
+                    styles={'group rounded-lg border border-transparent px-5 py-2 transition-colors hover:border-purple-500 hover:bg-purple-300 hover:dark:border-gray-700/50 hover:dark:bg-gray-800/30'}
+                />
+            ))}  
+        </>
+    )
+}

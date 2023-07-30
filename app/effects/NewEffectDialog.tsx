@@ -113,10 +113,11 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-[#221c28] p-6 text-left shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
+                                            group border-transparent border-4 dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-200"
+                    className="text-lg font-medium leading-6 text-yellow-200/70"
                   >
                     New Effect
                   </Dialog.Title>
@@ -129,7 +130,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("name", { required: true })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="name"
                                     placeholder="Name"
@@ -138,7 +139,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("description", { required: true })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="description"
                                     placeholder="description"
@@ -147,7 +148,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("magic_effectiveness", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="magic_effectiveness"
                                     placeholder="Magic Power"
@@ -156,7 +157,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("physical_damage", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="physical_damage"
                                     placeholder="Physical Damage"
@@ -165,7 +166,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("magical_damage", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="magical_damage"
                                     placeholder="Magical Damage"
@@ -174,7 +175,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("healing", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="healing"
                                     placeholder="Healing"
@@ -183,7 +184,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("vitality_recovery", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="vitality_recovery"
                                     placeholder="Vitality Recovery"
@@ -192,7 +193,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("essence_recovery", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="essence_recovery"
                                     placeholder="Essence Recovery"
@@ -201,7 +202,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("vitality", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="vitality"
                                     placeholder="Vitality"
@@ -210,7 +211,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("range", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="range"
                                     placeholder="Range"
@@ -219,7 +220,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("damage", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="damage"
                                     placeholder="Damage"
@@ -228,7 +229,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("armor", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="armor"
                                     placeholder="Armor"
@@ -237,7 +238,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("magic_armor", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="magic_armor"
                                     placeholder="Magic Armor"
@@ -246,7 +247,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("essence", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="essence"
                                     placeholder="Essence"
@@ -255,7 +256,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("agility", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="agility"
                                     placeholder="Agility"
@@ -264,7 +265,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("hit_chance", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="hit_chance"
                                     placeholder="Hit Chance"
@@ -273,7 +274,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("evasion", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="evasion"
                                     placeholder="Evasion"
@@ -282,7 +283,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("hit_rate", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="hit_rate"
                                     placeholder="Hit Rate"
@@ -291,7 +292,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("movement", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="movement"
                                     placeholder="Movement"
@@ -300,7 +301,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("ammo", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="ammo"
                                     placeholder="Ammo"
@@ -309,7 +310,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("shield", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="shield"
                                     placeholder="Shield"
@@ -318,7 +319,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("barrier", { required: false, valueAsNumber: true })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
                                     name="barrier"
                                     placeholder="Barrier"
@@ -327,7 +328,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             <div>
                                 <input 
                                     {...register("max_stack", { required: false, valueAsNumber: true })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] focus:bg-[#3f3847] focus:outline-none'
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
                                     name="max_stack"
                                     placeholder="Max Stack"
@@ -337,12 +338,12 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                         <div className="mt-4 flex justify-between">
                             <button
                             type="button"
-                            className="inline-flex justify-center rounded-md bg-[#2b2532] hover:bg-[#3f3847] px-4 py-2 text-sm font-medium text-gray-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
+                            className="inline-flex justify-center rounded-md bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 px-4 py-2 text-sm font-medium text-gray-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"
                             onClick={closeModal}
                             >
                             Cancel
                             </button>
-                            <div className='inline-flex justify-center hover:text-gray-200 border border-green-700 shadow-lg shadow-green-700/50 rounded-lg px-4 py-2 bg-[#2b2532] hover:bg-[#3f3847]
+                            <div className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
                                                 cursor-pointer'>
                                     <input type="submit" value="Create" className='text-gray-400 text-sm cursor-pointer'/>
                             </div>

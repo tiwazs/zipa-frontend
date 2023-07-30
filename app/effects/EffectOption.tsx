@@ -28,6 +28,16 @@ interface EffectOptionProps {
     styles: string;
 }
 
+function DisplayEffectValue(props: {value: string}) {
+    const value = props.value.split("+");
+
+    if(props.value !== "0"){
+        return <span className='text-green-500 font-light'>{props.value}</span>
+    }else{
+        return null;
+    }
+}
+
 export default function EffectOption(effect: EffectOptionProps) {
     return (
     <div className={`${effect.styles}`}>
@@ -54,8 +64,8 @@ export default function EffectOption(effect: EffectOptionProps) {
             { (effect.movement && effect.movement !== "0") && <p>, <span className='text-green-500 font-light'>{effect.movement}</span> Movement   </p>}
             { (effect.ammo && effect.ammo !== "0") && <p>, <span className='text-green-500 font-light'>{effect.ammo}</span> Ammo   </p>}
             { (effect.shield && effect.shield !== "0") && <p>, <span className='text-green-500 font-light'>{effect.shield}</span> Shield   </p>}
-            { (effect.barrier || effect.barrier !== 0) && <p>{effect.barrier} Barrier   </p>}
-            { (effect.max_stack || effect.barrier !== 0) && <p>{effect.max_stack} Stacks   </p>}
+            { ( ( effect.barrier && effect.barrier !== 0) ) && <p>{effect.barrier} Barrier   </p>}
+            { ( ( effect.max_stack && effect.barrier !== 0) ) && <p>{effect.max_stack} Stacks   </p>}
         </div>
         
     </div>

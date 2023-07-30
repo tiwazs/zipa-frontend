@@ -1,5 +1,6 @@
 import React from 'react'
 import EffectOption from './EffectOption';
+import { useQuery } from 'react-query';
 
 const getEffects = async () => {
     try{
@@ -15,11 +16,15 @@ const getEffects = async () => {
 }
 
 export default async function EffectList() {
-    const effects = await getEffects();
+    const query = useQuery(["effects", getEffects], getEffects);
+
+    if (query.isLoading) {
+        return <h2>Loading...</h2>;
+    }
 
     return (
         <>
-            {effects.map((effect: any) => (
+            {query.data.map((effect: any) => (
                 <EffectOption 
                     id={effect.id}
                     name={effect.name}

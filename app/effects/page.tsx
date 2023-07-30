@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { Suspense } from 'react'
 import EffectList from './EffectList'
 import NewEffectDialog from './NewEffectDialog'
 
@@ -23,7 +25,9 @@ export default async function Effects() {
             <NewEffectDialog styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
                                     hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
         </div>
-        <EffectList />            
+        <Suspense fallback={<div className="text-green-700">Loading...</div>}>
+            <EffectList />
+        </Suspense>
     </main>
     )
 }

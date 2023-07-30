@@ -41,8 +41,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
     let [isOpen, setIsOpen] = useState(false);
     const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateEffectFormOptions>();
     
-    // TODO: Remove this once use hook is fixed
-    //const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
     
     const onSubmit: SubmitHandler<CreateEffectFormOptions> = async data => {
         console.log(data);
@@ -61,7 +60,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
 
           // TODO: Remove this once use hook is fixed
           //router.refresh();        
-          //queryClient.invalidateQueries('Effects');
+          queryClient.invalidateQueries('effects');
       }catch(e){
           console.log(`Error: ${e}`);
           setIsOpen(false);

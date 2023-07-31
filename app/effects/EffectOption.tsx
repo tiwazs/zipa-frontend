@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
+import Link from 'next/link';
 
 interface EffectOptionProps {
     id: string;
@@ -62,7 +63,9 @@ export default function EffectOption(effect: EffectOptionProps) {
     <div className={`${effect.styles}`}>
         <div className='flex items-center justify-between'>
         <div>
-            <h3 className='font-bold my-2 text-yellow-200/70'>{effect.name}</h3>
+            <Link href={`/effects/${effect.id}`}>
+                <h3 className='font-bold my-2 text-yellow-200/70'>{effect.name}</h3>
+            </Link>
             <p className='my-1 text-gray-100 '>{effect.description}</p>
             <div className='flex font-extralight italic '>
                 { (effect.magic_effectiveness && effect.magic_effectiveness !== "0") && <p>, <span className='text-green-500 font-light'>{effect.magic_effectiveness}</span> Magic Power   </p>}

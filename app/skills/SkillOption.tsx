@@ -106,24 +106,43 @@ export default function SkillOption(skill: SkillOptionProps) {
             <div>
                 <p className='my-1 text-gray-100 '>{skill.description}</p>
                 <div className='flex flex-col font-extralight italic '>
+                    {/*Damage Types*/}
                     <div className='flex'>
                         { (skill.physical_damage  && skill.physical_damage !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.physical_damage}</span> Physical Damage   </p>}
                         { (skill.magical_damage && skill.magical_damage !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.magical_damage}</span> Magical Damage   </p>}
                         { (skill.vitality_recovery && skill.vitality_recovery !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.vitality_recovery}</span> Recovering   </p>}
                         { (skill.essence_recovery && skill.essence_recovery !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.essence_recovery}</span> Essence Recovering   </p>}
                     </div>
-                    
+                    {/*Other Skill Details: Range, AoE, Targe, Etc*/}
                     { (skill.range && skill.range !== "0") && <p>Range: <span className='text-gray-400 font-light'>{skill.range}</span> Mts</p>}
                     { (skill.area_of_effect && skill.area_of_effect !== "0") && <p>Area: <span className='text-gray-400 font-light'>{skill.area_of_effect}</span> Mts Radius</p>}
                     { (skill.target && skill.target !== "0") && <p>Target: <span className='text-yellow-500 font-light'>{TargetText(skill.target)}</span></p>}
+                    { skill.channeled && <p><span className='text-gray-400 font-light'>Channeled</span></p>}
+                    { (skill.effects && skill.effects.length > 0) && <p>
+                            Effects:
+                        </p>}
+                            {skill.effects.map((effect: any) => {
+                                return (
+                                        <div className='px-4 font-light'>
+                                            <p>
+                                                <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
+                                            </p>
+                                            <p>
+                                                <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>
+                                            </p>
+                                        </div>
+                                )
+                            })}
+                        
                 </div>
                 
                 
             </div>
-            <div className='flex space-x-2'>
-                <h1>Cost  </h1>
-            { (skill.essence_cost && skill.essence_cost !== "0") && <p> <span className='text-blue-500 font-light'>{skill.essence_cost}</span> P</p>}
-            { (skill.vitality_cost && skill.vitality_cost !== "0") && <p> <span className='text-red-500 font-light'>{skill.vitality_cost}</span> V</p>}
+            {/*General Skill Details. Resource and CD*/}
+            <div className='my-2 flex space-x-2 font-light text-sm'>
+                { (skill.essence_cost && skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.essence_cost}</span> P</p>}
+                { (skill.vitality_cost && skill.vitality_cost !== "0") && <p> <span className='text-red-500 font-light'>{skill.vitality_cost}</span> V</p>}
+                { (skill.cooldown && skill.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{skill.cooldown}</span> T </p>}
             </div>
         </div>
         <div>

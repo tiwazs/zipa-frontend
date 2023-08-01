@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { useQuery } from 'react-query';
+import DetailedEffectChart from './DetailedEffectChart';
 
 type EffectPageProps = {
     params: {
@@ -45,8 +46,10 @@ export default function EffectPage({ params: { effectId } }: EffectPageProps) {
                         before:dark:to-purple-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-[#9101ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
                 </div>
 
-                {/*Effect Data*/}
                 <h3>{query.data.description}</h3>
+
+                {/*Effect Data*/}
+                <DetailedEffectChart effect={query.data} />
             </main>           
         </>
     )

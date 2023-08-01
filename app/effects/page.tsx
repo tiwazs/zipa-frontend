@@ -4,7 +4,7 @@ import React, { Suspense } from 'react'
 import EffectList from './EffectList'
 import NewEffectDialog from './NewEffectDialog'
 
-export default async function Effects() {    
+export default function Effects() {    
     return (
     <main className="items-center justify-between p-24">
         <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">

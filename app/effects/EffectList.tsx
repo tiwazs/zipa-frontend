@@ -15,7 +15,7 @@ const getEffects = async () => {
     }
 }
 
-export default async function EffectList() {
+export default function EffectList() {
     const query = useQuery(["effects", getEffects], getEffects);
 
     if (query.isLoading) {
@@ -26,6 +26,7 @@ export default async function EffectList() {
         <>
             {query.data.map((effect: any) => (
                 <EffectOption 
+                    key={effect.id}
                     id={effect.id}
                     name={effect.name}
                     description={effect.description}

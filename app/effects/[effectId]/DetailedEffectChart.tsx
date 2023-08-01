@@ -47,7 +47,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
 
         try{
-            const response = await fetch(`/effects/${effect.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/${effect.id}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data)
@@ -75,7 +75,6 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             type="text"
                             name="magic_effectiveness"
-                            value={effect.magic_effectiveness}
                             disabled={!editing}
                             placeholder={effect.magic_effectiveness ? effect.magic_effectiveness : "0"}
                         />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 
 interface Effect {
     id: string;
@@ -37,6 +38,7 @@ type DetailedEffectChartProps = {
 export default function DetailedEffectChart({effect, styles}: DetailedEffectChartProps) {
     const [ editing, setEditing ] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Effect>();
+    const queryClient = useQueryClient();
 
     const onCancel = () => {
         reset();
@@ -53,6 +55,9 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                 body: JSON.stringify(data)
             });
             console.log(`Response: ${JSON.stringify(response)}`);
+
+
+            queryClient.invalidateQueries(`effect`);
             setEditing(false);
         }catch(e){
             console.log(`Error: ${e}`);
@@ -297,6 +302,16 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="max_stack"
                             disabled={!editing}
                             placeholder={ (effect.max_stack && effect.max_stack!==0) ? effect.max_stack.toString() : "0"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2 col-span-3'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>
+                        <textarea 
+                            {...register("description", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
+                            name="description"
+                            disabled={!editing}
+                            placeholder={ effect.description ? effect.description : "Description" }
                         />                                
                     </div>
                 </div>

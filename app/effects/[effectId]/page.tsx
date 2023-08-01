@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import DetailedEffectChart from './DetailedEffectChart';
 
 type EffectPageProps = {
@@ -10,10 +10,13 @@ type EffectPageProps = {
 }
 
 const getEffect = async (effectId: string) => {
+
     try{
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/${effectId}`, {
             method: 'GET',
         });
+        console.log(`Response: ${JSON.stringify(response)}`);
+
 
         return await response.json();
     }catch(e){
@@ -23,7 +26,7 @@ const getEffect = async (effectId: string) => {
 }
 
 export default function EffectPage({ params: { effectId } }: EffectPageProps) {
-    const query = useQuery([`effect-${effectId}`, effectId], () => getEffect(effectId) );
+    const query = useQuery([`effect`, effectId], () => getEffect(effectId) );
     
     if (query.isLoading) {
         return <h2>Loading...</h2>;
@@ -46,7 +49,7 @@ export default function EffectPage({ params: { effectId } }: EffectPageProps) {
                         before:dark:to-purple-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-[#9101ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
                 </div>
 
-                <h3>{query.data.description}</h3>
+                <h3 className='my-4 mx-2'>{query.data.description}</h3>
 
                 {/*Effect Data*/}
                 <DetailedEffectChart effect={query.data} />

@@ -22,6 +22,7 @@ interface SkillOptionProps {
     skill_on: string;
     skill_types: any;
     effects: any;
+    summons: any;
     styles: string;
 }
 
@@ -118,6 +119,7 @@ export default function SkillOption(skill: SkillOptionProps) {
                     { (skill.area_of_effect && skill.area_of_effect !== "0") && <p>Area: <span className='text-gray-400 font-light'>{skill.area_of_effect}</span> Mts Radius</p>}
                     { (skill.target && skill.target !== "0") && <p>Target: <span className='text-yellow-500 font-light'>{TargetText(skill.target)}</span></p>}
                     { skill.channeled && <p><span className='text-gray-400 font-light'>Channeled</span></p>}
+                    {/* Skill Effects*/}
                     { (skill.effects && skill.effects.length > 0) && 
                             <p>
                                 Effects:
@@ -130,6 +132,23 @@ export default function SkillOption(skill: SkillOptionProps) {
                                     </p>
                                     <p>
                                         <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>
+                                    </p>
+                                </div>
+                                )
+                            })}
+                    {/* Skill Summons*/}
+                    { (skill.summons && skill.summons.length > 0) && 
+                            <p>
+                                Summons:
+                            </p>}
+                            {skill.summons.map((summon: any) => {
+                                return (
+                                <div className='px-4 font-light'>
+                                    <p>
+                                        <Link href={`/summons/${summon.unit.id}`}><span className='text-yellow-400 font-normal'>{summon.unit.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T
+                                    </p>
+                                    <p>
+                                        <span className='px-4 text-gray-400 font-light'>{summon.unit.description}</span>
                                     </p>
                                 </div>
                                 )

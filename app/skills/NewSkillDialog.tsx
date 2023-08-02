@@ -19,21 +19,22 @@ const SkillOnList = [
 interface CreateEffectFormOptions {
     name: string;
     description: string;
-    physical_damage: string;
-    magical_damage: string;
-    healing: string;
-    vitality_recovery: string;
-    essence_recovery: string;
-    range: string;
-    area_of_effect: string;
-    essence_cost: string;
-    vitality_cost: string;
-    cooldown: number;
-    channeled: boolean;
-    target: string;
-    skill_on: string;
-    skill_types: string[];
-    effects: string[];
+    physical_damage?: string;
+    magical_damage?: string;
+    healing?: string;
+    vitality_recovery?: string;
+    essence_recovery?: string;
+    range?: string;
+    area_of_effect?: string;
+    essence_cost?: string;
+    vitality_cost?: string;
+    cooldown?: number;
+    channeled?: boolean;
+    target?: string;
+    skill_on?: string;
+    skill_types?: string[];
+    effects?: string[];
+    summons?: string[];
 }
 
 interface NewEffectDialogProps {

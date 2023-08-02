@@ -6,31 +6,34 @@ import { Fragment, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
+import EffectSelection from './EffectSelection';
+
+const SkillOnList = [
+    { value: "INSTANT", label: "INSTANT" },
+    { value: "OVER_TIME", label: "OVER_TIME" },
+    { value: "DURING_CHANNEL", label: "DURING_CHANNEL" },
+    { value: "AFTER_CHANNEL", label: "AFTER_CHANNEL" },
+    { value: "DELAYED", label: "DELAYED" }
+];  
 
 interface CreateEffectFormOptions {
     name: string;
     description: string;
-    magic_effectiveness?: string;
-    physical_damage?: string;
-    magical_damage?: string;
-    healing?: string;
-    vitality_recovery?: string;
-    essence_recovery?: string;
-    vitality?: string;
-    range?: string;
-    damage?: string;
-    armor?: string;
-    magic_armor?: string;
-    essence?: string;
-    agility?: string;
-    hit_chance?: string;
-    evasion?: string;
-    hit_rate?: string;
-    movement?: string;
-    ammo?: string;
-    shield?: string;
-    barrier?: number;
-    max_stack?: number;
+    physical_damage: string;
+    magical_damage: string;
+    healing: string;
+    vitality_recovery: string;
+    essence_recovery: string;
+    range: string;
+    area_of_effect: string;
+    essence_cost: string;
+    vitality_cost: string;
+    cooldown: number;
+    channeled: boolean;
+    target: string;
+    skill_on: string;
+    skill_types: string[];
+    effects: string[];
 }
 
 interface NewEffectDialogProps {
@@ -48,7 +51,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
 
         // Not setting the content type. aparently the browser will do that for us, including the boundary
         try{
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/skills/`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -60,7 +63,7 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
 
           // TODO: Remove this once use hook is fixed
           //router.refresh();        
-          queryClient.invalidateQueries('effects');
+          queryClient.invalidateQueries('skills');
       }catch(e){
           console.log(`Error: ${e}`);
           setIsOpen(false);
@@ -118,11 +121,12 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-yellow-200/70"
                   >
-                    New Effect
+                    New Skill
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-400">
-                      Upload face Effects for the profile. this allows the face recognition app to identify the profile.
+                      Create a new skill that can be used by units. skills can be used by units to attack, heal, buff, debuff, etc. they also
+                      can be magical, physical and can be used to target a variety of targets.
                     </p>
                     <form className='rounded-2xl flex-row justify-between ' onSubmit={handleSubmit(onSubmit)}>
                         <div className='mx-4'>
@@ -142,15 +146,6 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                                     type="text"
                                     name="description"
                                     placeholder="description"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("magic_effectiveness", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="magic_effectiveness"
-                                    placeholder="Magic Power"
                                 />                                
                             </div>
                             <div>
@@ -200,15 +195,6 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             </div>
                             <div>
                                 <input 
-                                    {...register("vitality", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="vitality"
-                                    placeholder="Vitality"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
                                     {...register("range", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
@@ -218,120 +204,91 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             </div>
                             <div>
                                 <input 
-                                    {...register("damage", { required: false })}
+                                    {...register("area_of_effect", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
-                                    name="damage"
-                                    placeholder="Damage"
+                                    name="area_of_effect"
+                                    placeholder="Area of Effect"
                                 />                                
                             </div>
                             <div>
                                 <input 
-                                    {...register("armor", { required: false })}
+                                    {...register("essence_cost", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
-                                    name="armor"
-                                    placeholder="Armor"
+                                    name="essence_cost"
+                                    placeholder="Essence Cost"
                                 />                                
                             </div>
                             <div>
                                 <input 
-                                    {...register("magic_armor", { required: false })}
+                                    {...register("vitality_cost", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
-                                    name="magic_armor"
-                                    placeholder="Magic Armor"
+                                    name="vitality_cost"
+                                    placeholder="Vitality Cost"
                                 />                                
                             </div>
                             <div>
                                 <input 
-                                    {...register("essence", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="essence"
-                                    placeholder="Essence"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("agility", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="agility"
-                                    placeholder="Agility"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("hit_chance", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="hit_chance"
-                                    placeholder="Hit Chance"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("evasion", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="evasion"
-                                    placeholder="Evasion"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("hit_rate", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="hit_rate"
-                                    placeholder="Hit Rate"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("movement", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="movement"
-                                    placeholder="Movement"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("ammo", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="ammo"
-                                    placeholder="Ammo"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("shield", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="shield"
-                                    placeholder="Shield"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("barrier", { required: false, valueAsNumber: true })}
+                                    {...register("cooldown", { required: false, valueAsNumber: true })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
-                                    name="barrier"
-                                    placeholder="Barrier"
+                                    name="cooldown"
+                                    placeholder="Cooldown"
                                 />                                
                             </div>
                             <div>
                                 <input 
-                                    {...register("max_stack", { required: false, valueAsNumber: true })}
+                                    {...register("channeled", { required: false, valueAsNumber: true })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
-                                    name="max_stack"
-                                    placeholder="Max Stack"
+                                    name="channeled"
+                                    placeholder="Channeled"
                                 />                                
+                            </div>
+                            <div>
+                                <select 
+                                    {...register("target", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    name="target"
+                                    placeholder="ENEMY"
+                                >       
+                                    <option value="NONE">NONE</option>
+                                    <option value="SELF">SELF</option>
+                                    <option value="ALLY">ALLY</option>
+                                    <option value="ALLY_SUMMON">ALLY_SUMMON</option>
+                                    <option value="ALLY_AROUND">ALLY_AROUND</option>
+                                    <option value="ALLY_EXCEPT_SELF">ALLY_EXCEPT_SELF</option>
+                                    <option value="ENEMY">ENEMY</option>
+                                    <option value="ENEMY_SUMMON">ENEMY_SUMMON</option>
+                                    <option value="ENEMY_AROUND">ENEMY_AROUND</option>
+                                    <option value="ANY">ANY</option>
+                                    <option value="ANY_AROUND">ANY_AROUND</option>
+                                    <option value="ANY_EXCEPT_SELF">ANY_EXCEPT_SELF</option>
+                                    <option value="ANY_SUMMON">ANY_SUMMON</option>
+                                    <option value="POINT">POINT</option>
+                                    <option value="POINT_ENEMY">POINT_ENEMY</option>
+                                    <option value="POINT_ALLY">POINT_ALLY</option>
+                                    <option value="AREA">AREA</option>
+                                    <option value="AREA_ENEMY">AREA_ENEMY</option>
+                                    <option value="AREA_ALLY">AREA_ALLY</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select 
+                                    {...register("skill_on", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    name='skill_on'
+                                    placeholder="INSTANT"
+                                >
+                                    <option value="INSTANT">INSTANT</option>
+                                    <option value="OVER_TIME">OVER_TIME</option>
+                                    <option value="DURING_CHANNEL">DURING_CHANNEL</option>
+                                    <option value="AFTER_CHANNEL">AFTER_CHANNEL</option>
+                                    <option value="DELAYED">DELAYED</option>
+                                </select>
+
                             </div>
                         </div>
                         <div className="mt-4 flex justify-between">

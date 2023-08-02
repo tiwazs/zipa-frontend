@@ -82,9 +82,9 @@ export default function SkillOption(skill: SkillOptionProps) {
     const queryClient = useQueryClient();
 
 
-    const deleteEffect = async () => {
+    const deleteSkill = async () => {
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/${skill.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/skills/${skill.id}`, {
                 method: 'DELETE',
             });
 
@@ -118,19 +118,20 @@ export default function SkillOption(skill: SkillOptionProps) {
                     { (skill.area_of_effect && skill.area_of_effect !== "0") && <p>Area: <span className='text-gray-400 font-light'>{skill.area_of_effect}</span> Mts Radius</p>}
                     { (skill.target && skill.target !== "0") && <p>Target: <span className='text-yellow-500 font-light'>{TargetText(skill.target)}</span></p>}
                     { skill.channeled && <p><span className='text-gray-400 font-light'>Channeled</span></p>}
-                    { (skill.effects && skill.effects.length > 0) && <p>
-                            Effects:
-                        </p>}
+                    { (skill.effects && skill.effects.length > 0) && 
+                            <p>
+                                Effects:
+                            </p>}
                             {skill.effects.map((effect: any) => {
                                 return (
-                                        <div className='px-4 font-light'>
-                                            <p>
-                                                <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
-                                            </p>
-                                            <p>
-                                                <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>
-                                            </p>
-                                        </div>
+                                <div className='px-4 font-light'>
+                                    <p>
+                                        <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
+                                    </p>
+                                    <p>
+                                        <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>
+                                    </p>
+                                </div>
                                 )
                             })}
                         
@@ -147,7 +148,7 @@ export default function SkillOption(skill: SkillOptionProps) {
         </div>
         <div>
             <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
-                                 active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>
+                                 active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteSkill}><IoTrashOutline/></h5>
         </div>
         </div>
     </div>

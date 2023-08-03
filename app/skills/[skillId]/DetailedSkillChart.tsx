@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import SkillEffectCard from './SkillEffectCard';
 import SkillSummonCard from './SkillSummonCard';
-import NewSkillEffectDialog from './NewSkillEffectDialog';
+import NewSkillEffectDialog from './NewSkillOptionDialog';
 
 interface Skill {
     id: string;
@@ -264,14 +264,25 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
                             <h1>Effects</h1>
-                            {editing && <NewSkillEffectDialog skillId={skill.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' />}
+                            {editing && <NewSkillEffectDialog skillId={skill.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
+                                    title={'Add Effects'} 
+                                    description={'Skills may leave lasting effects on the target. These effects can be positive or negative. select the type of effect you want to add to this skill.'} 
+                                    selection={'effects'} 
+                            />}
                         </div>
                         {(skill.effects && skill.effects.length > 0) ? skill.effects.map((effect: any) => {
                             return <SkillEffectCard skilleffect={effect} skillId={skill.id} editable={editing} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
-                        <h1>Summons</h1>
+                        <div className='flex space-x-2'>
+                            <h1>Summons</h1>
+                            {editing && <NewSkillEffectDialog skillId={skill.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
+                                        title={'Add Summons'} 
+                                        description={'Skills may summon other entities to the battlefield. These summons can be positive or negative. select the type of summon you want to add to this skill.'}
+                                        selection={'summons'} 
+                            />}
+                        </div>
                         {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
                             return <SkillSummonCard summon={summon} skillId={skill.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}

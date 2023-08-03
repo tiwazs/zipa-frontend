@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
 import EffectSelection from './EffectSelection';
+import SummonSelection from './SummonSelection';
 
 const SkillOnList = [
     { value: "INSTANT", label: "INSTANT" },
@@ -39,11 +40,14 @@ interface CreateEffectFormOptions {
 }
 
 interface NewEffectDialogProps {
+    title: string;
+    description: string;
+    selection: string;
     skillId: string;
     styles?: string;
 }
 
-export default function NewEffectDialog({ skillId, styles}: NewEffectDialogProps) {
+export default function NewEffectDialog({ title, description, selection, skillId, styles}: NewEffectDialogProps) {
     let [isOpen, setIsOpen] = useState(false);
     const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateEffectFormOptions>();
         
@@ -99,13 +103,13 @@ export default function NewEffectDialog({ skillId, styles}: NewEffectDialogProps
                     as="h3"
                     className="text-lg font-medium leading-6 text-yellow-200/70"
                   >
-                    Add Effects
+                    {title}
                   </Dialog.Title>
                   <div className="mt-2 flex flex-col space-y-6">
                     <p className="text-sm text-gray-400">
-                      Effects can leave lasting effects on the target. select from the list below.
+                      {description}
                     </p>
-                    <EffectSelection skillId={skillId} />
+                    {(selection === "effects") ? <EffectSelection skillId={skillId} /> : <SummonSelection skillId={skillId} /> }
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 px-4 py-2 text-sm font-medium text-gray-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"

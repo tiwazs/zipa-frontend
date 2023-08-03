@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import SkillEffectCard from './SkillEffectCard';
 import SkillSummonCard from './SkillSummonCard';
+import NewSkillEffectDialog from './NewSkillEffectDialog';
 
 interface Skill {
     id: string;
@@ -261,7 +262,10 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                         />                                
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
-                        <h1>Effects</h1>
+                        <div className='flex'>
+                            <h1>Effects</h1>
+                            {editing && <NewSkillEffectDialog skillId={skill.id} />}
+                        </div>
                         {(skill.effects && skill.effects.length > 0) ? skill.effects.map((effect: any) => {
                             return <SkillEffectCard skilleffect={effect} skillId={skill.id} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}

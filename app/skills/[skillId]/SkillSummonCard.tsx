@@ -26,7 +26,7 @@ export default function SkillSummonCard({ skillId, summon }: SkillSummonCardProp
     };
     
     return (
-        <div className='group px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
+        <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <p>
                 <Link href={`/summons/${summon.unit.id}`}><span className='text-yellow-400 font-normal'>{summon.unit.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T

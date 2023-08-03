@@ -6,7 +6,6 @@ import { Fragment, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
-import EffectSelection from './EffectSelection';
 
 const SkillOnList = [
     { value: "INSTANT", label: "INSTANT" },

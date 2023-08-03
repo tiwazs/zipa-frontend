@@ -19,6 +19,7 @@ const SkillOnList = [
 interface CreateEffectFormOptions {
     name: string;
     description: string;
+    conditions?: string;
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
@@ -146,7 +147,16 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="description"
-                                    placeholder="description"
+                                    placeholder="Description"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("conditions", { required: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="conditions"
+                                    placeholder="Conditions"
                                 />                                
                             </div>
                             <div>

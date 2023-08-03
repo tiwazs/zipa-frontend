@@ -81,7 +81,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="magic_effectiveness"
                             disabled={!editing}
-                            placeholder={effect.magic_effectiveness ? effect.magic_effectiveness : "0"}
+                            placeholder={effect.magic_effectiveness ? effect.magic_effectiveness : "N/A"}
                         />
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -92,7 +92,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="physical_damage"
                             disabled={!editing}
-                            placeholder={effect.physical_damage ? effect.physical_damage : "0"}
+                            placeholder={effect.physical_damage ? effect.physical_damage : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -103,7 +103,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="magical_damage"
                             disabled={!editing}
-                            placeholder={effect.magical_damage ? effect.magical_damage : "0"}
+                            placeholder={effect.magical_damage ? effect.magical_damage : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -114,7 +114,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="healing"
                             disabled={!editing}
-                            placeholder={effect.healing ? effect.healing : "0"}
+                            placeholder={effect.healing ? effect.healing : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -125,7 +125,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="vitality_recovery"
                             disabled={!editing}
-                            placeholder={effect.vitality_recovery ? effect.vitality_recovery : "0"}
+                            placeholder={effect.vitality_recovery ? effect.vitality_recovery : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -136,7 +136,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="essence_recovery"
                             disabled={!editing}
-                            placeholder={effect.essence_recovery ? effect.essence_recovery : "0"}
+                            placeholder={effect.essence_recovery ? effect.essence_recovery : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -147,7 +147,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="vitality"
                             disabled={!editing}
-                            placeholder={effect.vitality ? effect.vitality : "0"}
+                            placeholder={effect.vitality ? effect.vitality : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -158,7 +158,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="range"
                             disabled={!editing}
-                            placeholder={effect.range ? effect.range : "0"}
+                            placeholder={effect.range ? effect.range : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -169,7 +169,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="damage"
                             disabled={!editing}
-                            placeholder={effect.damage ? effect.damage : "0"}
+                            placeholder={effect.damage ? effect.damage : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -180,7 +180,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="armor"
                             disabled={!editing}
-                            placeholder={effect.armor ? effect.armor : "0"}
+                            placeholder={effect.armor ? effect.armor : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -191,7 +191,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="magic_armor"
                             disabled={!editing}
-                            placeholder={effect.magic_armor ? effect.magic_armor : "0"}
+                            placeholder={effect.magic_armor ? effect.magic_armor : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -202,7 +202,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="essence"
                             disabled={!editing}
-                            placeholder={effect.essence ? effect.essence : "0"}
+                            placeholder={effect.essence ? effect.essence : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -213,7 +213,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="agility"
                             disabled={!editing}
-                            placeholder={effect.agility ? effect.agility : "0"}
+                            placeholder={effect.agility ? effect.agility : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -224,7 +224,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="hit_chance"
                             disabled={!editing}
-                            placeholder={effect.hit_chance ? effect.hit_chance : "0"}
+                            placeholder={effect.hit_chance ? effect.hit_chance : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -235,7 +235,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="evasion"
                             disabled={!editing}
-                            placeholder={effect.evasion ? effect.evasion : "0"}
+                            placeholder={effect.evasion ? effect.evasion : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -246,7 +246,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="hit_rate"
                             disabled={!editing}
-                            placeholder={effect.hit_rate ? effect.hit_rate : "0"}
+                            placeholder={effect.hit_rate ? effect.hit_rate : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -257,7 +257,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="movement"
                             disabled={!editing}
-                            placeholder={effect.movement ? effect.movement : "0"}
+                            placeholder={effect.movement ? effect.movement : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -268,7 +268,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="ammo"
                             disabled={!editing}
-                            placeholder={effect.ammo ? effect.ammo : "0"}
+                            placeholder={effect.ammo ? effect.ammo : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -279,30 +279,30 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             type="text"
                             name="shield"
                             disabled={!editing}
-                            placeholder={effect.shield ? effect.shield : "0"}
+                            placeholder={effect.shield ? effect.shield : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Barrier</h1>
-                        <input 
+                        { editing ? <input 
                             {...register("barrier", { required: false, valueAsNumber: true })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             type="number"
                             name="barrier"
                             disabled={!editing}
                             placeholder={ (effect.barrier!==0 && effect.barrier) ? effect.barrier.toString() : "0"}
-                        />                                
+                        /> : <h1>{effect.barrier ? effect.barrier : "N/A"}</h1> }                      
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Max Stack</h1>
-                        <input 
+                        { editing ? <input 
                             {...register("max_stack", { required: false, valueAsNumber: true })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             type="number"
                             name="max_stack"
                             disabled={!editing}
                             placeholder={ (effect.max_stack && effect.max_stack!==0) ? effect.max_stack.toString() : "0"}
-                        />                                
+                        /> : <h1>{effect.max_stack ? effect.max_stack : "N/A"}</h1> }
                     </div>
                     <div className='flex items-center space-x-2 col-span-3'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>

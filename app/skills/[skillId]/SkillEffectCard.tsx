@@ -6,9 +6,10 @@ import { useQueryClient } from 'react-query';
 interface SkillEffectCardProps {
     skillId: string;
     skilleffect: any;
+    editable: boolean;
 }
 
-export default function SkillEffectCard({ skillId, skilleffect }: SkillEffectCardProps) {
+export default function SkillEffectCard({ skillId, skilleffect, editable }: SkillEffectCardProps) {
     const effect = skilleffect.effect;
     const queryClient = useQueryClient();
 
@@ -60,8 +61,8 @@ export default function SkillEffectCard({ skillId, skilleffect }: SkillEffectCar
             </p>
             </div>
             <div>
-                <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
-                                    active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>
+                {editable && <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
+                                    active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>}
             </div>
         </div>
     )

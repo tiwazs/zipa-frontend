@@ -6,9 +6,10 @@ import { useQueryClient } from 'react-query';
 interface SkillSummonCardProps {
     skillId: string;
     summon: any;
+    editable: boolean;
 }
 
-export default function SkillSummonCard({ skillId, summon }: SkillSummonCardProps) {
+export default function SkillSummonCard({ skillId, summon, editable }: SkillSummonCardProps) {
     const queryClient = useQueryClient();
 
     const deleteEffect = async () => {
@@ -36,8 +37,8 @@ export default function SkillSummonCard({ skillId, summon }: SkillSummonCardProp
             </p>
             </div>
             <div>
-                <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
-                                    active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>
+                { editable && <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
+                                    active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>}
             </div>
         </div>
     )

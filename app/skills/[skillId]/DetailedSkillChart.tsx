@@ -262,18 +262,18 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                         />                                
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
-                        <div className='flex'>
+                        <div className='flex space-x-2'>
                             <h1>Effects</h1>
-                            {editing && <NewSkillEffectDialog skillId={skill.id} />}
+                            {editing && <NewSkillEffectDialog skillId={skill.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' />}
                         </div>
                         {(skill.effects && skill.effects.length > 0) ? skill.effects.map((effect: any) => {
-                            return <SkillEffectCard skilleffect={effect} skillId={skill.id} />       
+                            return <SkillEffectCard skilleffect={effect} skillId={skill.id} editable={editing} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <h1>Summons</h1>
                         {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
-                            return <SkillSummonCard summon={summon} skillId={skill.id} />
+                            return <SkillSummonCard summon={summon} skillId={skill.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

@@ -1,6 +1,9 @@
+import Link from 'next/link';
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
+import SkillEffectCard from './SkillEffectCard';
+import SkillSummonCard from './SkillSummonCard';
 
 interface Skill {
     id: string;
@@ -63,7 +66,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
     return (
     <>
         <div className="transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
-                                  group border-transparent border-4 dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
+                                  border-transparent border-4 dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
             <h2 className={`mb-3 text-xl font-medium`}>
               Detailed Information{' '}
             </h2>
@@ -256,6 +259,18 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             disabled={!editing}
                             placeholder={ skill.description ? skill.description : "Description" }
                         />                                
+                    </div>
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <h1>Effects</h1>
+                        {(skill.effects && skill.effects.length > 0) ? skill.effects.map((effect: any) => {
+                            return <SkillEffectCard skilleffect={effect} skillId={skill.id} />       
+                        }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                    </div>
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <h1>Summons</h1>
+                        {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
+                            return <SkillSummonCard summon={summon} />
+                        }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>
                 <div className="mt-4 flex justify-between">

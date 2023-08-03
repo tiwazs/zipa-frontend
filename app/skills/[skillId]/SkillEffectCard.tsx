@@ -1,73 +1,40 @@
-import React from 'react'
-import { useQueryClient } from 'react-query';
-import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
+import React from 'react'
+import { IoTrashOutline } from 'react-icons/io5';
+import { useQueryClient } from 'react-query';
 
-interface EffectOptionProps {
-    id: string;
-    name: string;
-    description: string;
-    magic_effectiveness: string;
-    physical_damage: string;
-    magical_damage: string;
-    healing: string;
-    vitality_recovery: string;
-    essence_recovery: string;
-    vitality: string;
-    range: string;
-    damage: string;
-    armor: string;
-    magic_armor: string;
-    essence: string;
-    agility: string;
-    hit_chance: string;
-    evasion: string;
-    hit_rate: string;
-    movement: string;
-    ammo: string;
-    shield: string;
-    barrier: number;
-    max_stack: number;
-    styles: string;
+interface SkillEffectCardProps {
+    skillId: string;
+    skilleffect: any;
 }
 
-function DisplayEffectValue(props: {value: string}) {
-    const value = props.value.split("+");
-
-    if(props.value !== "0"){
-        return <span className='text-green-500 font-light'>{props.value}</span>
-    }else{
-        return null;
-    }
-}
-
-export default function EffectOption(effect: EffectOptionProps) {
+export default function SkillEffectCard({ skillId, skilleffect }: SkillEffectCardProps) {
+    const effect = skilleffect.effect;
     const queryClient = useQueryClient();
-
 
     const deleteEffect = async () => {
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/${effect.id}`, {
-                method: 'DELETE',
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/skills/remove_effect/${skillId}?effect_id=${effect.id}`, {
+                method: 'PUT',
             });
 
             console.log(`Response: ${JSON.stringify(response)}`);
 
-            queryClient.invalidateQueries('effects');
+            queryClient.invalidateQueries('skill');
         }catch(e){
             console.log(`Error: ${e}`);
         }
     };
 
     return (
-    <div className={`${effect.styles}`}>
-        <div className='flex items-center justify-between'>
-        <div>
-            <Link href={`/effects/${effect.id}`}>
-                <h3 className='font-bold my-2 text-yellow-200/70'>{effect.name}</h3>
-            </Link>
-            <p className='my-1 text-gray-100 '>{effect.description}</p>
-            <div className='flex font-extralight italic space-x-2 '>
+        <div className='group px-4 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
+            <div>
+            <p>
+                <Link href={`/effects/${skilleffect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{skilleffect.duration}</span> T
+            </p>
+            <p>
+                <span className='px-4 text-gray-400 font-light'>{effect.description}</span>
+                <div className='px-4 flex font-extralight italic space-x-2 '>
                 { (effect.magic_effectiveness && effect.magic_effectiveness !== "0") && <p><span className='text-green-500 font-light'>{effect.magic_effectiveness}</span> Magic Power   </p>}
                 { (effect.physical_damage && effect.physical_damage !== "0") && <p><span className='text-green-500 font-light'>{effect.physical_damage}</span> Physical Damage   </p>}
                 { (effect.magical_damage && effect.magical_damage !== "0") && <p><span className='text-green-500 font-light'>{effect.magical_damage}</span> Magic Damage   </p>}
@@ -90,12 +57,12 @@ export default function EffectOption(effect: EffectOptionProps) {
                 { ( ( effect.barrier && effect.barrier !== 0) ) && <p>{effect.barrier} Barrier   </p>}
                 { ( ( effect.max_stack && effect.barrier !== 0) ) && <p>{effect.max_stack} Stacks   </p>}
             </div>
+            </p>
+            </div>
+            <div>
+                <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
+                                    active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>
+            </div>
         </div>
-        <div>
-            <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
-                                 active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteEffect}><IoTrashOutline/></h5>
-        </div>
-        </div>
-    </div>
     )
 }

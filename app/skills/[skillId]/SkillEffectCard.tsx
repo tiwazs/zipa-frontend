@@ -27,7 +27,7 @@ export default function SkillEffectCard({ skillId, skilleffect }: SkillEffectCar
     };
 
     return (
-        <div className='group px-4 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
+        <div className='group px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <p>
                 <Link href={`/effects/${skilleffect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{skilleffect.duration}</span> T

@@ -269,7 +269,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <h1>Summons</h1>
                         {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
-                            return <SkillSummonCard summon={summon} />
+                            return <SkillSummonCard summon={summon} skillId={skill.id} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

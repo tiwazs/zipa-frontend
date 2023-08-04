@@ -1,43 +1,63 @@
-import Link from 'next/link';
 import React, { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
-import SkillEffectCard from './SkillEffectCard';
-import SkillSummonCard from './SkillSummonCard';
-import NewSkillEffectDialog from './NewSkillOptionDialog';
+import NewItemOptionDialog from './NewItemOptionDialog';
+import ItemSkillCard from './ItemSkillCard';
 
-interface Skill {
+export const paintRarity = (rarity: string) => {
+    switch(rarity){
+        case "COMMON":
+            return "text-gray-100";
+        case "UNCOMMON":
+            return "text-green-700";
+        case "RARE":
+            return "text-blue-600";
+        case "EPIC":
+            return "text-purple-700";
+        case "LEGENDARY":
+            return "text-orange-500";
+        default:
+            return "text-gray-100";
+    }
+}
+
+interface Item {
     id: string;
     name: string;
     description: string;
     conditions?: string;
+    rarity: string;
+    magic_effectiveness?: string;
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
     vitality_recovery?: string;
     essence_recovery?: string;
+    vitality?: string;
     range?: string;
-    area_of_effect?: string;
-    essence_cost?: string;
-    vitality_cost?: string;
-    cooldown?: number;
-    channeled?: number;
-    target?: string
-    skill_on?: string
-    skill_types?: any[]
-    effects?: any[]
-    summons?: any[]
+    damage?: string;
+    armor?: string;
+    magic_armor?: string;
+    essence?: string;
+    agility?: string;
+    hit_chance?: string;
+    evasion?: string;
+    hit_rate?: string;
+    movement?: string;
+    ammo?: string;
+    shield?: string;
+    skills: any[];
 }
 
-type DetailedSkillChartProps = {
-    skill: Skill;
+type DetailedItemChartProps = {
+    item: Item;
     styles?: string;
 }
 
 
-export default function DetailedSkillChart({skill, styles}: DetailedSkillChartProps) {
+export default function DetailedItemChart({item, styles}: DetailedItemChartProps) {
     const [ editing, setEditing ] = useState(false);
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Skill>();
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Item>();
     const queryClient = useQueryClient();
 
     const onCancel = () => {
@@ -45,11 +65,11 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
         setEditing(!editing) 
     }
 
-    const onSubmit:SubmitHandler<Skill> = async (data) => {
+    const onSubmit:SubmitHandler<Item> = async (data) => {
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
 
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/skills/${skill.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/update/${item.id}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data)
@@ -57,7 +77,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
             console.log(`Response: ${JSON.stringify(response)}`);
 
 
-            queryClient.invalidateQueries(`skill`);
+            queryClient.invalidateQueries(`item`);
             setEditing(false);
         }catch(e){
             console.log(`Error: ${e}`);
@@ -74,6 +94,35 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
             <form className='rounded-2xl' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mx-2 lg:grid lg:grid-cols-4'>
                     <div className='flex items-center space-x-2'>
+                        <h1>Rarity</h1>
+                        {editing ? <select 
+                            {...register("rarity", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            name='rarity'
+                            placeholder=""
+                            disabled={!editing}
+                        >
+                            <option value=""></option>
+                            <option value="COMMON">COMMON</option>
+                            <option value="UNCOMMON">UNCOMMON</option>
+                            <option value="RARE">RARE</option>
+                            <option value="EPIC">EPIC</option>
+                            <option value="LEGENDARY">LEGENDARY</option>
+                        </select> : <h1 className={`my-2 py-3 ${paintRarity(item.rarity)}`}>{item.rarity}</h1> }
+
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Magic Power</h1>
+                        <input 
+                            {...register("magic_effectiveness", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="magic_effectiveness"
+                            disabled={!editing}
+                            placeholder={item.magic_effectiveness ? item.magic_effectiveness : "N/A"}
+                        />
+                    </div>
+                    <div className='flex items-center space-x-2'>
                         <h1>Physical Damage</h1>
                         <input 
                             {...register("physical_damage", { required: false })}
@@ -81,7 +130,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             type="text"
                             name="physical_damage"
                             disabled={!editing}
-                            placeholder={skill.physical_damage ? skill.physical_damage : "N/A"}
+                            placeholder={item.physical_damage ? item.physical_damage : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -92,7 +141,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             type="text"
                             name="magical_damage"
                             disabled={!editing}
-                            placeholder={skill.magical_damage ? skill.magical_damage : "N/A"}
+                            placeholder={item.magical_damage ? item.magical_damage : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -103,7 +152,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             type="text"
                             name="healing"
                             disabled={!editing}
-                            placeholder={skill.healing ? skill.healing : "N/A"}
+                            placeholder={item.healing ? item.healing : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -114,7 +163,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             type="text"
                             name="vitality_recovery"
                             disabled={!editing}
-                            placeholder={skill.vitality_recovery ? skill.vitality_recovery : "N/A"}
+                            placeholder={item.vitality_recovery ? item.vitality_recovery : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -125,7 +174,18 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             type="text"
                             name="essence_recovery"
                             disabled={!editing}
-                            placeholder={skill.essence_recovery ? skill.essence_recovery : "N/A"}
+                            placeholder={item.essence_recovery ? item.essence_recovery : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Vitality</h1>
+                        <input 
+                            {...register("vitality", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="vitality"
+                            disabled={!editing}
+                            placeholder={item.vitality ? item.vitality : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -136,112 +196,129 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             type="text"
                             name="range"
                             disabled={!editing}
-                            placeholder={skill.range ? skill.range : "N/A"}
+                            placeholder={item.range ? item.range : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Area of Effect</h1>
+                        <h1>Damage</h1>
                         <input 
-                            {...register("area_of_effect", { required: false })}
+                            {...register("damage", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             type="text"
-                            name="area_of_effect"
+                            name="damage"
                             disabled={!editing}
-                            placeholder={skill.area_of_effect ? skill.area_of_effect : "N/A"}
+                            placeholder={item.damage ? item.damage : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Essence Cost</h1>
+                        <h1>Armor</h1>
                         <input 
-                            {...register("essence_cost", { required: false })}
+                            {...register("armor", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             type="text"
-                            name="essence_cost"
+                            name="armor"
                             disabled={!editing}
-                            placeholder={skill.essence_cost ? skill.essence_cost : "N/A"}
+                            placeholder={item.armor ? item.armor : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Vitality Cost</h1>
+                        <h1>Magic Armor</h1>
                         <input 
-                            {...register("vitality_cost", { required: false })}
+                            {...register("magic_armor", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             type="text"
-                            name="vitality_cost"
+                            name="magic_armor"
                             disabled={!editing}
-                            placeholder={skill.vitality_cost ? skill.vitality_cost : "N/A"}
+                            placeholder={item.magic_armor ? item.magic_armor : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Cooldown</h1>
-                        {editing ? <input 
-                            {...register("cooldown", { required: false, valueAsNumber: true })}
+                        <h1>Essence</h1>
+                        <input 
+                            {...register("essence", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="cooldown"
+                            type="text"
+                            name="essence"
                             disabled={!editing}
-                            placeholder={(skill.cooldown && skill.cooldown !== 0 ) ? skill.cooldown?.toString() : "0"}
-                        /> : <h1>{(skill.cooldown && skill.cooldown !== 0 ) ? skill.cooldown?.toString() : "0"}</h1>}                           
+                            placeholder={item.essence ? item.essence : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Channeled</h1>
-                        {editing ? <input 
-                            {...register("channeled", { required: false, valueAsNumber: true })}
+                        <h1>Agility</h1>
+                        <input 
+                            {...register("agility", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="channeled"
+                            type="text"
+                            name="agility"
                             disabled={!editing}
-                            placeholder={skill.channeled ? skill.channeled?.toString() : "False"}
-                        /> : <h1>{skill.channeled ? skill.channeled?.toString() : "False"}</h1>}                       
+                            placeholder={item.agility ? item.agility : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Target</h1>
-                        {editing ? <select 
-                            {...register("target", { required: false })}
+                        <h1>Hit Chance</h1>
+                        <input 
+                            {...register("hit_chance", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            name="target"
-                            placeholder=""
+                            type="text"
+                            name="hit_chance"
                             disabled={!editing}
-                        >   
-                            <option value=""></option>    
-                            <option value="NONE">NONE</option>
-                            <option value="SELF">SELF</option>
-                            <option value="ALLY">ALLY</option>
-                            <option value="ALLY_SUMMON">ALLY_SUMMON</option>
-                            <option value="ALLY_AROUND">ALLY_AROUND</option>
-                            <option value="ALLY_EXCEPT_SELF">ALLY_EXCEPT_SELF</option>
-                            <option value="ENEMY">ENEMY</option>
-                            <option value="ENEMY_SUMMON">ENEMY_SUMMON</option>
-                            <option value="ENEMY_AROUND">ENEMY_AROUND</option>
-                            <option value="ANY">ANY</option>
-                            <option value="ANY_AROUND">ANY_AROUND</option>
-                            <option value="ANY_EXCEPT_SELF">ANY_EXCEPT_SELF</option>
-                            <option value="ANY_SUMMON">ANY_SUMMON</option>
-                            <option value="POINT">POINT</option>
-                            <option value="POINT_ENEMY">POINT_ENEMY</option>
-                            <option value="POINT_ALLY">POINT_ALLY</option>
-                            <option value="AREA">AREA</option>
-                            <option value="AREA_ENEMY">AREA_ENEMY</option>
-                            <option value="AREA_ALLY">AREA_ALLY</option>
-                        </select> : <h1 className='my-2 py-3'>{skill.target}</h1> }
+                            placeholder={item.hit_chance ? item.hit_chance : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Target Type</h1>
-                        {editing ? <select 
-                            {...register("skill_on", { required: false })}
+                        <h1>Evasion</h1>
+                        <input 
+                            {...register("evasion", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            name='skill_on'
-                            placeholder=""
+                            type="text"
+                            name="evasion"
                             disabled={!editing}
-                        >
-                            <option value=""></option>
-                            <option value="INSTANT">INSTANT</option>
-                            <option value="OVER_TIME">OVER_TIME</option>
-                            <option value="DURING_CHANNEL">DURING_CHANNEL</option>
-                            <option value="AFTER_CHANNEL">AFTER_CHANNEL</option>
-                            <option value="DELAYED">DELAYED</option>
-                        </select> : <h1 className='my-2 py-3'>{skill.skill_on}</h1> }
-
+                            placeholder={item.evasion ? item.evasion : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Hit Rate</h1>
+                        <input 
+                            {...register("hit_rate", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="hit_rate"
+                            disabled={!editing}
+                            placeholder={item.hit_rate ? item.hit_rate : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Movement</h1>
+                        <input 
+                            {...register("movement", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="movement"
+                            disabled={!editing}
+                            placeholder={item.movement ? item.movement : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Ammo</h1>
+                        <input 
+                            {...register("ammo", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="ammo"
+                            disabled={!editing}
+                            placeholder={item.ammo ? item.ammo : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Shield</h1>
+                        <input 
+                            {...register("shield", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="shield"
+                            disabled={!editing}
+                            placeholder={item.shield ? item.shield : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1>Conditions</h1>      
@@ -250,8 +327,8 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             name="conditions"
                             disabled={!editing}
-                            placeholder={skill.conditions ? skill.conditions : "N/A"}
-                        /> : <h1 className='my-2 py-3'>{skill.conditions ? skill.conditions : "N/A"}</h1> }
+                            placeholder={item.conditions ? item.conditions : "N/A"}
+                        /> : <h1 className='my-2 py-3'>{item.conditions ? item.conditions : "N/A"}</h1> }
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>
@@ -260,33 +337,19 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
                             name="description"
                             disabled={!editing}
-                            placeholder={ skill.description ? skill.description : "Description" }
+                            placeholder={ item.description ? item.description : "Description" }
                         />                                
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
-                            <h1>Effects</h1>
-                            {editing && <NewSkillEffectDialog skillId={skill.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
-                                    title={'Add Effects'} 
+                            <h1>Skills</h1>
+                            {editing && <NewItemOptionDialog itemId={item.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
+                                    title={'Add Skills'} 
                                     description={'Skills may leave lasting effects on the target. These effects can be positive or negative. select the type of effect you want to add to this skill.'} 
-                                    selection={'effects'} 
                             />}
                         </div>
-                        {(skill.effects && skill.effects.length > 0) ? skill.effects.map((effect: any) => {
-                            return <SkillEffectCard skilleffect={effect} skillId={skill.id} editable={editing} />       
-                        }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
-                    </div>
-                    <div className='items-center space-x-2 col-span-4 my-4'>
-                        <div className='flex space-x-2'>
-                            <h1>Summons</h1>
-                            {editing && <NewSkillEffectDialog skillId={skill.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
-                                        title={'Add Summons'} 
-                                        description={'Skills may summon other entities to the battlefield. These summons can be positive or negative. select the type of summon you want to add to this skill.'}
-                                        selection={'summons'} 
-                            />}
-                        </div>
-                        {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
-                            return <SkillSummonCard summon={summon} skillId={skill.id} editable={editing} />
+                        {(item.skills && item.skills.length > 0) ? item.skills.map((skill: any) => {
+                            return <ItemSkillCard itemskill={skill} itemId={item.id} editable={editing} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

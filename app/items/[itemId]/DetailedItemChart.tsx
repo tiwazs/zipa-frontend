@@ -328,7 +328,7 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                             name="conditions"
                             disabled={!editing}
                             placeholder={item.conditions ? item.conditions : "N/A"}
-                        /> : <h1 className='my-2 py-3'>{item.conditions ? item.conditions : "N/A"}</h1> }
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{item.conditions ? item.conditions : "N/A"}</h1> }
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>
@@ -345,7 +345,7 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                             <h1>Skills</h1>
                             {editing && <NewItemOptionDialog itemId={item.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
                                     title={'Add Skills'} 
-                                    description={'Skills may leave lasting effects on the target. These effects can be positive or negative. select the type of effect you want to add to this skill.'} 
+                                    description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
                             />}
                         </div>
                         {(item.skills && item.skills.length > 0) ? item.skills.map((skill: any) => {

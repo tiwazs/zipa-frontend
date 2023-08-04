@@ -3,6 +3,7 @@ import { Listbox, Transition } from '@headlessui/react'
 //import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import {AiOutlineCheck, AiOutlineDown } from 'react-icons/ai'
 import { useQuery, useQueryClient } from 'react-query'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 const getSkills = async () => {
   try{
@@ -23,24 +24,31 @@ interface SkillSelectionProps {
 export default function SkillSelection({itemId}: SkillSelectionProps) {
     const query = useQuery(["skills", getSkills], getSkills);
     const [selected, setSelected] = useState<any>(undefined)
-    const [duration, setDuration] = useState<string>("0")
+    const [essence_cost, setEssenceCost] = useState<string>("0")
+    const [cooldown, setCooldown] = useState<string>("0")
 
     const queryClient = useQueryClient();
 
     const onAddSkill = async () => {
+      const data = {
+        item_id: itemId,
+        skill_id: selected.id,
+        essence_cost: essence_cost,
+        cooldown: cooldown
+      }
 
       // Not setting the content type. aparently the browser will do that for us, including the boundary
       try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/skills/add_skill/${itemId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/add_skill?id=${itemId}`, {
             method: "PUT",
             headers: {
               'Content-Type': 'application/json'
             },
-            //body: JSON.stringify({body})
+            body: JSON.stringify(data)
         });
         console.log(`Response: ${JSON.stringify(response)}`);
       
-        queryClient.invalidateQueries('skill');
+        queryClient.invalidateQueries('item');
     }catch(e){
         console.log(`Error: ${e}`);
     }
@@ -105,10 +113,18 @@ export default function SkillSelection({itemId}: SkillSelectionProps) {
           </div>
         </Listbox>
       </div>
-      <div className='flex items-center w-full'>
-        <h1>Duration</h1>
-        <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-               value={duration} type="text" id="duration" onChange={(e)=>{setDuration(e.target.value)}}/>
+      {/* Form */}
+      <div className='flex flex-col w-full'>
+        <div className='flex items-center'>
+            <h1>Essence Cost</h1>
+            <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                   value={essence_cost} type="text" id="essence_cost" onChange={(e)=>{setEssenceCost(e.target.value)}}/>
+        </div>
+        <div className='flex items-center'>
+        <h1>Cooldown</h1>
+            <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                   value={cooldown} type="text" id="cooldown" onChange={(e)=>{setCooldown(e.target.value)}}/>
+        </div>
       </div>
       <button
           type="button"

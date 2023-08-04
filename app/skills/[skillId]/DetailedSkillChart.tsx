@@ -251,7 +251,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             name="conditions"
                             disabled={!editing}
                             placeholder={skill.conditions ? skill.conditions : "N/A"}
-                        /> : <h1 className='my-2 py-3'>{skill.conditions ? skill.conditions : "N/A"}</h1> }
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{skill.conditions ? skill.conditions : "N/A"}</h1> }
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>

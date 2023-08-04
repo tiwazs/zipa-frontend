@@ -128,7 +128,7 @@ export default function SkillOption(skill: SkillOptionProps) {
                             </p>}
                             {skill.effects.map((effect: any) => {
                                 return (
-                                <div className='px-4 font-light'>
+                                <div key={effect.effect.id} className='px-4 font-light'>
                                     <p>
                                         <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
                                     </p>
@@ -145,7 +145,7 @@ export default function SkillOption(skill: SkillOptionProps) {
                             </p>}
                             {skill.summons.map((summon: any) => {
                                 return (
-                                <div className='px-4 font-light'>
+                                <div key={summon.unit.id} className='px-4 font-light'>
                                     <p>
                                         <Link href={`/summons/${summon.unit.id}`}><span className='text-yellow-400 font-normal'>{summon.unit.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T
                                     </p>

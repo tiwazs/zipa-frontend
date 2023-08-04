@@ -273,7 +273,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             />}
                         </div>
                         {(skill.effects && skill.effects.length > 0) ? skill.effects.map((effect: any) => {
-                            return <SkillEffectCard skilleffect={effect} skillId={skill.id} editable={editing} />       
+                            return <SkillEffectCard key={effect.effect.id} skilleffect={effect} skillId={skill.id} editable={editing} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
@@ -286,7 +286,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             />}
                         </div>
                         {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
-                            return <SkillSummonCard summon={summon} skillId={skill.id} editable={editing} />
+                            return <SkillSummonCard key={summon.unit.id} summon={summon} skillId={skill.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

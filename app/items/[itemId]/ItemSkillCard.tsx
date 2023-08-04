@@ -74,7 +74,7 @@ export default function ItemSkillCard({ itemId, itemskill, editable }: ItemSkill
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <p>
-                <Link href={`/skills/${itemskill.id}`}><span className='text-yellow-400 font-normal'>{skill.name}</span></Link> lasting <span className='text-purple-400'>{itemskill.duration}</span> T
+                <Link href={`/skills/${itemskill.id}`}><span className='text-yellow-400 font-normal'>{skill.name}</span></Link>
             </p>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{skill.description}</span>
@@ -94,6 +94,11 @@ export default function ItemSkillCard({ itemId, itemskill, editable }: ItemSkill
                     { skill.channeled && <p><span className='text-gray-400 font-light'>Channeled</span></p>}
                     {/* Skill Effects*/}
                     {/* Skill Summons*/}
+                    {/* Item Skill info */}
+                    <div className='flex space-x-2'>
+                        <p className='font-light text-gray-400 text-sm'>Cooldown: <span className='text-purple-400'> {itemskill.cooldown}</span> T</p>
+                        <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {itemskill.essence_cost}</span> P</p>
+                    </div>
                 </div>
             </p>
             </div>

@@ -67,13 +67,13 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <h3 className='font-bold my-2 text-yellow-200/70'>{effect.name}</h3>
             </Link>
             <p className='my-1 text-gray-100 '>{effect.description}</p>
-            <div className='flex font-extralight italic space-x-2 '>
+            <div className='flex flex-col font-extralight italic'>
                 { (effect.magic_effectiveness && effect.magic_effectiveness !== "0") && <p><span className='text-green-500 font-light'>{effect.magic_effectiveness}</span> Magic Power   </p>}
                 { (effect.physical_damage && effect.physical_damage !== "0") && <p><span className='text-green-500 font-light'>{effect.physical_damage}</span> Physical Damage   </p>}
                 { (effect.magical_damage && effect.magical_damage !== "0") && <p><span className='text-green-500 font-light'>{effect.magical_damage}</span> Magic Damage   </p>}
                 { (effect.healing && effect.healing !== "0") && <p><span className='text-green-500 font-light'>{effect.healing}</span> Healing   </p>}
-                { (effect.vitality_recovery && effect.vitality_recovery !== "0") && <p>Recovers  <span className='text-green-500 font-light'>{effect.vitality_recovery}</span> Vitality   </p>}
-                { (effect.essence_recovery && effect.essence_recovery !== "0") && <p>Recovers  <span className='text-green-500 font-light'>{effect.essence_recovery}</span> Essence   </p>}
+                { (effect.vitality_recovery && effect.vitality_recovery !== "0") && <p><span className='text-green-500 font-light'>{effect.vitality_recovery}</span> Recovering   </p>}
+                { (effect.essence_recovery && effect.essence_recovery !== "0") && <p><span className='text-green-500 font-light'>{effect.essence_recovery}</span> Essence Recovering</p>}
                 { (effect.vitality && effect.vitality !== "0") && <p><span className='text-green-500 font-light'>{effect.vitality}</span> Max Vitality   </p>}
                 { (effect.range && effect.range !== "0") && <p><span className='text-green-500 font-light'>{effect.range}</span> Range   </p>}
                 { (effect.damage && effect.damage !== "0") && <p><span className='text-green-500 font-light'>{effect.damage}</span> All Damage   </p>}

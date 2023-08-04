@@ -119,13 +119,17 @@ export default function ItemOption(item: ItemOptionProps) {
                             </p>}
                             {item.skills.map((skill: any) => {
                                 return (
-                                <div className='px-4 font-light'>
+                                <div key={skill.skill.id} className='px-4 font-light'>
                                     <p>
-                                        <Link href={`/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link> lasting <span className='text-purple-400'>{skill.duration}</span> T
+                                        <Link href={`/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
                                     </p>
                                     <p>
                                         <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
                                     </p>
+                                    <div className='px-4 flex space-x-2'>
+                                        <p className='font-light text-gray-400 text-sm'>CD: <span className='text-purple-400'> {skill.cooldown}</span> T</p>
+                                        <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {skill.essence_cost}</span> P</p>
+                                    </div>
                                 </div>
                                 )
                             })}                        

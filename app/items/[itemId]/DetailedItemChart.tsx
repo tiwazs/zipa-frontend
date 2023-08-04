@@ -349,7 +349,7 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                             />}
                         </div>
                         {(item.skills && item.skills.length > 0) ? item.skills.map((skill: any) => {
-                            return <ItemSkillCard itemskill={skill} itemId={item.id} editable={editing} />       
+                            return <ItemSkillCard key={skill.skill.id} itemskill={skill} itemId={item.id} editable={editing} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

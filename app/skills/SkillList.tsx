@@ -29,7 +29,8 @@ export default function EffectList() {
                     key={skill.id} 
                     id={skill.id} 
                     name={skill.name} 
-                    description={skill.description} 
+                    description={skill.description}
+                    conditions={skill.conditions} 
                     physical_damage={skill.physical_damage}
                     magical_damage={skill.magical_damage}
                     healing={skill.healing}

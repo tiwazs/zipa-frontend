@@ -7,6 +7,7 @@ interface SkillOptionProps {
     id: string;
     name: string;
     description: string;
+    conditions: string;
     physical_damage: string;
     magical_damage: string;
     healing: string;
@@ -107,12 +108,13 @@ export default function SkillOption(skill: SkillOptionProps) {
             <div>
                 <p className='my-1 text-gray-100 '>{skill.description}</p>
                 <div className='flex flex-col font-extralight italic '>
+                    { (skill.conditions && skill.conditions !== "0") && <p>Conditions: <span className='text-orange-500 font-light'>{skill.conditions}</span> </p>}
                     {/*Damage Types*/}
                     <div className='flex'>
-                        { (skill.physical_damage  && skill.physical_damage !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.physical_damage}</span> Physical Damage   </p>}
-                        { (skill.magical_damage && skill.magical_damage !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.magical_damage}</span> Magical Damage   </p>}
-                        { (skill.vitality_recovery && skill.vitality_recovery !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.vitality_recovery}</span> Recovering   </p>}
-                        { (skill.essence_recovery && skill.essence_recovery !== "0") && <p>Damage: <span className='text-green-500 font-light'>{skill.essence_recovery}</span> Essence Recovering   </p>}
+                        { (skill.physical_damage  && skill.physical_damage !== "0") && <p>Deals <span className='text-green-500 font-light'>{skill.physical_damage}</span> Physical Damage   </p>}
+                        { (skill.magical_damage && skill.magical_damage !== "0") && <p>Deals <span className='text-green-500 font-light'>{skill.magical_damage}</span> Magical Damage   </p>}
+                        { (skill.vitality_recovery && skill.vitality_recovery !== "0") && <p>Restores <span className='text-green-500 font-light'>{skill.vitality_recovery}</span> Vitality   </p>}
+                        { (skill.essence_recovery && skill.essence_recovery !== "0") && <p>Restores <span className='text-green-500 font-light'>{skill.essence_recovery}</span> Essence </p>}
                     </div>
                     {/*Other Skill Details: Range, AoE, Targe, Etc*/}
                     { (skill.range && skill.range !== "0") && <p>Range: <span className='text-gray-400 font-light'>{skill.range}</span> Mts</p>}

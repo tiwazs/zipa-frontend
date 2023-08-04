@@ -244,7 +244,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1>Conditions</h1>      
                         { editing ? <textarea 
-                            {...register("conditions", { required: true })}
+                            {...register("conditions", { required: false })}
                             className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             name="conditions"
                             disabled={!editing}

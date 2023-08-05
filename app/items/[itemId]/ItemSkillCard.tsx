@@ -78,7 +78,7 @@ export default function ItemSkillCard({ itemId, itemskill, editable }: ItemSkill
             </p>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{skill.description}</span>
-                <div className='flex flex-col font-extralight italic '>
+                <div className='px-4 flex flex-col font-extralight italic '>
                     { (skill.conditions && skill.conditions !== "0") && <p>Conditions: <span className='text-orange-500 font-light'>{skill.conditions}</span> </p>}
                     {/*Damage Types*/}
                     <div className='flex'>

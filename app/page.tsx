@@ -16,6 +16,7 @@ export default function Home() {
         <MainOptionCard title="General" description="General description for battle, units spells and combat rules" link="/general" />
         <MainOptionCard title="Factions" description="Playable factions, their cultures, traits, units and more" link="/factions" />
         <MainOptionCard title="Units" description="All playable units for all factions" link="/units" />
+        <MainOptionCard title="Traits" description="All the available Traits" link="/traits" />
         <MainOptionCard title="Skills" description="All The available abilities" link="/skills" />
         <MainOptionCard title="Items" description="All the available items" link="/items" />
         <MainOptionCard title="Effects" description="All the available Effecs" link="/effects" />

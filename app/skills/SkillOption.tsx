@@ -163,7 +163,7 @@ export default function SkillOption(skill: SkillOptionProps) {
             {/*General Skill Details. Resource and CD*/}
             <div className='my-2 flex space-x-2 font-light text-sm'>
                 { (skill.essence_cost && skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.essence_cost}</span> P</p>}
-                { (skill.vitality_cost && skill.vitality_cost !== "0") && <p> <span className='text-red-500 font-light'>{skill.vitality_cost}</span> V</p>}
+                { (skill.vitality_cost && skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.vitality_cost}</span> V</p>}
                 { (skill.cooldown && skill.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{skill.cooldown}</span> T </p>}
             </div>
         </div>

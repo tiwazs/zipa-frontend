@@ -24,6 +24,7 @@ export default function EffectSelection({skillId}: EffectSelectionProps) {
     const query = useQuery(["effects", getEffects], getEffects);
     const [selected, setSelected] = useState<any>(undefined)
     const [duration, setDuration] = useState<string>("0")
+    const [conditions, setConditions] = useState<string>("")
 
     const queryClient = useQueryClient();
 
@@ -101,10 +102,18 @@ export default function EffectSelection({skillId}: EffectSelectionProps) {
           </div>
         </Listbox>
       </div>
-      <div className='flex items-center w-full'>
-        <h1>Duration</h1>
-        <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-               value={duration} type="text" id="duration" onChange={(e)=>{setDuration(e.target.value)}}/>
+      {/* Form */}
+      <div className='flex flex-col w-full'>
+          <div className='flex items-center'>
+                <h1>Conditions</h1>
+                <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                      value={conditions} type="text" id="conditions" onChange={(e)=>{setConditions(e.target.value)}}/>
+          </div>
+          <div className='flex items-center w-full'>
+            <h1>Duration</h1>
+            <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                  value={duration} type="text" id="duration" onChange={(e)=>{setDuration(e.target.value)}}/>
+          </div>
       </div>
       <button
           type="button"

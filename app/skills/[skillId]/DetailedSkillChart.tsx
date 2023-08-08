@@ -286,7 +286,7 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             />}
                         </div>
                         {(skill.summons && skill.summons.length > 0) ? skill.summons.map((summon: any) => {
-                            return <SkillSummonCard key={summon.unit.id} summon={summon} skillId={skill.id} editable={editing} />
+                            return <SkillSummonCard key={summon.unit_specialization.id} summon={summon} skillId={skill.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

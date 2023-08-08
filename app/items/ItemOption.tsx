@@ -28,6 +28,11 @@ interface ItemOptionProps {
     movement: string;
     ammo: string;
     shield: string;
+    dexterity_requirement?: number;
+    strength_requirement?: number;
+    mind_requirement?: number;
+    faith_requirement?: number;
+    weight?: number;
     skills: any;
     styles: string;
 }
@@ -132,7 +137,20 @@ export default function ItemOption(item: ItemOptionProps) {
                                     </div>
                                 </div>
                                 )
-                            })}                        
+                            })}
+                    <div>
+                        <p>Weight: <span className='text-orange-500 font-light'>{(item.weight && item.weight !== 0 ) ? item.weight?.toString() : "0"}</span> </p>
+                        {((item.dexterity_requirement !==0) || 
+                            (item.strength_requirement!==0) || 
+                            (item.mind_requirement!==0) || 
+                            (item.faith_requirement!==0)) && <p>Requires:</p>}
+                        <div className='px-6 text-orange-500 font-light text-sm'>
+                            {(item.dexterity_requirement !== 0) && <p><span>{item.dexterity_requirement?.toString()} Dexterity</span></p>}
+                            {(item.strength_requirement !== 0) && <p><span>{item.strength_requirement?.toString()} Dexterity</span></p>}
+                            {(item.mind_requirement !== 0) && <p><span>{item.mind_requirement?.toString()} Dexterity</span></p>}
+                            {(item.faith_requirement !== 0) && <p><span>{item.faith_requirement?.toString()} Dexterity</span></p>}
+                        </div>
+                    </div>                        
                 </div>
             </div>
         </div>

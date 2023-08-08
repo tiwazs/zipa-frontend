@@ -145,12 +145,12 @@ export default function SkillOption(skill: SkillOptionProps) {
                             </p>}
                             {skill.summons.map((summon: any) => {
                                 return (
-                                <div key={summon.unit.id} className='px-4 font-light'>
+                                <div key={summon.unit_specialization.id} className='px-4 font-light'>
                                     <p>
-                                        <Link href={`/summons/${summon.unit.id}`}><span className='text-yellow-400 font-normal'>{summon.unit.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T
+                                        <Link href={`/summons/${summon.unit_specialization.id}`}><span className='text-yellow-400 font-normal'>{summon.unit_specialization.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T
                                     </p>
                                     <p>
-                                        <span className='px-4 text-gray-400 font-light'>{summon.unit.description}</span>
+                                        <span className='px-4 text-gray-400 font-light'>{summon.unit_specialization.description}</span>
                                     </p>
                                 </div>
                                 )

@@ -51,6 +51,11 @@ export default function EffectList() {
                     movement={skill.movement}
                     ammo={skill.ammo}
                     shield={skill.shield}
+                    dexterity_requirement={skill.dexterity_requirement}
+                    strength_requirement={skill.strength_requirement}
+                    mind_requirement={skill.mind_requirement}
+                    faith_requirement={skill.faith_requirement}
+                    weight={skill.weight}
                     skills={skill.skills}        
 
                     styles={"group border-4 border-transparent px-5 py-2 transition-colors hover:border-purple-500 hover:bg-purple-300 hover:dark:border-yellow-700/50 hover:dark:bg-purple-900/20 \

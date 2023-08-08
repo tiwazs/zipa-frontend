@@ -46,6 +46,11 @@ interface Item {
     movement?: string;
     ammo?: string;
     shield?: string;
+    dexterity_requirement?: number;
+    strength_requirement?: number;
+    mind_requirement?: number;
+    faith_requirement?: number;
+    weight?: number;
     skills: any[];
 }
 
@@ -319,6 +324,61 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                             disabled={!editing}
                             placeholder={item.shield ? item.shield : "N/A"}
                         />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Dexterity Requirement</h1>
+                        {editing ? <input 
+                            {...register("dexterity_requirement", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="dexterity_requirement"
+                            disabled={!editing}
+                            placeholder={(item.dexterity_requirement && item.dexterity_requirement !== 0 ) ? item.dexterity_requirement?.toString() : "0"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(item.dexterity_requirement && item.dexterity_requirement !== 0 ) ? item.dexterity_requirement?.toString() : "0"}</h1>}                           
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Strength Requirement</h1>
+                        {editing ? <input 
+                            {...register("strength_requirement", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="strength_requirement"
+                            disabled={!editing}
+                            placeholder={(item.strength_requirement && item.strength_requirement !== 0 ) ? item.strength_requirement?.toString() : "0"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(item.strength_requirement && item.strength_requirement !== 0 ) ? item.strength_requirement?.toString() : "0"}</h1>}                           
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Mind Requirement</h1>
+                        {editing ? <input 
+                            {...register("mind_requirement", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="mind_requirement"
+                            disabled={!editing}
+                            placeholder={(item.mind_requirement && item.mind_requirement !== 0 ) ? item.mind_requirement?.toString() : "0"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(item.mind_requirement && item.mind_requirement !== 0 ) ? item.mind_requirement?.toString() : "0"}</h1>}                           
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Faith Requirement</h1>
+                        {editing ? <input 
+                            {...register("faith_requirement", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="faith_requirement"
+                            disabled={!editing}
+                            placeholder={(item.faith_requirement && item.faith_requirement !== 0 ) ? item.faith_requirement?.toString() : "0"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(item.faith_requirement && item.faith_requirement !== 0 ) ? item.faith_requirement?.toString() : "0"}</h1>}                           
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Weight</h1>
+                        {editing ? <input 
+                            {...register("weight", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="weight"
+                            disabled={!editing}
+                            placeholder={(item.weight && item.weight !== 0 ) ? item.weight?.toString() : "0"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(item.weight && item.weight !== 0 ) ? item.weight?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1>Conditions</h1>      

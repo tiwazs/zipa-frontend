@@ -31,6 +31,11 @@ interface CreateEffectFormOptions {
     movement?: string;
     ammo?: string;
     shield?: string;
+    dexterity_requirement?: number;
+    strength_requirement?: number;
+    mind_requirement?: number;
+    faith_requirement?: number;
+    weight?: number;
     skills?: string[];
 }
 
@@ -339,6 +344,51 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                                     type="text"
                                     name="shield"
                                     placeholder="Shield"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("dexterity_requirement", { required: false, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="dexterity_requirement"
+                                    placeholder="dexterity_requirement"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("strength_requirement", { required: false, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="strength_requirement"
+                                    placeholder="strength_requirement"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("mind_requirement", { required: false, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="mind_requirement"
+                                    placeholder="mind_requirement"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("faith_requirement", { required: false, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="faith_requirement"
+                                    placeholder="faith_requirement"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("weight", { required: false, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="weight"
+                                    placeholder="weight"
                                 />                                
                             </div>
                         </div>

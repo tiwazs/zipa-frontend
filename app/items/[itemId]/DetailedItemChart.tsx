@@ -27,6 +27,8 @@ interface Item {
     description: string;
     conditions?: string;
     rarity: string;
+    is_weapon: boolean;
+    object_type: string;
     magic_effectiveness?: string;
     physical_damage?: string;
     magical_damage?: string;

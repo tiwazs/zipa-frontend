@@ -11,7 +11,6 @@ interface CreateSpecializationFormOptions {
     name: string;
     description: string;
     vitality: number;
-    range: number;
     strength: number;
     dexterity: number;
     mind: number;
@@ -24,8 +23,7 @@ interface CreateSpecializationFormOptions {
     evasion: number;
     hit_rate: number;
     movement: number;
-    ammo: number;
-    shield: number;
+    weapon_proficiencies: string;
     tier: number;
     skills?: string[];
     items?: string[];
@@ -155,15 +153,6 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                             </div>
                             <div>
                                 <input 
-                                    {...register("range", { required: true, valueAsNumber: true })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="number"
-                                    name="range"
-                                    placeholder="range"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
                                     {...register("strength", { required: true, valueAsNumber: true })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
@@ -240,7 +229,7 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
                                     name="hit_chance"
-                                    placeholder="hit_chance"
+                                    placeholder="Hit Chance"
                                 />                                
                             </div>
                             <div>
@@ -258,7 +247,7 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="number"
                                     name="hit_rate"
-                                    placeholder="hit_rate"
+                                    placeholder="Hit Rate"
                                 />                                
                             </div>
                             <div>
@@ -272,20 +261,11 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                             </div>
                             <div>
                                 <input 
-                                    {...register("ammo", { required: true, valueAsNumber: true })}
+                                    {...register("weapon_proficiencies", { required: true })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="number"
-                                    name="ammo"
-                                    placeholder="ammo"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("shield", { required: true, valueAsNumber: true })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="number"
-                                    name="shield"
-                                    placeholder="shield"
+                                    type="text"
+                                    name="weapon_proficiencies"
+                                    placeholder="Weapon Proficiencies"
                                 />                                
                             </div>
                             <div>

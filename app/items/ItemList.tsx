@@ -31,6 +31,8 @@ export default function EffectList() {
                     name={skill.name}
                     description={skill.description}
                     conditions={skill.conditions}
+                    is_weapon={skill.is_weapon}
+                    object_type={skill.object_type}
                     rarity={skill.rarity}
                     magic_effectiveness={skill.magic_effectiveness}
                     physical_damage={skill.physical_damage}

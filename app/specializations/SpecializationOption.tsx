@@ -9,7 +9,6 @@ interface SpecializationOptionProps {
     name: string;
     description: string;
     vitality: number;
-    range: number;
     strength: number;
     dexterity: number;
     mind: number;
@@ -22,8 +21,7 @@ interface SpecializationOptionProps {
     evasion: number;
     hit_rate: number;
     movement: number;
-    ammo: number;
-    shield: number;
+    weapon_proficiencies: string;
     tier: number;
     skills: any;
     items: any;
@@ -114,7 +112,6 @@ export default function SpecializationOption(specialization: SpecializationOptio
                     <StatsSummary name={'Fth'} value={specialization.faith} />
                     <StatsSummary name={'Arm'} value={specialization.armor} />
                     <StatsSummary name={'Mar'} value={specialization.magic_armor} />
-                    <StatsSummary name={'Rng'} value={specialization.range} />
                     <StatsSummary name={'Ess'} value={specialization.essence} />
                     <StatsSummary name={'Agi'} value={specialization.agility} />                        
                     <StatsSummary name={'Hit'} value={specialization.hit_chance} />

@@ -27,8 +27,7 @@ interface Specialization {
     evasion?: string;
     hit_rate?: string;
     movement?: string;
-    ammo?: string;
-    shield?: string;
+    weapon_proficiencies: string;
     dexterity_requirement?: number;
     strength_requirement?: number;
     mind_requirement?: number;

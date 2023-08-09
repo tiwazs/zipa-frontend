@@ -8,6 +8,8 @@ interface ItemOptionProps {
     name: string;
     description: string;
     conditions: string;
+    is_weapon: boolean;
+    object_type: string;
     rarity: string;
     magic_effectiveness: string;
     physical_damage: string;

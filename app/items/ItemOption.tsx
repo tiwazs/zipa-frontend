@@ -91,7 +91,11 @@ export default function ItemOption(item: ItemOptionProps) {
             <Link href={`/items/${item.id}`}>
                 <div className='my-2'>
                     <h3 className={`font-bold ${paintRarity(item.rarity)}`}>{item.name}</h3>
-                    <h4 className={` text-xs italic font-light ${paintRarity(item.rarity)}`}>{item.rarity}</h4>
+                    <div className={`flex space-x-1 text-xs italic font-light ${paintRarity(item.rarity)}`}>
+                        <h4>{item.rarity}</h4>
+                        <h4>|</h4>
+                        <h4>{item.object_type}</h4>
+                    </div>
                 </div>
             </Link>
             <div>

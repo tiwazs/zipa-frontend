@@ -31,7 +31,6 @@ export default function EffectList() {
                     name={specialization.name}
                     description={specialization.description}
                     vitality={specialization.vitality}
-                    range={specialization.range}
                     strength={specialization.strength}
                     dexterity={specialization.dexterity}
                     mind={specialization.mind}
@@ -44,8 +43,7 @@ export default function EffectList() {
                     evasion={specialization.evasion}
                     hit_rate={specialization.hit_rate}
                     movement={specialization.movement}
-                    ammo={specialization.ammo}
-                    shield={specialization.shield}
+                    weapon_proficiencies={specialization.weapon_proficiencies}
                     tier={specialization.tier}
                     skills={specialization.skills}
                     items={specialization.items}

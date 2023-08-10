@@ -6,6 +6,7 @@ import { Fragment, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';  
+import ObjectTypeSelection from './ObjectTypeSelection';
 
 interface CreateSpecializationFormOptions {
     name: string;
@@ -34,8 +35,46 @@ interface NewSpecializationDialogProps {
     styles?: string;
 }
 
+export interface OjbectOptionType{
+    label: string;
+    value: string;
+    realValue: string;
+}
+
+const opbjectTypeOptions:OjbectOptionType[]  = ['CURVED_SWORD_1H','CURVED_SWORD_2H','STRAIGHT_SWORD_1H','STRAIGHT_SWORD_2H','AXE_1H','AXE_2H','HAMMER_1H','HAMMER_2H','SPEAR_1H','SPEAR_2H','JAVELIN_1H','STAFF_1H','STAFF_2H','BOW_2H','CROSSBOW_2H','DAGGER_1H','OTHER'].map(
+  (item) => ({ label: item, value: item.replace(/_/g," "), realValue: item })
+);
+
+function ObjectTypeSelectedList({removeObjectType,selectedObjectTypes, styles}: {removeObjectType: any, selectedObjectTypes: OjbectOptionType[], styles?:string}) {
+
+    function RemoveObjectType(selectedEvent: OjbectOptionType){
+        removeObjectType(selectedEvent);
+    }
+
+    return (
+      <div className={`${styles}`}>
+        {selectedObjectTypes.map((object: any) => (
+          <div key={object.label} className="border-2 border-yellow-500/50 rounded-xl w-18 h-18 p-1 bg-opacity-50 bg-black">
+            <div className='flex flex-col items-end' onClick={()=>RemoveObjectType(object)}>
+              <button className='text-xs'>
+                x
+              </button>
+            </div>
+            <span className="block font-light text-xs text-yellow-200/70 ">
+              {object.value}
+            </span>
+          </div>
+        ))}
+      </div>
+    )
+}
+
+
 export default function NewSpecializationDialog({styles}: NewSpecializationDialogProps) {
     let [isOpen, setIsOpen] = useState(false);
+    let [objectTypesSelected, setObjectTypesSelected] = useState<OjbectOptionType[]>([]);
+    let [objectTypesRemaining, setObjectTypesRemaining] = useState<OjbectOptionType[]>(opbjectTypeOptions);
+    let [weaponProficiencies, setWeaponProficiencies] = useState<string>("");
     const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateSpecializationFormOptions>();
     
     const queryClient = useQueryClient();
@@ -63,6 +102,47 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
           setIsOpen(false);
       }
     };
+
+    function handleObjectTypeAdded(selectedObjectType: OjbectOptionType) {
+        // Remove the selected object type from the remaining options
+        setObjectTypesRemaining(
+            objectTypesRemaining.filter((item) => item.realValue !== selectedObjectType.realValue)
+        );
+        
+        // Keep track of the selected object types
+        let objectTypesSelectedBuffer = [...objectTypesSelected,selectedObjectType]
+        setObjectTypesSelected(
+            objectTypesSelectedBuffer
+        );
+
+        // Generate the weapon proficiencies string 
+        // Since the selected object types are not updated yet (done in the lines above, but state is async), we cannot use the objectTypesSelected variable.
+        setWeaponProficiencies(
+            objectTypesSelectedBuffer.map((item) => item.realValue).join('|')
+        );
+    }
+    function handleObjectTypeRemoved(selectedObjectType: OjbectOptionType) {
+        // Remove the object type from the selected options
+        let objectTypesSelectedBuffer =  objectTypesSelected.filter((item) => item.realValue !== selectedObjectType.realValue)
+        setObjectTypesSelected(
+          objectTypesSelectedBuffer
+        );
+
+        // Keep track of the remaining object types
+        setObjectTypesRemaining(
+            [
+              ...objectTypesRemaining,
+              selectedObjectType
+            ]
+        );
+
+        // Generate the weapon proficiencies string
+        // Since the selected object types are not updated yet (done in the lines above, but state is async), we cannot use the objectTypesSelected variable.
+        setWeaponProficiencies(
+            objectTypesSelectedBuffer.map((item) => item.realValue).join('|')
+        );
+    }
+
 
   function closeModal() {
     setIsOpen(false)
@@ -265,9 +345,11 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="weapon_proficiencies"
-                                    placeholder="Weapon Proficiencies"
+                                    value={weaponProficiencies}
                                 />                                
                             </div>
+                            <ObjectTypeSelectedList removeObjectType={handleObjectTypeRemoved} selectedObjectTypes={objectTypesSelected} styles='w-full grid grid-cols-5 gap-1' />
+                            <ObjectTypeSelection addObjectType={handleObjectTypeAdded} objectTypes={objectTypesRemaining} selectedObjectTypes={objectTypesSelected} />
                             <div>
                                 <input 
                                     {...register("tier", { required: true, valueAsNumber: true })}

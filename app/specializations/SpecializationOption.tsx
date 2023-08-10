@@ -3,6 +3,7 @@ import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
 import StatsSummary from './StatsSummary';
+import { paintTier, writeTier } from './[specializationId]/DetailedSpecializationChart';
 
 interface SpecializationOptionProps {
     id: string;
@@ -56,40 +57,6 @@ export default function SpecializationOption(specialization: SpecializationOptio
             console.log(`Error: ${e}`);
         }
     };
-
-    const paintTier = (tier: number) => {
-        switch(tier){
-            case 1:
-                return "text-orange-800";
-            case 2:
-                return "text-zinc-300/80";
-            case 3:
-                return "text-zinc-300";
-            case 4:
-                return "text-amber-600/90";
-            case 5:
-                return "text-amber-500";
-            default:
-                return "text-gray-100";
-        }
-    }
-
-    const writeTier = (tier: number) => {
-        switch(tier){
-            case 1:
-                return "I";
-            case 2:
-                return "II";
-            case 3:
-                return "III";
-            case 4:
-                return "IV";
-            case 5:
-                return "V";
-            default:
-                return "";
-        }
-    }
 
     return (
     <div className={`${specialization.styles}`}>

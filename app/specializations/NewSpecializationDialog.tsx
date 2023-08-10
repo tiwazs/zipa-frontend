@@ -41,7 +41,7 @@ export interface OjbectOptionType{
     realValue: string;
 }
 
-const opbjectTypeOptions:OjbectOptionType[]  = ['CURVED_SWORD_1H','CURVED_SWORD_2H','STRAIGHT_SWORD_1H','STRAIGHT_SWORD_2H','AXE_1H','AXE_2H','HAMMER_1H','HAMMER_2H','SPEAR_1H','SPEAR_2H','JAVELIN_1H','STAFF_1H','STAFF_2H','BOW_2H','CROSSBOW_2H','DAGGER_1H','OTHER'].map(
+export const opbjectTypeOptions:OjbectOptionType[]  = ['CURVED_SWORD_1H','CURVED_SWORD_2H','STRAIGHT_SWORD_1H','STRAIGHT_SWORD_2H','AXE_1H','AXE_2H','HAMMER_1H','HAMMER_2H','SPEAR_1H','SPEAR_2H','JAVELIN_1H','STAFF_1H','STAFF_2H','BOW_2H','CROSSBOW_2H','DAGGER_1H','OTHER'].map(
   (item) => ({ label: item, value: item.replace(/_/g," "), realValue: item })
 );
 

@@ -6,25 +6,20 @@ import { Fragment, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
-import SkillSelection from './SpecializationSelection';
+import SkillSelection from './SkillSelection';
+import ItemSelection from './ItemSelection';
+import TraitSelection from './TraitSelection';
 
-interface CreateEffectFormOptions {
-    name: string;
-    description: string;
-    effects?: string[];
-}
-
-interface NewEffectDialogProps {
+interface NewOptionDialogProps {
     title: string;
     description: string;
+    selection: string;
     specializationId: string;
     styles?: string;
 }
 
-export default function NewSpecializationOptionDialog({ title, description, specializationId, styles}: NewEffectDialogProps) {
-    let [isOpen, setIsOpen] = useState(false);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateEffectFormOptions>();
-        
+export default function NewOptionDialog({ title, description, selection, specializationId, styles}: NewOptionDialogProps) {
+    let [isOpen, setIsOpen] = useState(false);        
 
   function closeModal() {
     setIsOpen(false)
@@ -83,7 +78,9 @@ export default function NewSpecializationOptionDialog({ title, description, spec
                     <p className="text-sm text-gray-400">
                       {description}
                     </p>
-                      <SkillSelection specializationId={specializationId} />
+                    {(selection === "skills") ? <SkillSelection specializationId={specializationId} /> 
+                        : (selection === "traits") ? <TraitSelection specializationId={specializationId} /> 
+                        : <ItemSelection specializationId={specializationId} /> }
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 px-4 py-2 text-sm font-medium text-gray-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"

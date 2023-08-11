@@ -96,8 +96,8 @@ export default function SpecializationSkillCard({ specializationId, specializati
                     {/* Skill Summons*/}
                     {/* Specialization Skill info */}
                     <div className='flex space-x-2'>
-                        <p className='font-light text-gray-400 text-sm'>Cooldown: <span className='text-purple-400'> {specializationskill.cooldown}</span> T</p>
-                        <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {specializationskill.essence_cost}</span> P</p>
+                        <p className='font-light text-gray-400 text-sm'>Cooldown: <span className='text-purple-400'> {specializationskill.skill.cooldown}</span> T</p>
+                        <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {specializationskill.skill.essence_cost}</span> P</p>
                     </div>
                 </div>
             </p>

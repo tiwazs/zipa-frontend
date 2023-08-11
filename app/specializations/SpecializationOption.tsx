@@ -68,7 +68,30 @@ export default function SpecializationOption(specialization: SpecializationOptio
                 </div>
             </Link>
             <div className='w-full flex items-center justify-between'>
-                <p className='my-1 text-gray-100 '>{specialization.description}</p>
+                <div>
+                    <p className='my-1 text-gray-100 '>{specialization.description}</p>
+                    {/* Specialization Skills*/}
+                    { (specialization.skills && specialization.skills.length > 0) && 
+                    <p>
+                        Skills:
+                    </p>}
+                    {specialization.skills.map((skill: any) => {
+                        return (
+                        <div key={skill.skill.id} className='px-4 font-light'>
+                            <p>
+                                <Link href={`/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
+                            </p>
+                            <p>
+                                <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
+                            </p>
+                            <div className='px-4 flex space-x-2'>
+                                <p className='font-light text-gray-400 text-sm'>CD: <span className='text-purple-400'> {skill.cooldown}</span> T</p>
+                                <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {skill.essence_cost}</span> P</p>
+                            </div>
+                        </div>
+                        )
+                    })}
+                </div>
                 {/*Stats*/}
                 <div className='flex space-x-2 items-center'>
                     <p className={`px-3 ${paintTier(specialization.tier)} text-2xl font-extrabold font-serif`}>{writeTier(specialization.tier)}</p>
@@ -86,27 +109,6 @@ export default function SpecializationOption(specialization: SpecializationOptio
                     <StatsSummary name={'Hir'} value={specialization.hit_rate} />
                     <StatsSummary name={'Mov'} value={specialization.movement} />
                 </div>
-                {/* Specialization Skills*/}
-                { (specialization.skills && specialization.skills.length > 0) && 
-                        <p>
-                            Effects:
-                        </p>}
-                        {specialization.skills.map((skill: any) => {
-                            return (
-                            <div key={skill.skill.id} className='px-4 font-light'>
-                                <p>
-                                    <Link href={`/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
-                                </p>
-                                <p>
-                                    <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
-                                </p>
-                                <div className='px-4 flex space-x-2'>
-                                    <p className='font-light text-gray-400 text-sm'>CD: <span className='text-purple-400'> {skill.cooldown}</span> T</p>
-                                    <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {skill.essence_cost}</span> P</p>
-                                </div>
-                            </div>
-                            )
-                        })}
             </div>
         </div>
         <div>

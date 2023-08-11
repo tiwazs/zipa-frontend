@@ -5,9 +5,9 @@ import {AiOutlineCheck, AiOutlineDown } from 'react-icons/ai'
 import { useQuery, useQueryClient } from 'react-query'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-const getSkills = async () => {
+const getTraits = async () => {
   try{
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/skills/`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/traits/`, {
           method: 'GET'
           })
       return await response.json();
@@ -22,29 +22,19 @@ interface SkillSelectionProps {
 }
 
 export default function SkillSelection({specializationId}: SkillSelectionProps) {
-    const query = useQuery(["skills", getSkills], getSkills);
+    const query = useQuery(["traits", getTraits], getTraits);
     const [selected, setSelected] = useState<any>(undefined)
-    const [essence_cost, setEssenceCost] = useState<string>("0")
-    const [cooldown, setCooldown] = useState<string>("0")
 
     const queryClient = useQueryClient();
 
     const onAddSkill = async () => {
-      const data = {
-        specialization_id: specializationId,
-        skill_id: selected.id,
-        essence_cost: essence_cost,
-        cooldown: cooldown
-      }
-
       // Not setting the content type. aparently the browser will do that for us, including the boundary
       try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/specializations/add_skill?id=${specializationId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/specializations/add_trait/${specializationId}?trait_id=${selected.id}`, {
             method: "PUT",
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
         });
         console.log(`Response: ${JSON.stringify(response)}`);
       
@@ -80,15 +70,15 @@ export default function SkillSelection({specializationId}: SkillSelectionProps) 
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {query.data.map((skill: any) => (
+                {query.data.map((trait: any) => (
                   <Listbox.Option
-                    key={skill.id}
+                    key={trait.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? 'bg-purple-400/30 text-yellow-200/70' : 'text-gray-300'
                       }`
                     }
-                    value={skill}
+                    value={trait}
                   >
                     {({ selected }) => (
                       <>
@@ -97,7 +87,7 @@ export default function SkillSelection({specializationId}: SkillSelectionProps) 
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
-                          {skill.name}
+                          {trait.name}
                         </span>
                         {selected ? (
                           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-yellow-200/70">
@@ -114,18 +104,6 @@ export default function SkillSelection({specializationId}: SkillSelectionProps) 
         </Listbox>
       </div>
       {/* Form */}
-      <div className='flex flex-col w-full'>
-        <div className='flex items-center'>
-            <h1>Essence Cost</h1>
-            <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                   value={essence_cost} type="text" id="essence_cost" onChange={(e)=>{setEssenceCost(e.target.value)}}/>
-        </div>
-        <div className='flex items-center'>
-        <h1>Cooldown</h1>
-            <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                   value={cooldown} type="text" id="cooldown" onChange={(e)=>{setCooldown(e.target.value)}}/>
-        </div>
-      </div>
       <button
           type="button"
           className="w-full inline-flex justify-center rounded-md bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 px-4 py-2 text-sm font-medium text-gray-400

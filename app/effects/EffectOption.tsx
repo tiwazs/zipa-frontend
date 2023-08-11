@@ -79,7 +79,7 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <DisplayValue value={effect.ammo} after_text=' Ammo'/>
                 <DisplayValue value={effect.shield} after_text=' Shield'/>
                 { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
-                { ( effect.max_stack !== 0 ) && <p>{effect.max_stack} Stacks   </p>}
+                { ( effect.max_stack !== 0 ) && <p>Stacks {effect.max_stack} Times  </p>}
             </div>
         </div>
         <div>

@@ -32,7 +32,7 @@ export default function DetailedTraitChart({trait, styles}: DetailedTraitChartPr
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
 
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/traits/${trait.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/traits/update/${trait.id}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data)

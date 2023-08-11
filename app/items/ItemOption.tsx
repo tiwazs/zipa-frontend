@@ -126,11 +126,11 @@ export default function ItemOption(item: ItemOptionProps) {
                     {/* Item Skills*/}
                     { (item.skills && item.skills.length > 0) && 
                             <p>
-                                Effects:
+                                Skills:
                             </p>}
                             {item.skills.map((skill: any) => {
                                 return (
-                                <div key={skill.skill.id} className='px-4 font-light'>
+                                <div key={skill.skill.id} className='px-4 font-ligh'>
                                     <p>
                                         <Link href={`/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
                                     </p>

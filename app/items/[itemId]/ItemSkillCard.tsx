@@ -41,8 +41,8 @@ export default function ItemSkillCard({ itemId, itemskill, editable }: ItemSkill
                     { (skill.conditions && skill.conditions !== "0") && <p>Conditions: <span className='text-orange-500 font-light'>{skill.conditions}</span> </p>}
                     {/*Damage Types*/}
                     <div className='flex'>
-                        <DisplayValue value={skill.physical_damage} after_text=' Physical Damage'/>
-                        <DisplayValue value={skill.magical_damage} after_text=' Magical Damage'/>
+                        <DisplayValue previous_text='Deals ' value={skill.physical_damage} after_text=' Physical Damage'/>
+                        <DisplayValue previous_text='Deals ' value={skill.magical_damage} after_text=' Magical Damage'/>
                         <DisplayValue value={skill.vitality_recovery} after_text=' Vitality'/>
                         <DisplayValue value={skill.essence_recovery} after_text=' Essence'/>
                     </div>

@@ -1,3 +1,5 @@
+import DisplayValue from '@/app/_components/DisplayValue';
+import { paintRarity } from '@/app/_libs/text_paint_methods';
 import Link from 'next/link';
 import React from 'react'
 import { IoTrashOutline } from 'react-icons/io5';
@@ -27,23 +29,6 @@ export default function SpecializationItemCard({ specializationId, specializatio
         }
     };
 
-    const paintRarity = (rarity: string) => {
-        switch(rarity){
-            case "COMMON":
-                return "text-gray-100";
-            case "UNCOMMON":
-                return "text-green-700";
-            case "RARE":
-                return "text-blue-600";
-            case "EPIC":
-                return "text-purple-700";
-            case "LEGENDARY":
-                return "text-orange-500";
-            default:
-                return "text-gray-100";
-        }
-    }
-
     return (
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
@@ -59,24 +44,24 @@ export default function SpecializationItemCard({ specializationId, specializatio
                 <span className='px-4 text-gray-400 font-light'>{item.description}</span>
                 <div className='px-4 flex flex-col font-extralight italic '>
                     { (item.conditions && item.conditions !== "0") && <p>Conditions: <span className='text-orange-500 font-light'>{item.conditions}</span> </p>}
-                    { (item.physical_damage  && item.physical_damage !== "0") && <p> <span className='text-green-500 font-light'>{item.physical_damage}</span> Physical Damage   </p>}
-                    { (item.magical_damage && item.magical_damage !== "0") && <p> <span className='text-green-500 font-light'>{item.magical_damage}</span> Magical Damage   </p>}
-                    { (item.healing && item.healing !== "0") && <p> <span className='text-green-500 font-light'>{item.healing}</span>   </p>}
-                    { (item.vitality_recovery && item.vitality_recovery !== "0") && <p> <span className='text-green-500 font-light'>{item.vitality_recovery}</span> Recovering   </p>}
-                    { (item.essence_recovery && item.essence_recovery !== "0") && <p> <span className='text-green-500 font-light'>{item.essence_recovery}</span> Essence Recovering   </p>}
-                    { (item.vitality && item.vitality !== "0") && <p> <span className='text-green-500 font-light'>{item.vitality}</span> Vitality   </p>}
-                    { (item.range && item.range !== "0") && <p> <span className='text-green-500 font-light'>{item.range}</span> Range   </p>}
-                    { (item.damage && item.damage !== "0") && <p> <span className='text-green-500 font-light'>{item.damage}</span> Damage   </p>}
-                    { (item.armor && item.armor !== "0") && <p> <span className='text-green-500 font-light'>{item.armor}</span> Armor   </p>}
-                    { (item.magic_armor && item.magic_armor !== "0") && <p> <span className='text-green-500 font-light'>{item.magic_armor}</span> Magic Armor   </p>}
-                    { (item.essence && item.essence !== "0") && <p> <span className='text-green-500 font-light'>{item.essence}</span> Essence   </p>}
-                    { (item.agility && item.agility !== "0") && <p> <span className='text-green-500 font-light'>{item.agility}</span> Agility   </p>}
-                    { (item.hit_chance && item.hit_chance !== "0") && <p> <span className='text-green-500 font-light'>{item.hit_chance}</span> Hit Chance   </p>}
-                    { (item.evasion && item.evasion !== "0") && <p> <span className='text-green-500 font-light'>{item.evasion}</span> Evasion   </p>}
-                    { (item.hit_rate && item.hit_rate !== "0") && <p> <span className='text-green-500 font-light'>{item.hit_rate}</span> Hit Rate   </p>}
-                    { (item.movement && item.movement !== "0") && <p> <span className='text-green-500 font-light'>{item.movement}</span> Movement   </p>}
-                    { (item.ammo && item.ammo !== "0") && <p> <span className='text-green-500 font-light'>{item.ammo}</span> Ammo   </p>}
-                    { (item.shield && item.shield !== "0") && <p> <span className='text-green-500 font-light'>{item.shield}</span> Shield   </p>}                    
+                    <DisplayValue value={item.physical_damage} after_text=' Physical Damage' />
+                    <DisplayValue value={item.magical_damage} after_text=' Magical Damage' />
+                    <DisplayValue value={item.healing} after_text=' Healing Power' />
+                    <DisplayValue value={item.vitality_recovery} after_text=' Vitality' />
+                    <DisplayValue value={item.essence_recovery} after_text=' Essence' />
+                    <DisplayValue value={item.vitality} after_text=' Max Vitality' />
+                    <DisplayValue value={item.range} after_text=' Range' />
+                    <DisplayValue value={item.damage} after_text=' Damage' />
+                    <DisplayValue value={item.armor} after_text=' Armor' />
+                    <DisplayValue value={item.magic_armor} after_text=' Magic' />
+                    <DisplayValue value={item.essence} after_text=' Essence' />
+                    <DisplayValue value={item.agility} after_text=' Agility' />
+                    <DisplayValue value={item.hit_chance} after_text=' Hit' />
+                    <DisplayValue value={item.evasion} after_text=' Evasion' />
+                    <DisplayValue value={item.hit_rate} after_text=' Hit' />
+                    <DisplayValue value={item.movement} after_text=' Movement' />
+                    <DisplayValue value={item.ammo} after_text=' Ammo' />
+                    <DisplayValue value={item.shield} after_text=' Shield' />
                 </div>
                 <div className='px-4'>
                     <p>Weight: <span className='text-orange-500 font-light'>{(item.weight && item.weight !== 0 ) ? item.weight?.toString() : "0"}</span> </p>
@@ -85,10 +70,10 @@ export default function SpecializationItemCard({ specializationId, specializatio
                         (item.mind_requirement!==0) || 
                         (item.faith_requirement!==0)) && <p>Requires:</p>}
                     <div className='px-6 text-orange-500 font-light text-sm'>
-                        {(item.dexterity_requirement !== 0) && <p><span>{item.dexterity_requirement?.toString()} Dexterity</span></p>}
-                        {(item.strength_requirement !== 0) && <p><span>{item.strength_requirement?.toString()} Dexterity</span></p>}
-                        {(item.mind_requirement !== 0) && <p><span>{item.mind_requirement?.toString()} Dexterity</span></p>}
-                        {(item.faith_requirement !== 0) && <p><span>{item.faith_requirement?.toString()} Dexterity</span></p>}
+                        <DisplayValue value={item.dexterity_requirement} after_text=' Dexterity' />
+                        <DisplayValue value={item.strength_requirement} after_text=' Strength' />
+                        <DisplayValue value={item.mind_requirement} after_text=' Mind' />
+                        <DisplayValue value={item.faith_requirement} after_text=' Faith' />
                     </div>
                 </div> 
             </p>

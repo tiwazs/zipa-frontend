@@ -4,7 +4,7 @@ import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
 import StatsSummary from './StatsSummary';
 import { paintTier, writeTier } from './[specializationId]/DetailedSpecializationChart';
-import { paintRarity } from '../items/[itemId]/DetailedItemChart';
+import { paintRarity } from '@/app/_libs/text_paint_methods';
 
 interface SpecializationOptionProps {
     id: string;

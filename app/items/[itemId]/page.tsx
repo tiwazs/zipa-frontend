@@ -1,7 +1,8 @@
 'use client'
 import React from 'react'
 import { useQuery, useQueryClient } from 'react-query';
-import DetailedItemChart, { paintRarity } from './DetailedItemChart';
+import DetailedItemChart from './DetailedItemChart';
+import { paintRarity } from '@/app/_libs/text_paint_methods';
 
 type ItemPageProps = {
     params: {

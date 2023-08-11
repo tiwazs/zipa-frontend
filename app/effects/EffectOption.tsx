@@ -2,6 +2,7 @@ import React from 'react'
 import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
+import DisplayValue from '../_components/DisplayValue';
 
 interface EffectOptionProps {
     id: string;
@@ -31,16 +32,6 @@ interface EffectOptionProps {
     styles: string;
 }
 
-function DisplayEffectValue(props: {value: string}) {
-    const value = props.value.split("+");
-
-    if(props.value !== "0"){
-        return <span className='text-green-500 font-light'>{props.value}</span>
-    }else{
-        return null;
-    }
-}
-
 export default function EffectOption(effect: EffectOptionProps) {
     const queryClient = useQueryClient();
 
@@ -68,27 +59,27 @@ export default function EffectOption(effect: EffectOptionProps) {
             </Link>
             <p className='my-1 text-gray-100 '>{effect.description}</p>
             <div className='flex flex-col font-extralight italic'>
-                { (effect.magic_effectiveness && effect.magic_effectiveness !== "0") && <p><span className='text-green-500 font-light'>{effect.magic_effectiveness}</span> Magic Power   </p>}
-                { (effect.physical_damage && effect.physical_damage !== "0") && <p><span className='text-green-500 font-light'>{effect.physical_damage}</span> Physical Damage   </p>}
-                { (effect.magical_damage && effect.magical_damage !== "0") && <p><span className='text-green-500 font-light'>{effect.magical_damage}</span> Magic Damage   </p>}
-                { (effect.healing && effect.healing !== "0") && <p><span className='text-green-500 font-light'>{effect.healing}</span> Healing   </p>}
-                { (effect.vitality_recovery && effect.vitality_recovery !== "0") && <p><span className='text-green-500 font-light'>{effect.vitality_recovery}</span> Recovering   </p>}
-                { (effect.essence_recovery && effect.essence_recovery !== "0") && <p><span className='text-green-500 font-light'>{effect.essence_recovery}</span> Essence Recovering</p>}
-                { (effect.vitality && effect.vitality !== "0") && <p><span className='text-green-500 font-light'>{effect.vitality}</span> Max Vitality   </p>}
-                { (effect.range && effect.range !== "0") && <p><span className='text-green-500 font-light'>{effect.range}</span> Range   </p>}
-                { (effect.damage && effect.damage !== "0") && <p><span className='text-green-500 font-light'>{effect.damage}</span> All Damage   </p>}
-                { (effect.armor && effect.armor !== "0") && <p><span className='text-green-500 font-light'>{effect.armor}</span> Armor   </p>}
-                { (effect.magic_armor && effect.magic_armor !== "0") && <p><span className='text-green-500 font-light'>{effect.magic_armor}</span> Magic Armor   </p>}
-                { (effect.essence && effect.essence !== "0") && <p><span className='text-green-500 font-light'>{effect.essence}</span> Max Essence   </p>}
-                { (effect.agility && effect.agility !== "0") && <p><span className='text-green-500 font-light'>{effect.agility}</span> Agility   </p>}
-                { (effect.hit_chance && effect.hit_chance !== "0") && <p><span className='text-green-500 font-light'>{effect.hit_chance}</span> Hit Chance   </p>}
-                { (effect.evasion && effect.evasion !== "0") && <p><span className='text-green-500 font-light'>{effect.evasion}</span> Evasion   </p>}
-                { (effect.hit_rate && effect.hit_rate !== "0") && <p><span className='text-green-500 font-light'>{effect.hit_rate}</span> Hit Rate   </p>}
-                { (effect.movement && effect.movement !== "0") && <p><span className='text-green-500 font-light'>{effect.movement}</span> Movement   </p>}
-                { (effect.ammo && effect.ammo !== "0") && <p><span className='text-green-500 font-light'>{effect.ammo}</span> Ammo   </p>}
-                { (effect.shield && effect.shield !== "0") && <p><span className='text-green-500 font-light'>{effect.shield}</span> Shield   </p>}
-                { ( ( effect.barrier && effect.barrier !== 0) ) && <p>{effect.barrier} Barrier   </p>}
-                { ( ( effect.max_stack && effect.barrier !== 0) ) && <p>{effect.max_stack} Stacks   </p>}
+                <DisplayValue value={effect.magic_effectiveness} after_text=' Magic Power'/>
+                <DisplayValue value={effect.physical_damage} after_text=' Physical Damage'/>
+                <DisplayValue value={effect.magical_damage} after_text=' Magic Damage'/>
+                <DisplayValue value={effect.healing} after_text=' Healing Power'/>
+                <DisplayValue value={effect.vitality_recovery} after_text=' Vitality'/>
+                <DisplayValue value={effect.essence_recovery} after_text=' Essence'/>
+                <DisplayValue value={effect.vitality} after_text=' Max Vitality'/>
+                <DisplayValue value={effect.range} after_text=' Range'/>
+                <DisplayValue value={effect.damage} after_text=' All Damage'/>
+                <DisplayValue value={effect.armor} after_text=' Armor'/>
+                <DisplayValue value={effect.magic_armor} after_text=' Magic Armor'/>
+                <DisplayValue value={effect.essence} after_text=' Max Essence'/>
+                <DisplayValue value={effect.agility} after_text=' Agility'/>
+                <DisplayValue value={effect.hit_chance} after_text=' Hit Chance'/>
+                <DisplayValue value={effect.evasion} after_text=' Evasion'/>
+                <DisplayValue value={effect.hit_rate} after_text=' Hit Rate'/>
+                <DisplayValue value={effect.movement} after_text=' Movement'/>
+                <DisplayValue value={effect.ammo} after_text=' Ammo'/>
+                <DisplayValue value={effect.shield} after_text=' Shield'/>
+                { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
+                { ( effect.max_stack !== 0 ) && <p>{effect.max_stack} Stacks   </p>}
             </div>
         </div>
         <div>

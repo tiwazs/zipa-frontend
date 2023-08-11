@@ -3,23 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import NewItemOptionDialog from './NewItemOptionDialog';
 import ItemSkillCard from './ItemSkillCard';
-
-export const paintRarity = (rarity: string) => {
-    switch(rarity){
-        case "COMMON":
-            return "text-gray-100";
-        case "UNCOMMON":
-            return "text-green-700";
-        case "RARE":
-            return "text-blue-600";
-        case "EPIC":
-            return "text-purple-700";
-        case "LEGENDARY":
-            return "text-orange-500";
-        default:
-            return "text-gray-100";
-    }
-}
+import { paintRarity } from '@/app/_libs/text_paint_methods';
 
 interface Item {
     id: string;

@@ -48,7 +48,7 @@ export default function SpecializationItemCard({ specializationId, specializatio
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <p>
-                <Link href={`/items/${specializationitem.id}`}><span className='text-yellow-400 font-normal'>{item.name}</span></Link>
+                <Link href={`/items/${specializationitem.item.id}`}><span className='text-yellow-400 font-normal'>{item.name}</span></Link>
                 <div className={`px-4 flex space-x-1 text-xs italic font-light ${paintRarity(item.rarity)}`}>
                     <h4>{item.rarity}</h4>
                     <h4>|</h4>

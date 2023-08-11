@@ -294,7 +294,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                             />
                             <TagObjectsSelector objectTypeOptionsSelected={objectTypesListToDict(splitWeaponProficiencies(weaponProficiencies))} objectTypeOptions={opbjectTypeOptions} updateObjectsOutput={handleWeaponProficienciesChange} style='w-full grid grid-cols-3 gap-1' />
                         </> : <h1 className={`my-2 py-3 flex space-x-1`}>{splitWeaponProficiencies(specialization.weapon_proficiencies).map((weapon_proficiency: string) => {
-                            return (<div className='border-2 border-yellow-500/50 rounded-xl w-20 p-1 bg-black'>
+                            return (<div key={weapon_proficiency} className='border-2 border-yellow-500/50 rounded-xl w-20 p-1 bg-black'>
                                         <h1 className='text-xs text-yellow-200/70'>{weapon_proficiency.replace(/_/g," ")}</h1>
                                     </div>
                                     )

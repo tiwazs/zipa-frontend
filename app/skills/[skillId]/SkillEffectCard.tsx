@@ -31,7 +31,7 @@ export default function SkillEffectCard({ skillId, skilleffect, editable }: Skil
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <p>
-                <Link href={`/effects/${skilleffect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{skilleffect.duration}</span> T
+                <Link href={`/effects/${skilleffect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{skilleffect.duration}</span> T
             </p>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{effect.description}</span>

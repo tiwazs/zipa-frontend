@@ -31,7 +31,7 @@ export default function SpecializationTraitCard({ specializationId, specializati
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <p>
-                <Link href={`/traits/${specializationtrait.id}`}><span className='text-yellow-400 font-normal'>{trait.name}</span></Link>
+                <Link href={`/traits/${specializationtrait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.name}</span></Link>
             </p>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{trait.description}</span>

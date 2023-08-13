@@ -28,6 +28,8 @@ interface EffectOptionProps {
     ammo: string;
     shield: string;
     barrier: number;
+    incoming_physical_damage: string;
+    incoming_magical_damage: string;
     max_stack: number;
     styles: string;
 }
@@ -78,6 +80,8 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <DisplayValue value={effect.movement} after_text=' Movement'/>
                 <DisplayValue value={effect.ammo} after_text=' Ammo'/>
                 <DisplayValue value={effect.shield} after_text=' Shield'/>
+                <DisplayValue previous_text='Suffers ' value={effect.incoming_physical_damage} after_text=' Physical Damage' style='text-red-500'/>
+                <DisplayValue previous_text='Suffers ' value={effect.incoming_magical_damage} after_text=' Magical Damage' style='text-red-500'/>
                 { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
                 { ( effect.max_stack !== 0 ) && <p>Stacks {effect.max_stack} Times  </p>}
             </div>

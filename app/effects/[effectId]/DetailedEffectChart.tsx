@@ -26,6 +26,8 @@ interface Effect {
     ammo?: string;
     shield?: string;
     barrier?: number;
+    incoming_physical_damage?: string;
+    incoming_magical_damage?: string;
     max_stack?: number;
 }
 
@@ -291,7 +293,40 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="barrier"
                             disabled={!editing}
                             placeholder={ (effect.barrier!==0 && effect.barrier) ? effect.barrier.toString() : "0"}
-                        /> : <h1>{effect.barrier ? effect.barrier : "N/A"}</h1> }                      
+                        /> : <h1 className='text-gray-400'>{effect.barrier ? effect.barrier : "N/A"}</h1> }                      
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Suffers Physical Damage</h1>
+                        <input 
+                            {...register("incoming_physical_damage", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="incoming_physical_damage"
+                            disabled={!editing}
+                            placeholder={effect.incoming_physical_damage ? effect.incoming_physical_damage : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Suffers Magical Damage</h1>
+                        <input 
+                            {...register("incoming_magical_damage", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="incoming_magical_damage"
+                            disabled={!editing}
+                            placeholder={effect.incoming_magical_damage ? effect.incoming_magical_damage : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Shield</h1>
+                        <input 
+                            {...register("shield", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="shield"
+                            disabled={!editing}
+                            placeholder={effect.shield ? effect.shield : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Max Stack</h1>
@@ -302,7 +337,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="max_stack"
                             disabled={!editing}
                             placeholder={ (effect.max_stack && effect.max_stack!==0) ? effect.max_stack.toString() : "0"}
-                        /> : <h1>{effect.max_stack ? effect.max_stack : "N/A"}</h1> }
+                        /> : <h1 className='text-gray-400'>{effect.max_stack ? effect.max_stack : "N/A"}</h1> }
                     </div>
                     <div className='flex items-center space-x-2 col-span-3'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>

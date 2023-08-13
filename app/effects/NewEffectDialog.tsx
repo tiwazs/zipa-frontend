@@ -30,6 +30,8 @@ interface CreateEffectFormOptions {
     ammo?: string;
     shield?: string;
     barrier?: number;
+    incoming_physical_damage?: string;
+    incoming_magical_damage?: string;
     max_stack?: number;
 }
 
@@ -322,6 +324,24 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                                     type="number"
                                     name="barrier"
                                     placeholder="Barrier"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("incoming_physical_damage", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="incoming_physical_damage"
+                                    placeholder="Incoming Physical Damage"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("incoming_magical_damage", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="incoming_magical_damage"
+                                    placeholder="Incoming Magical Damage"
                                 />                                
                             </div>
                             <div>

@@ -57,6 +57,8 @@ export default function TraitEffectCard({ traitId, traiteffect, editable }: Trai
                     <DisplayValue value={effect.movement} after_text=' Movement'/>
                     <DisplayValue value={effect.ammo} after_text=' Ammo'/>
                     <DisplayValue value={effect.shield} after_text=' Shield'/>
+                    <DisplayValue previous_text='Suffers ' value={effect.incoming_physical_damage} after_text=' Physical Damage' style='text-red-500'/>
+                    <DisplayValue previous_text='Suffers ' value={effect.incoming_magical_damage} after_text=' Magical Damage' style='text-red-500'/>
                     { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
                     { ( effect.max_stack !== 0 ) && <p>Stacks {effect.max_stack} Times  </p>}
                     <p className='font-light text-gray-400 text-sm'>Cooldown: <span className='text-purple-400'> {traiteffect.cooldown}</span> T</p>

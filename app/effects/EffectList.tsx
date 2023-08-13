@@ -50,6 +50,8 @@ export default function EffectList() {
                     ammo={effect.ammo}
                     shield={effect.shield}
                     barrier={effect.barrier}
+                    incoming_physical_damage={effect.incoming_physical_damage}
+                    incoming_magical_damage={effect.incoming_magical_damage}
                     max_stack={effect.max_stack} 
                     styles={"group border-4 border-transparent px-5 py-2 transition-colors hover:border-purple-500 hover:bg-purple-300 hover:dark:border-yellow-700/50 hover:dark:bg-purple-900/20 \
                     dark:border-yellow-900/50  my-2 rounded-md \

@@ -28,8 +28,8 @@ interface Effect {
     barrier?: number;
     incoming_physical_damage?: string;
     incoming_magical_damage?: string;
-    icon?: File[];
     max_stack?: number;
+    icon?: File[];
 }
 
 type DetailedEffectChartProps = {

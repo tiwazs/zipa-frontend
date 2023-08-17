@@ -10,6 +10,7 @@ interface Trait {
     name: string;
     description: string;
     effects?: any[]
+    icon?: File[];
 }
 
 type DetailedTraitChartProps = {
@@ -30,6 +31,24 @@ export default function DetailedTraitChart({trait, styles}: DetailedTraitChartPr
 
     const onSubmit:SubmitHandler<Trait> = async (data) => {
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
+
+        let form = new FormData();
+        if(data.icon){
+            form.append('image', data.icon[0]);
+            form.append('type', 'image/jpeg');
+            
+            try{
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/traits/image/${trait.id}`, {
+                    method: "POST",
+                    body: form
+                });
+                console.log(`Response: ${JSON.stringify(response)}`);
+            }catch(e){
+                console.log(`Error: ${e}`);
+            }
+
+            delete data.icon;
+        }
 
         try{
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/traits/update/${trait.id}`, {
@@ -77,6 +96,16 @@ export default function DetailedTraitChart({trait, styles}: DetailedTraitChartPr
                         {(trait.effects && trait.effects.length > 0) ? trait.effects.map((effect: any) => {
                             return <TraitEffectCard key={effect.effect.id} traiteffect={effect} traitId={trait.id} editable={editing} />       
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                    </div>
+                    <div className='flex items-center space-x-2 col-span-3'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Icon</h1>
+                        <input 
+                            {...register("icon", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "" : "hidden"}`}
+                            type="file"
+                            name="icon"
+                            
+                        />                                
                     </div>
                 </div>
                 <div className="mt-4 flex justify-between">

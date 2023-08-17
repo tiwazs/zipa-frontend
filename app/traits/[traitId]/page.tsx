@@ -35,13 +35,16 @@ export default function TraitPage({ params: { traitId } }: TraitPageProps) {
     return (
         <>
             <main className="items-center justify-between p-24">
-                <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
-                    <h2 className={`mb-3 text-4xl font-medium`}>
-                        {query.data.name}{' '}
-                        <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                            -&gt;
-                        </span>
-                    </h2>
+                <div className='flex items-center space-x-3'>
+                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${query.data.id}.jpg`} alt="" className='w-14 h-14 rounded-md border-2 border-gray-500/60 my-2' />
+                    <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
+                        <h2 className={`mb-3 text-4xl font-medium`}>
+                            {query.data.name}{' '}
+                            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                                -&gt;
+                            </span>
+                        </h2>
+                    </div>
                 </div>
                 <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial
                         before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 

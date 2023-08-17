@@ -72,16 +72,6 @@ const TargetText = (text: string) => {
     }
 }
 
-function DisplaySkillValue(props: {value: string}) {
-    const value = props.value.split("+");
-
-    if(props.value !== "0"){
-        return <span className='text-green-500 font-light'>{props.value}</span>
-    }else{
-        return null;
-    }
-}
-
 export default function SkillOption(skill: SkillOptionProps) {
     const queryClient = useQueryClient();
 
@@ -101,7 +91,10 @@ export default function SkillOption(skill: SkillOptionProps) {
     };
 
     return (
-    <div className={`${skill.styles}`}>
+    <div className={`${skill.styles} flex space-x-3`}>
+        <Link href={`/skills/${skill.id}`}>
+            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
+        </Link>
         <div className='flex items-center justify-between'>
         <div>
             <Link href={`/skills/${skill.id}`}>

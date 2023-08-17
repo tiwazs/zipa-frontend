@@ -18,7 +18,7 @@ export const paintRarity = (rarity: string) => {
 
 export const paint_modifier = (_value: string) => {
     //const regex = /(?<sign>[\+\-])?(?<value>(\d+|ND))?(?<porcentage>\s*\%)?(?<max>\s*max)?/gm
-    const regex = /(?<sign>[+-])?(?<value>(\d+|ND))?(\s*%)?(?<max>\s*max)?/gm
+    const regex = /(?<sign>[+-])?(?<value>(\d+|ND|MD|HP))?(\s*%)?(?<max>\s*max)?/gm
     const match = regex.exec(_value);
     const sign = match?.groups?.sign;
     const max = match?.groups?.max;

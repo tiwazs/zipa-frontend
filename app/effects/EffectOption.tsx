@@ -53,7 +53,10 @@ export default function EffectOption(effect: EffectOptionProps) {
     };
 
     return (
-    <div className={`${effect.styles}`}>
+    <div className={`${effect.styles} flex space-x-3`}>
+        <Link href={`/effects/${effect.id}`}>
+            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
+        </Link>
         <div className='flex items-center justify-between'>
         <div>
             <Link href={`/effects/${effect.id}`}>

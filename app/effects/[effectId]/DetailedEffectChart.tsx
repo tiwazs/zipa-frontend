@@ -28,6 +28,7 @@ interface Effect {
     barrier?: number;
     incoming_physical_damage?: string;
     incoming_magical_damage?: string;
+    icon?: File[];
     max_stack?: number;
 }
 
@@ -49,6 +50,24 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
 
     const onSubmit:SubmitHandler<Effect> = async (data) => {
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
+
+        let form = new FormData();
+        if(data.icon){
+            form.append('image', data.icon[0]);
+            form.append('type', 'image/jpeg');
+            
+            try{
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/image/${effect.id}`, {
+                    method: "POST",
+                    body: form
+                });
+                console.log(`Response: ${JSON.stringify(response)}`);
+            }catch(e){
+                console.log(`Error: ${e}`);
+            }
+
+            delete data.icon;
+        }
 
         try{
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/effects/${effect.id}`, {
@@ -347,6 +366,16 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="description"
                             disabled={!editing}
                             placeholder={ effect.description ? effect.description : "Description" }
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2 col-span-3'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Icon</h1>
+                        <input 
+                            {...register("icon", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "" : "hidden"}`}
+                            type="file"
+                            name="icon"
+                            
                         />                                
                     </div>
                 </div>

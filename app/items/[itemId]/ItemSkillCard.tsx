@@ -32,9 +32,12 @@ export default function ItemSkillCard({ itemId, itemskill, editable }: ItemSkill
     return (
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
-            <p>
-                <Link href={`/skills/${itemskill.id}`}><span className='text-yellow-400 font-normal'>{skill.name}</span></Link>
-            </p>
+            <div className='flex items-center space-x-3'>
+                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                <p>
+                    <Link href={`/skills/${itemskill.id}`}><span className='text-yellow-400 font-normal'>{skill.name}</span></Link>
+                </p>
+            </div>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{skill.description}</span>
                 <div className='px-4 flex flex-col font-extralight italic '>

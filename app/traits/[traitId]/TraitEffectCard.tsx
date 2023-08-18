@@ -31,9 +31,12 @@ export default function TraitEffectCard({ traitId, traiteffect, editable }: Trai
     return (
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
-            <p>
-                <Link href={`/effects/${traiteffect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{traiteffect.duration}</span> T
-            </p>
+            <div className='flex items-center space-x-3'>
+                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                <p>
+                    <Link href={`/effects/${traiteffect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{traiteffect.duration}</span> T
+                </p>
+            </div>
             <p>
                 { (traiteffect.conditions && traiteffect.conditions !== "0") && <p className='px-4 font-light text-gray-400 text-sm'>Conditions: <span className='text-orange-500 font-light'>{traiteffect.conditions}</span> </p>}
                 <span className='px-4 text-gray-400 font-light'>{effect.description}</span>

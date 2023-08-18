@@ -124,9 +124,12 @@ export default function SkillOption(skill: SkillOptionProps) {
                             {skill.effects.map((effect: any) => {
                                 return (
                                 <div key={effect.effect.id} className='px-4 font-light'>
-                                    <p>
-                                        <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
-                                    </p>
+                                    <div className='flex items-center space-x-3'>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.effect.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <p>
+                                            <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
+                                        </p>
+                                    </div>
                                     <p>
                                         <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>
                                     </p>
@@ -140,10 +143,13 @@ export default function SkillOption(skill: SkillOptionProps) {
                             </p>}
                             {skill.summons.map((summon: any) => {
                                 return (
-                                <div key={summon.unit_specialization.id} className='px-4 font-light dark:border-2 rounded-md dark:border-yellow-900/50 w-full m-1'>
-                                    <p>
-                                        <Link href={`/summons/${summon.unit_specialization.id}`}><span className='text-yellow-400 font-normal'>{summon.unit_specialization.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T
-                                    </p>
+                                <div key={summon.unit_specialization.id} className='px-4 font-light rounded-md  w-full m-1'>
+                                    <div className='flex items-center space-x-3'>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/specializations/${summon.unit_specialization.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <p>
+                                            <Link href={`/summons/${summon.unit_specialization.id}`}><span className='text-yellow-400 font-normal'>{summon.unit_specialization.name}</span></Link> lasting <span className='text-purple-400'>{summon.duration}</span> T
+                                        </p>
+                                    </div>
                                     <p>
                                         <span className='px-4 text-gray-400 font-light'>{summon.unit_specialization.description}</span>
                                     </p>

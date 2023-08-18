@@ -31,9 +31,12 @@ export default function SkillEffectCard({ skillId, skilleffect, editable }: Skil
     return (
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
-            <p>
-                <Link href={`/effects/${skilleffect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{skilleffect.duration}</span> T
-            </p>
+            <div className='flex items-center space-x-3'>
+                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                <p>
+                    <Link href={`/effects/${skilleffect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.name}</span></Link> lasting <span className='text-purple-400'>{skilleffect.duration}</span> T
+                </p>
+            </div>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{effect.description}</span>
                 <div className='px-4 flex flex-col font-extralight italic space-x-2 '>

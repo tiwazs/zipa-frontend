@@ -49,9 +49,12 @@ export default function TraitOption(trait: TraitOptionProps) {
                             {trait.effects.map((effect: any) => {
                                 return (
                                 <div key={effect.effect.id} className='px-4 font-light'>
-                                    <p>
-                                        <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
-                                    </p>
+                                    <div className='flex items-center space-x-3'>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.effect.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <p>
+                                            <Link href={`/effects/${effect.effect.id}`}><span className='text-yellow-400 font-normal'>{effect.effect.name}</span></Link> lasting <span className='text-purple-400'>{effect.duration}</span> T
+                                        </p>
+                                    </div>
                                     { (effect.conditions && effect.conditions !== "0") && <p className='px-4 font-light text-gray-400 text-sm'>Conditions: <span className='text-orange-500 font-light'>{effect.conditions}</span> </p>}
                                     <p>
                                         <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>

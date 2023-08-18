@@ -32,14 +32,17 @@ export default function SpecializationItemCard({ specializationId, specializatio
     return (
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
-            <p>
-                <Link href={`/items/${specializationitem.item.id}`}><span className='text-yellow-400 font-normal'>{item.name}</span></Link>
-                <div className={`px-4 flex space-x-1 text-xs italic font-light ${paintRarity(item.rarity)}`}>
-                    <h4>{item.rarity}</h4>
-                    <h4>|</h4>
-                    <h4>{item.object_type}</h4>
-                </div>
-            </p>
+            <div className='flex items-center space-x-2'>
+                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${specializationitem.item.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
+                <p>
+                    <Link href={`/items/${specializationitem.item.id}`}><span className='text-yellow-400 font-normal'>{item.name}</span></Link>
+                    <div className={`px-4 flex space-x-1 text-xs italic font-light ${paintRarity(item.rarity)}`}>
+                        <h4>{item.rarity}</h4>
+                        <h4>|</h4>
+                        <h4>{item.object_type}</h4>
+                    </div>
+                </p>
+            </div>
             <p>
                 <span className='px-4 text-gray-400 font-light'>{item.description}</span>
                 <div className='px-4 flex flex-col font-extralight italic '>

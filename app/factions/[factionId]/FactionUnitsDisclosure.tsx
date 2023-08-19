@@ -10,10 +10,11 @@ interface DisclosureInformation {
 }
 
 interface FactionUnitsDisclosureProps {
+    factionId: string;
     disclosureInformationList: DisclosureInformation[];
 }
 
-export default function FactionUnitsDisclosure({ disclosureInformationList }: FactionUnitsDisclosureProps) {
+export default function FactionUnitsDisclosure({ factionId, disclosureInformationList }: FactionUnitsDisclosureProps) {
 
   if (!disclosureInformationList) return <h2>Loading...</h2>
   return (
@@ -62,6 +63,9 @@ export default function FactionUnitsDisclosure({ disclosureInformationList }: Fa
                                         skills={unit.skills}
                                         items={unit.items}
                                         traits={unit.traits}
+                                        removeEndpoint={`/factions/remove_unit/${factionId}?unit_id=`}
+                                        endpointMethod='PUT'
+                                        queryInvalidateKey='factionSpecializations'
                                         styles={"group border-4 border-transparent px-5 py-2 transition-colors hover:border-purple-500 hover:bg-purple-300 hover:dark:border-yellow-700/50 hover:dark:bg-purple-900/20 \
                                                     dark:border-yellow-900/50  my-2 rounded-md \
                                                     dark:bg-[url('/bg1.jpg')]"} />

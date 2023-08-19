@@ -157,7 +157,7 @@ export default function DetailedFactionChart({faction, styles}: DetailedFactionC
                     </div>
                 </div>
                 {(query.isLoading) ?  <h2>Loading...</h2>
-                    : <FactionUnitsDisclosure disclosureInformationList={ unitsOrganized }  />
+                    : <FactionUnitsDisclosure disclosureInformationList={unitsOrganized} factionId={faction.id}  />
                 }
                 <div className="mt-4 flex justify-between">
                     <button

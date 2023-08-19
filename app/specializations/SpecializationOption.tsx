@@ -27,6 +27,9 @@ interface SpecializationOptionProps {
     skills: any;
     items: any;
     traits: any;
+    removeEndpoint: string;
+    endpointMethod: string;
+    queryInvalidateKey?: string;
     styles: string;
 }
 
@@ -36,13 +39,13 @@ export default function SpecializationOption(specialization: SpecializationOptio
 
     const deleteSpecialization = async () => {
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/specializations/${specialization.id}`, {
-                method: 'DELETE',
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${specialization.removeEndpoint}${specialization.id}`, {
+                method: `${specialization.endpointMethod}`,
             });
 
             console.log(`Response: ${JSON.stringify(response)}`);
 
-            queryClient.invalidateQueries('specializations');
+            queryClient.invalidateQueries(`${specialization.queryInvalidateKey}`);
         }catch(e){
             console.log(`Error: ${e}`);
         }

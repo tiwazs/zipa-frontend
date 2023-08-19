@@ -1,6 +1,8 @@
 'use client'
 
 import React, { Suspense } from 'react'
+import FactionList from './FactionList'
+import NewFactionDialog from './NewFactionDialog'
 
 export default function FactionsPage() {    
     return (
@@ -19,6 +21,13 @@ export default function FactionsPage() {
            after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent 
            before:dark:to-purple-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-[#9101ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
         </div>
+        <div className='flex'>
+            <NewFactionDialog styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
+                                    hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
+        </div>
+        <Suspense fallback={<div className="text-green-700">Loading...</div>}>
+            <FactionList />
+        </Suspense>
     </main>
     )
 }

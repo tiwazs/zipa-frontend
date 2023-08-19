@@ -2,7 +2,7 @@ import React from 'react'
 import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
-import StatsSummary from './StatsSummary';
+import StatsSummary from '../_components/StatsSummary';
 import { paintTier, writeTier } from './[specializationId]/DetailedSpecializationChart';
 import { paintRarity } from '@/app/_libs/text_paint_methods';
 
@@ -148,15 +148,13 @@ export default function SpecializationOption(specialization: SpecializationOptio
                     })}
                 </div>
                 {/*Stats*/}
-                <div className='flex space-x-2 items-center'>
+                <div className='flex space-x-3 items-center'>
                     <p className={`px-3 ${paintTier(specialization.tier)} text-2xl font-extrabold font-serif`}>{writeTier(specialization.tier)}</p>
                     <StatsSummary name={'Vit'} value={specialization.vitality} />
                     <StatsSummary name={'Str'} value={specialization.strength} />
                     <StatsSummary name={'Dex'} value={specialization.dexterity} />
                     <StatsSummary name={'Min'} value={specialization.mind} />
                     <StatsSummary name={'Fth'} value={specialization.faith} />
-                    <StatsSummary name={'Arm'} value={specialization.armor} />
-                    <StatsSummary name={'Mar'} value={specialization.magic_armor} />
                     <StatsSummary name={'Ess'} value={specialization.essence} />
                     <StatsSummary name={'Agi'} value={specialization.agility} />                        
                     <StatsSummary name={'Hit'} value={specialization.hit_chance} />

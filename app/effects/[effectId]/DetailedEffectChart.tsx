@@ -10,8 +10,6 @@ interface Effect {
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
-    vitality_recovery?: string;
-    essence_recovery?: string;
     vitality?: string;
     range?: string;
     damage?: string;
@@ -26,8 +24,13 @@ interface Effect {
     ammo?: string;
     shield?: string;
     barrier?: number;
-    incoming_physical_damage?: string;
-    incoming_magical_damage?: string;
+    instant_vitality_recovery: string;
+    instant_essence_recovery: string;
+    instant_physical_damage: string;
+    instant_magical_damage: string;
+    instant_target: string;
+    instant_area_of_effect: string;
+    instant_conditions: string;
     max_stack?: number;
     icon?: File[];
 }
@@ -52,7 +55,7 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
 
         let form = new FormData();
-        if(data.icon){
+        if(data.icon && data.icon.length > 0){
             form.append('image', data.icon[0]);
             form.append('type', 'image/jpeg');
             
@@ -136,28 +139,6 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="healing"
                             disabled={!editing}
                             placeholder={effect.healing ? effect.healing : "N/A"}
-                        />                                
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Vitality Recovery</h1>
-                        <input 
-                            {...register("vitality_recovery", { required: false })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="text"
-                            name="vitality_recovery"
-                            disabled={!editing}
-                            placeholder={effect.vitality_recovery ? effect.vitality_recovery : "N/A"}
-                        />                                
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Essence Recovery</h1>
-                        <input 
-                            {...register("essence_recovery", { required: false })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="text"
-                            name="essence_recovery"
-                            disabled={!editing}
-                            placeholder={effect.essence_recovery ? effect.essence_recovery : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -315,28 +296,6 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                         /> : <h1 className='text-gray-400'>{effect.barrier ? effect.barrier : "N/A"}</h1> }                      
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <h1>Suffers Physical Damage</h1>
-                        <input 
-                            {...register("incoming_physical_damage", { required: false })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="text"
-                            name="incoming_physical_damage"
-                            disabled={!editing}
-                            placeholder={effect.incoming_physical_damage ? effect.incoming_physical_damage : "N/A"}
-                        />                                
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Suffers Magical Damage</h1>
-                        <input 
-                            {...register("incoming_magical_damage", { required: false })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="text"
-                            name="incoming_magical_damage"
-                            disabled={!editing}
-                            placeholder={effect.incoming_magical_damage ? effect.incoming_magical_damage : "N/A"}
-                        />                                
-                    </div>
-                    <div className='flex items-center space-x-2'>
                         <h1>Shield</h1>
                         <input 
                             {...register("shield", { required: false })}
@@ -357,6 +316,103 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             disabled={!editing}
                             placeholder={ (effect.max_stack && effect.max_stack!==0) ? effect.max_stack.toString() : "0"}
                         /> : <h1 className='text-gray-400'>{effect.max_stack ? effect.max_stack : "N/A"}</h1> }
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Vitality Recovery</h1>
+                        <input 
+                            {...register("instant_vitality_recovery", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="instant_vitality_recovery"
+                            disabled={!editing}
+                            placeholder={effect.instant_vitality_recovery ? effect.instant_vitality_recovery : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Essence Recovery</h1>
+                        <input 
+                            {...register("instant_essence_recovery", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="instant_essence_recovery"
+                            disabled={!editing}
+                            placeholder={effect.instant_essence_recovery ? effect.instant_essence_recovery : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Physical Damage</h1>
+                        <input 
+                            {...register("instant_physical_damage", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="instant_physical_damage"
+                            disabled={!editing}
+                            placeholder={effect.instant_physical_damage ? effect.instant_physical_damage : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Magical Damage</h1>
+                        <input 
+                            {...register("instant_magical_damage", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="instant_magical_damage"
+                            disabled={!editing}
+                            placeholder={effect.instant_magical_damage ? effect.instant_magical_damage : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Target</h1>
+                        {editing ? <select 
+                            {...register("instant_target", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            name="instant_target"
+                            placeholder=""
+                            disabled={!editing}
+                        >   
+                            <option value=""></option>    
+                            <option value="NONE">NONE</option>
+                            <option value="SELF">SELF</option>
+                            <option value="ALLY">ALLY</option>
+                            <option value="ALLY_SUMMON">ALLY_SUMMON</option>
+                            <option value="ALLY_AROUND">ALLY_AROUND</option>
+                            <option value="ALLY_EXCEPT_SELF">ALLY_EXCEPT_SELF</option>
+                            <option value="ENEMY">ENEMY</option>
+                            <option value="ENEMY_SUMMON">ENEMY_SUMMON</option>
+                            <option value="ENEMY_AROUND">ENEMY_AROUND</option>
+                            <option value="ANY">ANY</option>
+                            <option value="ANY_AROUND">ANY_AROUND</option>
+                            <option value="ANY_EXCEPT_SELF">ANY_EXCEPT_SELF</option>
+                            <option value="ANY_SUMMON">ANY_SUMMON</option>
+                            <option value="POINT">POINT</option>
+                            <option value="POINT_ENEMY">POINT_ENEMY</option>
+                            <option value="POINT_ALLY">POINT_ALLY</option>
+                            <option value="AREA">AREA</option>
+                            <option value="AREA_ENEMY">AREA_ENEMY</option>
+                            <option value="AREA_ALLY">AREA_ALLY</option>
+                        </select> : <h1 className='my-2 py-3'>{effect.instant_target}</h1> }
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Area of Effect</h1>
+                        <input 
+                            {...register("instant_area_of_effect", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="instant_area_of_effect"
+                            disabled={!editing}
+                            placeholder={effect.instant_area_of_effect ? effect.instant_area_of_effect : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Instant Conditions</h1>
+                        <input 
+                            {...register("instant_conditions", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="instant_conditions"
+                            disabled={!editing}
+                            placeholder={effect.instant_conditions ? effect.instant_conditions : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2 col-span-3'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>

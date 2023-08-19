@@ -34,8 +34,6 @@ export default function EffectList() {
                     physical_damage={effect.physical_damage}
                     magical_damage={effect.magical_damage}
                     healing={effect.healing}
-                    vitality_recovery={effect.vitality_recovery}
-                    essence_recovery={effect.essence_recovery}
                     vitality={effect.vitality}
                     range={effect.range}
                     damage={effect.damage}
@@ -50,13 +48,17 @@ export default function EffectList() {
                     ammo={effect.ammo}
                     shield={effect.shield}
                     barrier={effect.barrier}
-                    incoming_physical_damage={effect.incoming_physical_damage}
-                    incoming_magical_damage={effect.incoming_magical_damage}
-                    max_stack={effect.max_stack} 
+                    instant_vitality_recovery={effect.instant_vitality_recovery} 
+                    instant_essence_recovery={effect.instant_essence_recovery} 
+                    instant_physical_damage={effect.incoming_physical_damage}
+                    instant_magical_damage={effect.incoming_magical_damage}
+                    instant_target={effect.instant_target} 
+                    instant_area_of_effect={effect.instant_area_of_effect} 
+                    instant_conditions={effect.instant_conditions}
+                    max_stack={effect.max_stack}
                     styles={"group border-4 border-transparent px-5 py-2 transition-colors hover:border-purple-500 hover:bg-purple-300 hover:dark:border-yellow-700/50 hover:dark:bg-purple-900/20 \
                     dark:border-yellow-900/50  my-2 rounded-md \
-                    dark:bg-[url('/bg1.jpg')]"}
-                />
+                    dark:bg-[url('/bg1.jpg')]"} />
             ))}  
         </>
     )

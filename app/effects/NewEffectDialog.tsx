@@ -14,8 +14,6 @@ interface CreateEffectFormOptions {
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
-    vitality_recovery?: string;
-    essence_recovery?: string;
     vitality?: string;
     range?: string;
     damage?: string;
@@ -30,8 +28,13 @@ interface CreateEffectFormOptions {
     ammo?: string;
     shield?: string;
     barrier?: number;
-    incoming_physical_damage?: string;
-    incoming_magical_damage?: string;
+    instant_vitality_recovery: string;
+    instant_essence_recovery: string;
+    instant_physical_damage: string;
+    instant_magical_damage: string;
+    instant_target: string;
+    instant_area_of_effect: string;
+    instant_conditions: string;
     max_stack?: number;
 }
 
@@ -184,24 +187,6 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             </div>
                             <div>
                                 <input 
-                                    {...register("vitality_recovery", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="vitality_recovery"
-                                    placeholder="Vitality Recovery"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
-                                    {...register("essence_recovery", { required: false })}
-                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="text"
-                                    name="essence_recovery"
-                                    placeholder="Essence Recovery"
-                                />                                
-                            </div>
-                            <div>
-                                <input 
                                     {...register("vitality", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
@@ -328,20 +313,84 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             </div>
                             <div>
                                 <input 
-                                    {...register("incoming_physical_damage", { required: false })}
+                                    {...register("instant_vitality_recovery", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
-                                    name="incoming_physical_damage"
-                                    placeholder="Incoming Physical Damage"
+                                    name="instant_vitality_recovery"
+                                    placeholder="Instant Vitality Recovery"
                                 />                                
                             </div>
                             <div>
                                 <input 
-                                    {...register("incoming_magical_damage", { required: false })}
+                                    {...register("instant_essence_recovery", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
-                                    name="incoming_magical_damage"
-                                    placeholder="Incoming Magical Damage"
+                                    name="instant_essence_recovery"
+                                    placeholder="Instant Essence Recovery"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("instant_physical_damage", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="instant_physical_damage"
+                                    placeholder="Instant Physical Damage"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("instant_magical_damage", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="instant_magical_damage"
+                                    placeholder="Instant Magical Damage"
+                                />                                
+                            </div>
+                            <div>
+                                <select 
+                                    {...register("instant_target", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    name="instant_target"
+                                    placeholder="ENEMY"
+                                >       
+                                    <option value="NONE">NONE</option>
+                                    <option value="SELF">SELF</option>
+                                    <option value="ALLY">ALLY</option>
+                                    <option value="ALLY_SUMMON">ALLY_SUMMON</option>
+                                    <option value="ALLY_AROUND">ALLY_AROUND</option>
+                                    <option value="ALLY_EXCEPT_SELF">ALLY_EXCEPT_SELF</option>
+                                    <option value="ENEMY">ENEMY</option>
+                                    <option value="ENEMY_SUMMON">ENEMY_SUMMON</option>
+                                    <option value="ENEMY_AROUND">ENEMY_AROUND</option>
+                                    <option value="ANY">ANY</option>
+                                    <option value="ANY_AROUND">ANY_AROUND</option>
+                                    <option value="ANY_EXCEPT_SELF">ANY_EXCEPT_SELF</option>
+                                    <option value="ANY_SUMMON">ANY_SUMMON</option>
+                                    <option value="POINT">POINT</option>
+                                    <option value="POINT_ENEMY">POINT_ENEMY</option>
+                                    <option value="POINT_ALLY">POINT_ALLY</option>
+                                    <option value="AREA">AREA</option>
+                                    <option value="AREA_ENEMY">AREA_ENEMY</option>
+                                    <option value="AREA_ALLY">AREA_ALLY</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("instant_area_of_effect", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="instant_area_of_effect"
+                                    placeholder="Instant Area of Effect"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("instant_conditions", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="instant_conditions"
+                                    placeholder="Conditions"
                                 />                                
                             </div>
                             <div>

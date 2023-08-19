@@ -12,8 +12,6 @@ interface EffectOptionProps {
     physical_damage: string;
     magical_damage: string;
     healing: string;
-    vitality_recovery: string;
-    essence_recovery: string;
     vitality: string;
     range: string;
     damage: string;
@@ -28,8 +26,13 @@ interface EffectOptionProps {
     ammo: string;
     shield: string;
     barrier: number;
-    incoming_physical_damage: string;
-    incoming_magical_damage: string;
+    instant_vitality_recovery: string;
+    instant_essence_recovery: string;
+    instant_physical_damage: string;
+    instant_magical_damage: string;
+    instant_target: string;
+    instant_area_of_effect: string;
+    instant_conditions: string;
     max_stack: number;
     styles: string;
 }
@@ -68,8 +71,6 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <DisplayValue value={effect.physical_damage} after_text=' Physical Damage'/>
                 <DisplayValue value={effect.magical_damage} after_text=' Magic Damage'/>
                 <DisplayValue value={effect.healing} after_text=' Healing Power'/>
-                <DisplayValue value={effect.vitality_recovery} after_text=' Vitality'/>
-                <DisplayValue value={effect.essence_recovery} after_text=' Essence'/>
                 <DisplayValue value={effect.vitality} after_text=' Max Vitality'/>
                 <DisplayValue value={effect.range} after_text=' Range'/>
                 <DisplayValue value={effect.damage} after_text=' All Damage'/>
@@ -83,8 +84,13 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <DisplayValue value={effect.movement} after_text=' Movement'/>
                 <DisplayValue value={effect.ammo} after_text=' Ammo'/>
                 <DisplayValue value={effect.shield} after_text=' Shield'/>
-                <DisplayValue previous_text='Suffers ' value={effect.incoming_physical_damage} after_text=' Physical Damage' style='text-red-500'/>
-                <DisplayValue previous_text='Suffers ' value={effect.incoming_magical_damage} after_text=' Magical Damage' style='text-red-500'/>
+                <DisplayValue value={effect.instant_vitality_recovery} after_text=' Health'/>
+                <DisplayValue value={effect.instant_essence_recovery} after_text=' Essense'/>
+                <DisplayValue previous_text='Suffers ' value={effect.instant_physical_damage} after_text=' Physical Damage' style='text-red-500'/>
+                <DisplayValue previous_text='Suffers ' value={effect.instant_magical_damage} after_text=' Magical Damage' style='text-red-500'/>
+                <DisplayValue previous_text='Effect Target: ' value={effect.instant_target !== "SELF" ? effect.instant_target : "0"} style='text-red-500'/>
+                <DisplayValue previous_text='Area: ' value={effect.instant_area_of_effect} after_text=' Mts' style='text-red-500'/>
+                <DisplayValue previous_text='Conditions ' value={effect.instant_conditions} after_text=' Physical Damage' style='text-red-500'/>
                 { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
                 { ( effect.max_stack !== 0 ) && <p>Stacks {effect.max_stack} Times  </p>}
             </div>

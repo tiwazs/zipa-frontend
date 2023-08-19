@@ -7,14 +7,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
 
-const SkillOnList = [
-    { value: "INSTANT", label: "INSTANT" },
-    { value: "OVER_TIME", label: "OVER_TIME" },
-    { value: "DURING_CHANNEL", label: "DURING_CHANNEL" },
-    { value: "AFTER_CHANNEL", label: "AFTER_CHANNEL" },
-    { value: "DELAYED", label: "DELAYED" }
-];  
-
 interface CreateEffectFormOptions {
     name: string;
     description: string;

@@ -36,3 +36,37 @@ export const paint_modifier = (_value: string) => {
         return 'text-gray-500'
     }
 }
+
+export const paintTier = (tier: number | undefined) => {
+    switch(tier){
+        case 1:
+            return "text-orange-800";
+        case 2:
+            return "text-zinc-300/80";
+        case 3:
+            return "text-zinc-300";
+        case 4:
+            return "text-amber-600/90";
+        case 5:
+            return "text-amber-500";
+        default:
+            return "text-gray-100";
+    }
+}
+
+export const writeTier = (tier: number | undefined) => {
+    switch(tier){
+        case 1:
+            return "I";
+        case 2:
+            return "II";
+        case 3:
+            return "III";
+        case 4:
+            return "IV";
+        case 5:
+            return "V";
+        default:
+            return "";
+    }
+}

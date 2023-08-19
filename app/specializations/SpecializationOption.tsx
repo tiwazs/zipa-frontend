@@ -3,8 +3,7 @@ import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
 import StatsSummary from '../_components/StatsSummary';
-import { paintTier, writeTier } from './[specializationId]/DetailedSpecializationChart';
-import { paintRarity } from '@/app/_libs/text_paint_methods';
+import { paintRarity, paintTier, writeTier } from '@/app/_libs/text_paint_methods';
 
 interface SpecializationOptionProps {
     id: string;
@@ -29,16 +28,6 @@ interface SpecializationOptionProps {
     items: any;
     traits: any;
     styles: string;
-}
-
-function DisplaySpecializationValue(props: {value: string}) {
-    const value = props.value.split("+");
-
-    if(props.value !== "0"){
-        return <span className='text-green-500 font-light'>{props.value}</span>
-    }else{
-        return null;
-    }
 }
 
 export default function SpecializationOption(specialization: SpecializationOptionProps) {

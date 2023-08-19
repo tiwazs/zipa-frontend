@@ -6,6 +6,7 @@ import { Fragment, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import TraitSelection from './TraitSelection';
+import SpecializationSelection from './SpecializationSelection';
 
 interface NewOptionDialogProps {
     title: string;
@@ -76,6 +77,7 @@ export default function NewOptionDialog({ title, description, selection, faction
                       {description}
                     </p>
                     {(selection === "traits") ? <TraitSelection factionId={factionId} /> 
+                        : (selection === "specializations") ? <SpecializationSelection factionId={factionId} />
                         : null }
                     <button
                       type="button"

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import FactionTraitCard from './FactionTraitCard';
 import NewFactionOptionDialog from './NewFactionOptionDialog';
+import FactionUnitsDisclosure from './FactionUnitsDisclosure';
 
 interface Faction {
     id: string;
@@ -19,50 +20,34 @@ type DetailedFactionChartProps = {
     styles?: string;
 }
 
-export const paintTier = (tier: number | undefined) => {
-    switch(tier){
-        case 1:
-            return "text-orange-800";
-        case 2:
-            return "text-zinc-300/80";
-        case 3:
-            return "text-zinc-300";
-        case 4:
-            return "text-amber-600/90";
-        case 5:
-            return "text-amber-500";
-        default:
-            return "text-gray-100";
+const getFactionUnitSpecializations = async (factionId: string) => {
+
+    try{
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/specializations/faction/${factionId}`, {
+            method: 'GET',
+        });
+        console.log(`Response: ${JSON.stringify(response)}`);
+
+
+        return await response.json();
+    }catch(e){
+        console.log(`Error: ${e}`);
+        return [];
     }
-}
-
-export const writeTier = (tier: number | undefined) => {
-    switch(tier){
-        case 1:
-            return "I";
-        case 2:
-            return "II";
-        case 3:
-            return "III";
-        case 4:
-            return "IV";
-        case 5:
-            return "V";
-        default:
-            return "";
-    }
-}
-
-export const splitWeaponProficiencies = (weapon_proficiencies: string | undefined) => {
-    if(weapon_proficiencies === undefined) return [];
-
-    return weapon_proficiencies?.split("|");
 }
 
 export default function DetailedFactionChart({faction, styles}: DetailedFactionChartProps) {
     const [ editing, setEditing ] = useState(false);
+    let [ unitsOrganized, setUnitsOrganized ] = useState<any>(undefined);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Faction>();
+    const query = useQuery([`factionSpecializations`, faction.id], () => getFactionUnitSpecializations(faction.id) );
     const queryClient = useQueryClient();
+
+    useEffect(() => {
+        if(query.data){
+            organizeSpecializations(query.data)
+        }
+    }, [query.data])
 
     const onCancel = () => {
         reset();
@@ -89,6 +74,25 @@ export default function DetailedFactionChart({faction, styles}: DetailedFactionC
         }
     }
 
+    const organizeSpecializations = (specializations: any) => {
+        let tier_i_list = query.data.filter( (unit: any) => unit.tier === 1 )
+        let tier_ii_list = query.data.filter( (unit: any) => unit.tier === 2 )
+        let tier_iii_list = query.data.filter( (unit: any) => unit.tier === 3 )
+        let tier_iv_list = query.data.filter( (unit: any) => unit.tier === 4 )
+        let tier_v_list = query.data.filter( (unit: any) => unit.tier === 5 )
+        setUnitsOrganized( 
+            [
+                {title: 1, information: tier_i_list},
+                {title: 2, information: tier_ii_list},
+                {title: 3, information: tier_iii_list},
+                {title: 4, information: tier_iv_list},
+                {title: 5, information: tier_v_list},
+            ]
+        )
+    }
+
+    if (query.isLoading) return <h2>Loading...</h2>
+
     return (
     <>
         <div className="transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
@@ -109,9 +113,29 @@ export default function DetailedFactionChart({faction, styles}: DetailedFactionC
                             placeholder={ faction.description ? faction.description : "Description" }
                         />                                
                     </div>
+                    <div className='flex items-center space-x-2 col-span-4'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Identity</h1>
+                        <textarea 
+                            {...register("identity", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
+                            name="identity"
+                            disabled={!editing}
+                            placeholder={ faction.identity ? faction.identity : "Identity" }
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2 col-span-4'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Aspects</h1>
+                        <textarea 
+                            {...register("aspects", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
+                            name="aspects"
+                            disabled={!editing}
+                            placeholder={ faction.aspects ? faction.aspects : "Aspects" }
+                        />                                
+                    </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
-                            <h1>Traits</h1>
+                            <h1>Faction Traits</h1>
                             {editing && <NewFactionOptionDialog factionId={faction.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
                                 title={'Add Traits'}
                                 description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
@@ -121,7 +145,20 @@ export default function DetailedFactionChart({faction, styles}: DetailedFactionC
                             return <FactionTraitCard key={trait.trait.id} factiontrait={trait} factionId={faction.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
+                    { /* Faction Specializations Title. The Specialization list is ouside this div, in the Disclosure */ }
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <div className='flex space-x-2'>
+                            <h1>Faction Specializations</h1>
+                            {editing && <NewFactionOptionDialog factionId={faction.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                                title={'Add Traits'}
+                                description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
+                                selection={'specializations'}/>}
+                        </div>
+                    </div>
                 </div>
+                {(query.isLoading) ?  <h2>Loading...</h2>
+                    : <FactionUnitsDisclosure disclosureInformationList={ unitsOrganized }  />
+                }
                 <div className="mt-4 flex justify-between">
                     <button
                         type="button"

@@ -7,6 +7,7 @@ import TagObjectsSelector, { OjbectOptionType } from '../TagObjectsSelector';
 import { opbjectTypeOptions } from '../NewSpecializationDialog';
 import SpecializationTraitCard from './SpecializationTraitCard';
 import SpecializationItemCard from './SpecializationItemCard';
+import { paintTier, writeTier } from '@/app/_libs/text_paint_methods';
 
 interface Specialization {
     id: string;
@@ -35,40 +36,6 @@ interface Specialization {
 type DetailedSpecializationChartProps = {
     specialization: Specialization;
     styles?: string;
-}
-
-export const paintTier = (tier: number | undefined) => {
-    switch(tier){
-        case 1:
-            return "text-orange-800";
-        case 2:
-            return "text-zinc-300/80";
-        case 3:
-            return "text-zinc-300";
-        case 4:
-            return "text-amber-600/90";
-        case 5:
-            return "text-amber-500";
-        default:
-            return "text-gray-100";
-    }
-}
-
-export const writeTier = (tier: number | undefined) => {
-    switch(tier){
-        case 1:
-            return "I";
-        case 2:
-            return "II";
-        case 3:
-            return "III";
-        case 4:
-            return "IV";
-        case 5:
-            return "V";
-        default:
-            return "";
-    }
 }
 
 export const splitWeaponProficiencies = (weapon_proficiencies: string | undefined) => {

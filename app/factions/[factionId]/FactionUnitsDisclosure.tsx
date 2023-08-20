@@ -1,5 +1,6 @@
+import SpecializationOption from '@/app/_components/SpecializationOption';
 import { paintTier, writeTier } from '@/app/_libs/text_paint_methods';
-import SpecializationOption from '@/app/specializations/SpecializationOption';
+
 import { Disclosure } from '@headlessui/react'
 //import { AiOutlineDown } from '@heroicons/react/20/solid'
 import { AiOutlineDown } from 'react-icons/ai'

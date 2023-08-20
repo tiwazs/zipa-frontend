@@ -50,8 +50,8 @@ export default function EffectList() {
                     barrier={effect.barrier}
                     instant_vitality_recovery={effect.instant_vitality_recovery} 
                     instant_essence_recovery={effect.instant_essence_recovery} 
-                    instant_physical_damage={effect.incoming_physical_damage}
-                    instant_magical_damage={effect.incoming_magical_damage}
+                    instant_physical_damage={effect.instant_physical_damage}
+                    instant_magical_damage={effect.instant_magical_damage}
                     instant_target={effect.instant_target} 
                     instant_area_of_effect={effect.instant_area_of_effect} 
                     instant_conditions={effect.instant_conditions}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery } from 'react-query';
-import SpecializationOption from './SpecializationOption';
+import SpecializationOption from '../_components/SpecializationOption';
 
 const getSpecializations = async () => {
     try{

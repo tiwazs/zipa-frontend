@@ -2,7 +2,7 @@ import React from 'react'
 import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
-import StatsSummary from '../_components/StatsSummary';
+import StatsSummary from './StatsSummary';
 import { paintRarity, paintTier, writeTier } from '@/app/_libs/text_paint_methods';
 
 interface SpecializationOptionProps {

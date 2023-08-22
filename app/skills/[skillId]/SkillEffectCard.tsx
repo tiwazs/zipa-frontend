@@ -63,9 +63,9 @@ export default function SkillEffectCard({ skillId, skilleffect, editable }: Skil
                     <DisplayValue value={effect.instant_essence_recovery} after_text=' Essense'/>
                     <DisplayValue previous_text='Suffers ' value={effect.instant_physical_damage} after_text=' Physical Damage' style='text-red-500'/>
                     <DisplayValue previous_text='Suffers ' value={effect.instant_magical_damage} after_text=' Magical Damage' style='text-red-500'/>
-                    <DisplayValue previous_text='Target: ' value={effect.instant_target !== "SELF" ? effect.instant_target : "0"} style='text-red-500'/>
-                    <DisplayValue previous_text='Area: ' value={effect.instant_area_of_effect} after_text=' Mts' style='text-red-500'/>
-                    <DisplayValue previous_text='Conditions ' value={effect.instant_conditions} after_text=' Physical Damage' style='text-red-500'/>
+                    <DisplayValue previous_text='Target: ' value={effect.instant_target !== "SELF" ? effect.instant_target : "0"}/>
+                    <DisplayValue previous_text='Area: ' value={effect.instant_area_of_effect} after_text=' Mts'/>
+                    <DisplayValue previous_text='Conditions ' value={effect.instant_conditions} style='text-orange-500'/>
                     { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
                     { ( effect.max_stack !== 0 ) && <p>Stacks {effect.max_stack} Times  </p>}
                 </div>

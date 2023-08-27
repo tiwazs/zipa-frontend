@@ -106,9 +106,9 @@ export default function SpecializationOption(specialization: SpecializationOptio
                                 <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
                             </p>
                             <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                                { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> P</p>}
+                                { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
                                 { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
-                                { (skill.skill.cooldown && skill.skill.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
+                                { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
                             </div>
                         </div>
                         )
@@ -133,7 +133,7 @@ export default function SpecializationOption(specialization: SpecializationOptio
                             <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
                                 { (item.item.essence_cost && item.item.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{item.item.essence_cost}</span> P</p>}
                                 { (item.item.vitality_cost && item.item.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{item.item.vitality_cost}</span> V</p>}
-                                { (item.item.cooldown && item.item.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{item.item.cooldown}</span> T </p>}
+                                { (item.item.cooldown && item.item.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{item.item.cooldown}</span> T </p>}
                             </div>
                         </div>
                         )

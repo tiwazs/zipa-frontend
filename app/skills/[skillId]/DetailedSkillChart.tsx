@@ -20,8 +20,8 @@ interface Skill {
     area_of_effect?: string;
     essence_cost?: string;
     vitality_cost?: string;
-    cooldown?: number;
-    channeled?: number;
+    cooldown?: string;
+    channeled?: string;
     target?: string
     skill_on?: string
     skill_types?: any[]
@@ -193,25 +193,25 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Cooldown</h1>
-                        {editing ? <input 
-                            {...register("cooldown", { required: false, valueAsNumber: true })}
+                        <input 
+                            {...register("cooldown", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
+                            type="text"
                             name="cooldown"
                             disabled={!editing}
-                            placeholder={(skill.cooldown && skill.cooldown !== 0 ) ? skill.cooldown?.toString() : "0"}
-                        /> : <h1>{(skill.cooldown && skill.cooldown !== 0 ) ? skill.cooldown?.toString() : "0"}</h1>}                           
+                            placeholder={skill.cooldown ? skill.cooldown : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Channeled</h1>
-                        {editing ? <input 
-                            {...register("channeled", { required: false, valueAsNumber: true })}
+                        <input 
+                            {...register("channeled", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
+                            type="text"
                             name="channeled"
                             disabled={!editing}
-                            placeholder={skill.channeled ? skill.channeled?.toString() : "False"}
-                        /> : <h1>{skill.channeled ? skill.channeled?.toString() : "False"}</h1>}                       
+                            placeholder={skill.channeled ? skill.channeled : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Target</h1>

@@ -25,6 +25,7 @@ export default function SkillSelection({itemId}: SkillSelectionProps) {
     const query = useQuery(["skills", getSkills], getSkills);
     const [selected, setSelected] = useState<any>(undefined)
     const [essence_cost, setEssenceCost] = useState<string>("0")
+    const [vitality_cost, setVitalityCost] = useState<string>("0")
     const [cooldown, setCooldown] = useState<string>("0")
 
     const queryClient = useQueryClient();
@@ -34,6 +35,7 @@ export default function SkillSelection({itemId}: SkillSelectionProps) {
         item_id: itemId,
         skill_id: selected.id,
         essence_cost: essence_cost,
+        vitality_cost: vitality_cost,
         cooldown: cooldown
       }
 
@@ -119,6 +121,11 @@ export default function SkillSelection({itemId}: SkillSelectionProps) {
             <h1>Essence Cost</h1>
             <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                    value={essence_cost} type="text" id="essence_cost" onChange={(e)=>{setEssenceCost(e.target.value)}}/>
+        </div>
+        <div className='flex items-center'>
+            <h1>Vitality Cost</h1>
+            <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                   value={vitality_cost} type="text" id="vitality_cost" onChange={(e)=>{setVitalityCost(e.target.value)}}/>
         </div>
         <div className='flex items-center'>
         <h1>Cooldown</h1>

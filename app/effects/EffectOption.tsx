@@ -25,7 +25,7 @@ interface EffectOptionProps {
     movement: string;
     ammo: string;
     shield: string;
-    barrier: number;
+    barrier: string;
     instant_vitality_recovery: string;
     instant_essence_recovery: string;
     instant_physical_damage: string;
@@ -91,7 +91,7 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <DisplayValue previous_text='Effect Target: ' value={effect.instant_target !== "SELF" ? effect.instant_target : "0"} />
                 <DisplayValue previous_text='Area: ' value={effect.instant_area_of_effect} after_text=' Mts' />
                 <DisplayValue previous_text='Conditions ' value={effect.instant_conditions} style='text-orange-500'/>
-                { ( effect.barrier !== 0 ) && <p>{effect.barrier} Barrier   </p>}
+                <DisplayValue value={effect.barrier} after_text=' Barrier'/>
                 { ( effect.max_stack !== 0 ) && <p>Stacks {effect.max_stack} Times  </p>}
             </div>
         </div>

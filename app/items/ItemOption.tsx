@@ -119,8 +119,9 @@ export default function ItemOption(item: ItemOptionProps) {
                                         <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
                                     </p>
                                     <div className='px-4 flex space-x-2'>
-                                        <p className='font-light text-gray-400 text-sm'>CD: <span className='text-purple-400'> {skill.cooldown}</span> T</p>
-                                        <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {skill.essence_cost}</span> P</p>
+                                        { (skill.essence_cost && skill.essence_cost !== "0") && <p className='font-light text-sm'>Cost <span className='text-blue-500'>{skill.essence_cost}</span> E</p>}
+                                        { (skill.vitality_cost && skill.vitality_cost !== "0") && <p className='font-light text-sm'>Cost <span className='text-red-500'>{skill.vitality_cost}</span> V</p>}
+                                        { (skill.cooldown && skill.cooldown !== "0") && <p className='font-light text-sm'>CD <span className='text-purple-400'>{skill.cooldown}</span> T </p>}
                                     </div>
                                 </div>
                                 )

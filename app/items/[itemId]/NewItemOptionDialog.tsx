@@ -8,28 +8,6 @@ import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
 import SkillSelection from './SkillSelection';
 
-interface CreateEffectFormOptions {
-    name: string;
-    description: string;
-    conditions?: string;
-    physical_damage?: string;
-    magical_damage?: string;
-    healing?: string;
-    vitality_recovery?: string;
-    essence_recovery?: string;
-    range?: string;
-    area_of_effect?: string;
-    essence_cost?: string;
-    vitality_cost?: string;
-    cooldown?: number;
-    channeled?: boolean;
-    target?: string;
-    skill_on?: string;
-    skill_types?: string[];
-    effects?: string[];
-    summons?: string[];
-}
-
 interface NewEffectDialogProps {
     title: string;
     description: string;
@@ -38,9 +16,7 @@ interface NewEffectDialogProps {
 }
 
 export default function NewEffectDialog({ title, description, itemId, styles}: NewEffectDialogProps) {
-    let [isOpen, setIsOpen] = useState(false);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateEffectFormOptions>();
-        
+    let [isOpen, setIsOpen] = useState(false);        
 
   function closeModal() {
     setIsOpen(false)

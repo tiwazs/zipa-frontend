@@ -20,8 +20,8 @@ interface CreateEffectFormOptions {
     area_of_effect?: string;
     essence_cost?: string;
     vitality_cost?: string;
-    cooldown?: number;
-    channeled?: boolean;
+    cooldown?: string;
+    channeled?: string;
     target?: string;
     skill_on?: string;
     skill_types?: string[];
@@ -233,18 +233,18 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                             </div>
                             <div>
                                 <input 
-                                    {...register("cooldown", { required: false, valueAsNumber: true })}
+                                    {...register("cooldown", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="number"
+                                    type="text"
                                     name="cooldown"
-                                    placeholder="Cooldown"
+                                     placeholder="Cooldown"
                                 />                                
                             </div>
                             <div>
                                 <input 
-                                    {...register("channeled", { required: false, valueAsNumber: true })}
+                                    {...register("channeled", { required: false })}
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
-                                    type="number"
+                                    type="text"
                                     name="channeled"
                                     placeholder="Channeled"
                                 />                                

@@ -58,8 +58,9 @@ export default function ItemSkillCard({ itemId, itemskill, editable }: ItemSkill
                     {/* Skill Summons*/}
                     {/* Item Skill info */}
                     <div className='flex space-x-2'>
-                        <p className='font-light text-gray-400 text-sm'>Cooldown: <span className='text-purple-400'> {itemskill.cooldown}</span> T</p>
-                        <p className='font-light text-gray-400 text-sm'>Cost: <span className='text-blue-400'> {itemskill.essence_cost}</span> P</p>
+                        { (skill.cooldown && skill.cooldown !== "0") && <p className='font-light text-gray-400 text-sm'>Cooldown <span className='text-purple-400'>{itemskill.cooldown}</span> T </p>}
+                        { (skill.essence_cost && skill.essence_cost !== "0") && <p className='font-light text-gray-400 text-sm'>Cost <span className='text-blue-500'>{itemskill.essence_cost}</span> E</p>}
+                        { (skill.vitality_cost && skill.vitality_cost !== "0") && <p className='font-light text-gray-400 text-sm'>Cost <span className='text-red-500'>{itemskill.vitality_cost}</span> V</p>}
                     </div>
                 </div>
             </p>

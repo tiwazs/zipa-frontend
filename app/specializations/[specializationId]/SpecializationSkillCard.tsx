@@ -58,7 +58,7 @@ export default function SpecializationSkillCard({ specializationId, specializati
                     {/* Skill Summons*/}
                     {/* Specialization Skill info */}
                     <div className='flex space-x-2 text-sm'>
-                        { (skill.essence_cost && skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.essence_cost}</span> P</p>}
+                        { (skill.essence_cost && skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.essence_cost}</span> E</p>}
                         { (skill.vitality_cost && skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.vitality_cost}</span> V</p>}
                         { (skill.cooldown && skill.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{skill.cooldown}</span> T </p>}
                     </div>

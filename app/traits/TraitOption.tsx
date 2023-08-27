@@ -59,7 +59,7 @@ export default function TraitOption(trait: TraitOptionProps) {
                                     <p>
                                         <span className='px-4 text-gray-400 font-light'>{effect.effect.description}</span>
                                     </p>
-                                    <p className='px-4 font-light text-gray-400 text-sm'>CD: <span className='text-purple-400'> {effect.cooldown}</span> T</p>
+                                    { (effect.conditions && effect.conditions !== "0") && <p className='px-4 font-light text-gray-400 text-sm'>CD: <span className='text-purple-400'>{effect.cooldown}</span> T</p>}
                                 </div>
                                 )
                             })}

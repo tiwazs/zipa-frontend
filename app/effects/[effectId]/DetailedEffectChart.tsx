@@ -23,7 +23,7 @@ interface Effect {
     movement?: string;
     ammo?: string;
     shield?: string;
-    barrier?: number;
+    barrier?: string;
     instant_vitality_recovery: string;
     instant_essence_recovery: string;
     instant_physical_damage: string;
@@ -286,14 +286,14 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Barrier</h1>
-                        { editing ? <input 
-                            {...register("barrier", { required: false, valueAsNumber: true })}
+                        <input 
+                            {...register("barrier", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
+                            type="text"
                             name="barrier"
                             disabled={!editing}
-                            placeholder={ (effect.barrier!==0 && effect.barrier) ? effect.barrier.toString() : "0"}
-                        /> : <h1 className='text-gray-400'>{effect.barrier ? effect.barrier : "N/A"}</h1> }                      
+                            placeholder={effect.barrier ? effect.barrier : "N/A"}
+                        />                                
                     </div>
                     <div className='flex items-center space-x-2'>
                         <h1>Shield</h1>

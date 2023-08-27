@@ -19,57 +19,14 @@ interface SkillOptionProps {
     area_of_effect: string;
     essence_cost: string;
     vitality_cost: string;
-    cooldown: number;
-    channeled: boolean;
+    cooldown: string;
+    channeled: string;
     target: string;
     skill_on: string;
     skill_types: any;
     effects: any;
     summons: any;
     styles: string;
-}
-
-const TargetText = (text: string) => {
-    switch(text){
-        case "NONE":
-            return ""
-        case "SELF":
-            return "Self"
-        case "ALLY":
-            return "Ally"
-        case "ALLY_SUMMON":
-            return "Allied Summons"
-        case "ALLY_AROUND":
-            return "Allies Around"
-        case "ALLY_EXCEPT_SELF":
-            return "Ally Except Self"
-        case "ENEMY":
-            return "Enemy"
-        case "ENEMY_SUMMON":
-            return "Enemy Summons"
-        case "ENEMY_AROUND":
-            return "Enemies Around"
-        case "ANY":
-            return "Anyone"
-        case "ANY_AROUND":
-            return "Anyone Around"
-        case "ANY_EXCEPT_SELF":
-            return "Anyone Except Self"
-        case "ANY_SUMMON":
-            return "Anyone Summoned"
-        case "POINT":
-            return "Point"
-        case "POINT_ENEMY":
-            return "Enemy at a Point"
-        case "POINT_ALLY":
-            return "Ally at a Point"
-        case "AREA":
-            return "Everyone in Area"
-        case "AREA_ENEMY":
-            return "Enemies in Area"
-        case "AREA_ALLY":
-            return "Allies in Area"
-    }
 }
 
 export default function SkillOption(skill: SkillOptionProps) {
@@ -163,9 +120,9 @@ export default function SkillOption(skill: SkillOptionProps) {
             </div>
             {/*General Skill Details. Resource and CD*/}
             <div className='my-2 flex space-x-2 font-light text-sm'>
-                { (skill.essence_cost && skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.essence_cost}</span> P</p>}
+                { (skill.essence_cost && skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.essence_cost}</span> E</p>}
                 { (skill.vitality_cost && skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.vitality_cost}</span> V</p>}
-                { (skill.cooldown && skill.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{skill.cooldown}</span> T </p>}
+                { (skill.cooldown && skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.cooldown}</span> T </p>}
             </div>
         </div>
         <div>

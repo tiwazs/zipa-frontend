@@ -390,14 +390,14 @@ model User {
   id            String    @id @default(cuid())
   name          String?   @unique
   email         String    @unique
-  emailVerified DateTime?
   password      String?
   firstName     String?
   lastName      String?
   image         String?
+  emailVerified DateTime?
   apiKey        String?   @unique
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime  @updatedAt
   Account       Account[]
   Session       Session[]
 }

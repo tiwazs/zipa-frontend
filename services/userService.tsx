@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
-import { Encryptor } from "../lib/encryptor";
-import prisma from "../lib/prisma";
+import { Encryptor } from "../app/_libs/encryptor";
+import prisma from "../app/_libs/prisma";
 import crypto from 'crypto';
 
 

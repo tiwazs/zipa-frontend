@@ -1,0 +1,503 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId], map: "Account_userId_fkey")
+}
+
+model AssignedSkillType {
+  id            String    @id @default(cuid())
+  skill_id      String
+  skill_type_id String
+  created_at    DateTime  @default(now())
+  updated_at    DateTime
+  Skill         Skill     @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+  SkillType     SkillType @relation(fields: [skill_type_id], references: [id], onDelete: Cascade)
+
+  @@index([skill_id], map: "AssignedSkillType_skill_id_fkey")
+  @@index([skill_type_id], map: "AssignedSkillType_skill_type_id_fkey")
+}
+
+model Effect {
+  id                        String                @id @default(cuid())
+  name                      String
+  description               String                @db.Text
+  magic_effectiveness       String?
+  physical_damage           String?
+  magical_damage            String?
+  healing                   String?
+  vitality                  String?
+  range                     String?
+  damage                    String?
+  armor                     String?
+  magic_armor               String?
+  essence                   String?
+  agility                   String?
+  hit_chance                String?
+  evasion                   String?
+  hit_rate                  String?
+  movement                  String?
+  ammo                      String?
+  shield                    String?
+  barrier                   String?               @default("0")
+  max_stack                 Int?                  @default(1)
+  created_at                DateTime              @default(now())
+  updated_at                DateTime
+  conditions                String?
+  instant_area_of_effect    String?
+  instant_conditions        String?
+  instant_essence_recovery  String?
+  instant_magical_damage    String?
+  instant_physical_damage   String?
+  instant_target            Effect_instant_target @default(SELF)
+  instant_vitality_recovery String?
+  SkillEffect               SkillEffect[]
+  TraitEffect               TraitEffect[]
+}
+
+model Faction {
+  id                        String                      @id @default(cuid())
+  name                      String
+  description               String                      @db.Text
+  identity                  String?                     @db.Text
+  aspects                   String?                     @db.Text
+  created_at                DateTime                    @default(now())
+  updated_at                DateTime
+  FactionTrait              FactionTrait[]
+  FactionUnitSpecialization FactionUnitSpecialization[]
+  Unit                      Unit[]
+}
+
+model FactionTrait {
+  id         String   @id @default(cuid())
+  faction_id String
+  trait_id   String
+  conditions String?
+  created_at DateTime @default(now())
+  updated_at DateTime
+  Faction    Faction  @relation(fields: [faction_id], references: [id], onDelete: Cascade)
+  Trait      Trait    @relation(fields: [trait_id], references: [id], onDelete: Cascade)
+
+  @@index([faction_id], map: "FactionTrait_faction_id_fkey")
+  @@index([trait_id], map: "FactionTrait_trait_id_fkey")
+}
+
+model FactionUnitSpecialization {
+  id                     String             @id @default(cuid())
+  faction_id             String
+  unit_specialization_id String
+  created_at             DateTime           @default(now())
+  updated_at             DateTime
+  Faction                Faction            @relation(fields: [faction_id], references: [id], onDelete: Cascade)
+  UnitSpecialization     UnitSpecialization @relation(fields: [unit_specialization_id], references: [id], onDelete: Cascade)
+
+  @@index([faction_id], map: "FactionUnitSpecialization_faction_id_fkey")
+  @@index([unit_specialization_id], map: "FactionUnitSpecialization_unit_specialization_id_fkey")
+}
+
+model Item {
+  id                     String                   @id @default(cuid())
+  name                   String
+  description            String                   @db.Text
+  rarity                 Item_rarity              @default(COMMON)
+  magic_effectiveness    String?
+  physical_damage        String?
+  magical_damage         String?
+  healing                String?
+  essence_recovery       String?
+  vitality               String?
+  range                  String?                  @default("1")
+  damage                 String?
+  armor                  String?
+  magic_armor            String?
+  essence                String?
+  agility                String?
+  hit_chance             String?
+  evasion                String?
+  hit_rate               String?
+  movement               String?
+  ammo                   String?
+  shield                 String?
+  created_at             DateTime                 @default(now())
+  updated_at             DateTime
+  vitality_recovery      String?
+  conditions             String?
+  dexterity_requirement  Float                    @default(0)
+  faith_requirement      Float                    @default(0)
+  mind_requirement       Float                    @default(0)
+  strength_requirement   Float                    @default(0)
+  weight                 Float                    @default(0)
+  is_weapon              Boolean                  @default(false)
+  object_type            Item_object_type         @default(OTHER)
+  ItemSkill              ItemSkill[]
+  UnitItem               UnitItem[]
+  UnitSpecializationItem UnitSpecializationItem[]
+}
+
+model ItemSkill {
+  id            String   @id @default(cuid())
+  item_id       String
+  skill_id      String
+  essence_cost  String?  @default("0")
+  cooldown      String?  @default("0")
+  created_at    DateTime @default(now())
+  updated_at    DateTime
+  vitality_cost String?  @default("0")
+  Item          Item     @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  Skill         Skill    @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+
+  @@index([item_id], map: "ItemSkill_item_id_fkey")
+  @@index([skill_id], map: "ItemSkill_skill_id_fkey")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "Session_userId_fkey")
+}
+
+model Skill {
+  id                      String                    @id @default(cuid())
+  name                    String
+  description             String                    @db.Text
+  physical_damage         String?
+  magical_damage          String?
+  healing                 String?
+  essence_recovery        String?
+  range                   String?
+  area_of_effect          String?
+  essence_cost            String?
+  vitality_cost           String?
+  cooldown                String?                   @default("0")
+  channeled               String?                   @default("")
+  target                  Skill_target              @default(ENEMY)
+  skill_on                Skill_skill_on            @default(INSTANT)
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime
+  vitality_recovery       String?
+  conditions              String?
+  AssignedSkillType       AssignedSkillType[]
+  ItemSkill               ItemSkill[]
+  SkillEffect             SkillEffect[]
+  SkillSummon             SkillSummon[]
+  UnitSpecializationSkill UnitSpecializationSkill[]
+}
+
+model SkillEffect {
+  id         String   @id @default(cuid())
+  skill_id   String
+  effect_id  String
+  duration   String?  @default("1")
+  created_at DateTime @default(now())
+  updated_at DateTime
+  conditions String?
+  Effect     Effect   @relation(fields: [effect_id], references: [id], onDelete: Cascade)
+  Skill      Skill    @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+
+  @@index([effect_id], map: "SkillEffect_effect_id_fkey")
+  @@index([skill_id], map: "SkillEffect_skill_id_fkey")
+}
+
+model SkillSummon {
+  id                     String             @id @default(cuid())
+  skill_id               String
+  duration               String?            @default("1")
+  created_at             DateTime           @default(now())
+  updated_at             DateTime
+  conditions             String?
+  unit_specialization_id String
+  Skill                  Skill              @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+  UnitSpecialization     UnitSpecialization @relation(fields: [unit_specialization_id], references: [id], onDelete: Cascade)
+
+  @@index([skill_id], map: "SkillSummon_skill_id_fkey")
+  @@index([unit_specialization_id], map: "SkillSummon_unit_specialization_id_fkey")
+}
+
+model SkillType {
+  id                String              @id @default(cuid())
+  name              String
+  description       String              @db.Text
+  created_at        DateTime            @default(now())
+  updated_at        DateTime
+  AssignedSkillType AssignedSkillType[]
+}
+
+model Trait {
+  id                      String                    @id @default(cuid())
+  name                    String
+  description             String                    @db.Text
+  created_at              DateTime                  @default(now())
+  updated_at              DateTime
+  FactionTrait            FactionTrait[]
+  TraitEffect             TraitEffect[]
+  UnitSpecializationTrait UnitSpecializationTrait[]
+}
+
+model TraitEffect {
+  id         String   @id @default(cuid())
+  trait_id   String
+  effect_id  String
+  created_at DateTime @default(now())
+  updated_at DateTime
+  conditions String?
+  cooldown   String?  @default("0")
+  duration   String?  @default("1")
+  Effect     Effect   @relation(fields: [effect_id], references: [id], onDelete: Cascade)
+  Trait      Trait    @relation(fields: [trait_id], references: [id], onDelete: Cascade)
+
+  @@index([effect_id], map: "TraitEffect_effect_id_fkey")
+  @@index([trait_id], map: "TraitEffect_trait_id_fkey")
+}
+
+model Unit {
+  id                 String             @id @default(cuid())
+  name               String
+  title              String?
+  description        String?            @db.Text
+  base_vitality      Float
+  base_strength      Float
+  base_dexterity     Float
+  base_mind          Float
+  base_faith         Float
+  base_essence       Float
+  base_agility       Float
+  base_hit_chance    Float
+  base_evasion       Float
+  faction_id         String
+  specialization_id  String
+  skill_picks        String?
+  rank               Int                @default(1)
+  created_at         DateTime           @default(now())
+  updated_at         DateTime
+  Faction            Faction            @relation(fields: [faction_id], references: [id], onDelete: Cascade)
+  UnitSpecialization UnitSpecialization @relation(fields: [specialization_id], references: [id], onDelete: Cascade)
+  UnitItem           UnitItem[]
+
+  @@index([faction_id], map: "Unit_faction_id_fkey")
+  @@index([specialization_id], map: "Unit_specialization_id_fkey")
+}
+
+model UnitItem {
+  id         String   @id @default(cuid())
+  unit_id    String
+  item_id    String
+  quantity   Float
+  created_at DateTime @default(now())
+  updated_at DateTime
+  Item       Item     @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  Unit       Unit     @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+
+  @@index([item_id], map: "UnitItem_item_id_fkey")
+  @@index([unit_id], map: "UnitItem_unit_id_fkey")
+}
+
+model UnitSpecialization {
+  id                        String                      @id @default(cuid())
+  name                      String
+  description               String                      @db.Text
+  vitality                  Float
+  strength                  Float
+  dexterity                 Float
+  mind                      Float
+  faith                     Float
+  armor                     Float
+  magic_armor               Float
+  essence                   Float
+  agility                   Float
+  hit_chance                Float
+  evasion                   Float
+  hit_rate                  Float
+  movement                  Float
+  tier                      Int
+  created_at                DateTime                    @default(now())
+  updated_at                DateTime
+  weapon_proficiencies      String                      @db.Text
+  FactionUnitSpecialization FactionUnitSpecialization[]
+  SkillSummon               SkillSummon[]
+  Unit                      Unit[]
+  UnitSpecializationItem    UnitSpecializationItem[]
+  UnitSpecializationSkill   UnitSpecializationSkill[]
+  UnitSpecializationTrait   UnitSpecializationTrait[]
+}
+
+model UnitSpecializationItem {
+  id                     String             @id @default(cuid())
+  unit_specialization_id String
+  item_id                String
+  quantity               Float
+  created_at             DateTime           @default(now())
+  updated_at             DateTime
+  Item                   Item               @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  UnitSpecialization     UnitSpecialization @relation(fields: [unit_specialization_id], references: [id], onDelete: Cascade)
+
+  @@index([item_id], map: "UnitSpecializationItem_item_id_fkey")
+  @@index([unit_specialization_id], map: "UnitSpecializationItem_unit_specialization_id_fkey")
+}
+
+model UnitSpecializationSkill {
+  id                     String             @id @default(cuid())
+  unit_specialization_id String
+  skill_id               String
+  created_at             DateTime           @default(now())
+  updated_at             DateTime
+  Skill                  Skill              @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+  UnitSpecialization     UnitSpecialization @relation(fields: [unit_specialization_id], references: [id], onDelete: Cascade)
+
+  @@index([skill_id], map: "UnitSpecializationSkill_skill_id_fkey")
+  @@index([unit_specialization_id], map: "UnitSpecializationSkill_unit_specialization_id_fkey")
+}
+
+model UnitSpecializationTrait {
+  id                     String             @id @default(cuid())
+  unit_specialization_id String
+  trait_id               String
+  created_at             DateTime           @default(now())
+  updated_at             DateTime
+  conditions             String?
+  Trait                  Trait              @relation(fields: [trait_id], references: [id], onDelete: Cascade)
+  UnitSpecialization     UnitSpecialization @relation(fields: [unit_specialization_id], references: [id], onDelete: Cascade)
+
+  @@index([trait_id], map: "UnitSpecializationTrait_trait_id_fkey")
+  @@index([unit_specialization_id], map: "UnitSpecializationTrait_unit_specialization_id_fkey")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?   @unique
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  firstName     String?
+  lastName      String?
+  image         String?
+  apiKey        String?   @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  Account       Account[]
+  Session       Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum Item_rarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+}
+
+enum Skill_target {
+  NONE
+  SELF
+  ALLY
+  ALLY_SUMMON
+  ALLY_AROUND
+  ALLY_EXCEPT_SELF
+  ENEMY
+  ENEMY_SUMMON
+  ENEMY_AROUND
+  ANY
+  ANY_AROUND
+  ANY_EXCEPT_SELF
+  ANY_SUMMON
+  POINT
+  POINT_ENEMY
+  POINT_ALLY
+  AREA
+  AREA_ENEMY
+  AREA_ALLY
+}
+
+enum Skill_skill_on {
+  INSTANT
+  OVER_TIME
+  DURING_CHANNEL
+  AFTER_CHANNEL
+  DELAYED
+}
+
+enum Effect_instant_target {
+  NONE
+  SELF
+  ALLY
+  ALLY_SUMMON
+  ALLY_AROUND
+  ALLY_EXCEPT_SELF
+  ENEMY
+  ENEMY_SUMMON
+  ENEMY_AROUND
+  ANY
+  ANY_AROUND
+  ANY_EXCEPT_SELF
+  ANY_SUMMON
+  POINT
+  POINT_ENEMY
+  POINT_ALLY
+  AREA
+  AREA_ENEMY
+  AREA_ALLY
+}
+
+enum Item_object_type {
+  CURVED_SWORD_1H
+  CURVED_SWORD_2H
+  STRAIGHT_SWORD_1H
+  STRAIGHT_SWORD_2H
+  AXE_1H
+  AXE_2H
+  HAMMER_1H
+  HAMMER_2H
+  SPEAR_1H
+  SPEAR_2H
+  JAVELIN_1H
+  STAFF_1H
+  STAFF_2H
+  BOW_2H
+  CROSSBOW_2H
+  DAGGER_1H
+  SMALL_SHIELD
+  MEDIUM_SHIELD
+  LARGE_SHIELD
+  LIGHT_ARMOR
+  MEDIUM_ARMOR
+  HEAVY_ARMOR
+  AMULET
+  TRINKET
+  RING
+  CONSUMABLE
+  MATERIAL
+  KEY
+  OTHER
+}

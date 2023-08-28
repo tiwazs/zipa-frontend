@@ -13,15 +13,15 @@ export default function Home() {
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <MainOptionCard title="General" description="General description for battle, units spells and combat rules" link="/general" />
-        <MainOptionCard title="Factions" description="Playable factions, their cultures, traits, units and more" link="/factions" />
-        <MainOptionCard title="Specializations" description="Unit martial training routes" link="/specializations" />
-        <MainOptionCard title="Traits" description="All the available Traits" link="/traits" />
-        <MainOptionCard title="Skills" description="All The available abilities" link="/skills" />
-        <MainOptionCard title="Items" description="All the available items" link="/items" />
-        <MainOptionCard title="Effects" description="All the available Effecs" link="/effects" />
-        <MainOptionCard title="Unit Generation" description="All the available Effecs" link="/units" />
-        <MainOptionCard title="Combat Calculator" description="All the available Effecs" link="/combat_calculator" />
+        <MainOptionCard title="General" description="General description for battle, units spells and combat rules" link="/main/general" />
+        <MainOptionCard title="Factions" description="Playable factions, their cultures, traits, units and more" link="/main/factions" />
+        <MainOptionCard title="Specializations" description="Unit martial training routes" link="/main/specializations" />
+        <MainOptionCard title="Traits" description="All the available Traits" link="/main/traits" />
+        <MainOptionCard title="Skills" description="All The available abilities" link="/main/skills" />
+        <MainOptionCard title="Items" description="All the available items" link="/main/items" />
+        <MainOptionCard title="Effects" description="All the available Effecs" link="/main/effects" />
+        <MainOptionCard title="Unit Generation" description="All the available Effecs" link="/main/units" />
+        <MainOptionCard title="Combat Calculator" description="All the available Effecs" link="/main/combat_calculator" />
       </div>
     </main>
   )

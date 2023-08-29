@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 function page() {
     const router = useRouter();
+    
     useEffect(() => {
         router.push('/');
     }, [])

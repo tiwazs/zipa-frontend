@@ -31,10 +31,10 @@ export const authOptions:NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any, token: any }) {
       if (session?.user) {
         //session.apikey = token.apikey as string;
-        //session.userId = token.uid;
+        session.user_id = token.uid as string;
         //session.userEmail = token.email;
         //console.log('data: ' + JSON.stringify(session.apikey));
       }

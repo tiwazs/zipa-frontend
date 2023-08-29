@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
 import SpecializationSkillCard from './SpecializationSkillCard';
@@ -53,8 +53,13 @@ const objectTypesListToDict = (objectTypesList: string[]) => {
 export default function DetailedSpecializationChart({specialization, styles}: DetailedSpecializationChartProps) {
     const [ editing, setEditing ] = useState(false);
     let [ weaponProficiencies, setWeaponProficiencies ] = useState<string>(specialization.weapon_proficiencies ?? "");
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Specialization>();
+    const { register, handleSubmit, reset, watch, formState: { errors }, setValue } = useForm<Specialization>();
     const queryClient = useQueryClient();
+
+    // useState is async, so we need to use useEffect to set the value for the Form after the state is set
+    useEffect(() => {
+        setValue("weapon_proficiencies", weaponProficiencies)
+    }, [weaponProficiencies])
 
     const onCancel = () => {
         reset();
@@ -257,7 +262,6 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                                 type="text"
                                 name="weapon_proficiencies"
                                 disabled={!editing}
-                                value={weaponProficiencies}
                             />
                             <TagObjectsSelector objectTypeOptionsSelected={objectTypesListToDict(splitWeaponProficiencies(weaponProficiencies))} objectTypeOptions={opbjectTypeOptions} updateObjectsOutput={handleWeaponProficienciesChange} style='w-full grid grid-cols-3 gap-1' />
                         </> : <h1 className={`my-2 py-3 flex space-x-1`}>{splitWeaponProficiencies(specialization.weapon_proficiencies).map((weapon_proficiency: string) => {

@@ -294,12 +294,15 @@ model Unit {
   rank               Int                @default(1)
   created_at         DateTime           @default(now())
   updated_at         DateTime
+  user_id            String
   Faction            Faction            @relation(fields: [faction_id], references: [id], onDelete: Cascade)
   UnitSpecialization UnitSpecialization @relation(fields: [specialization_id], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [user_id], references: [id], onDelete: Cascade)
   UnitItem           UnitItem[]
 
   @@index([faction_id], map: "Unit_faction_id_fkey")
   @@index([specialization_id], map: "Unit_specialization_id_fkey")
+  @@index([user_id], map: "Unit_user_id_fkey")
 }
 
 model UnitItem {
@@ -400,6 +403,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   Account       Account[]
   Session       Session[]
+  Unit          Unit[]
 }
 
 model VerificationToken {

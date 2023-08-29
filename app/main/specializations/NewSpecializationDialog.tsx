@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation';
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';  
@@ -75,8 +75,12 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
     let [objectTypesSelected, setObjectTypesSelected] = useState<OjbectOptionType[]>([]);
     let [objectTypesRemaining, setObjectTypesRemaining] = useState<OjbectOptionType[]>(opbjectTypeOptions);
     let [weaponProficiencies, setWeaponProficiencies] = useState<string>("");
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateSpecializationFormOptions>();
+    const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm<CreateSpecializationFormOptions>();
     
+    // useState is async, so we need to use useEffect to set the value for the Form after the state is set
+    useEffect(() => {
+      setValue("weapon_proficiencies", weaponProficiencies)
+    }, [weaponProficiencies])
     const queryClient = useQueryClient();
     
     const onSubmit: SubmitHandler<CreateSpecializationFormOptions> = async data => {
@@ -345,7 +349,6 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                                     className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                     type="text"
                                     name="weapon_proficiencies"
-                                    value={weaponProficiencies}
                                 />                                
                             </div>
                             <ObjectTypeSelectedList removeObjectType={handleObjectTypeRemoved} selectedObjectTypes={objectTypesSelected} styles='w-full grid grid-cols-5 gap-1' />

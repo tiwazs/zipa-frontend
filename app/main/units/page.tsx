@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Suspense } from 'react'
+import UnitList from './UnitList'
 
 export default function UnitsPage() {   
     return (
@@ -17,6 +18,9 @@ export default function UnitsPage() {
            after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent 
            before:dark:to-purple-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-[#9101ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
         </div>
+        <Suspense fallback={<div className="text-green-700">Loading...</div>}>
+            <UnitList />
+        </Suspense>
     </main>
     )
 }

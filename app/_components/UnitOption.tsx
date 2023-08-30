@@ -58,8 +58,8 @@ export default function UnitOption(unit: UnitOptionProps) {
         <div className='w-full'>
             <Link href={`/main/units/${unit.id}`}>
                 <div className='my-2'>
-                    <h3 className={`font-bold text-yellow-200/70`}>{unit.name} <span className='font-light'> {unit.title ? unit.title : ""} </span></h3>
-                    <h3 className={`text-orange-500 italic font-extralight`}>{unit.specialization.name}</h3>
+                    <h3 className={`font-bold text-yellow-200/70`}>{unit.name} <span className='font-extralight italic text-orange-500'> {unit.title ? unit.title : ""} </span></h3>
+                    <h3 className={`text-yellow-200/70 italic font-light`}>{unit.specialization.name}</h3>
                 </div>
             </Link>
             <div className='w-full flex items-center justify-between'>
@@ -165,15 +165,15 @@ export default function UnitOption(unit: UnitOptionProps) {
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>
                     <p className={`px-3 ${paintTier(unit.rank)} text-2xl font-extrabold font-serif`}>{writeTier(unit.rank)}</p>
-                    <StatsSummary name={'Vit'} value={ value_multiplier( unit.base_vitality, unit.specialization.vitality, 10 )} />
+                    <StatsSummary name={'Vit'} value={ value_multiplier( unit.base_vitality, unit.specialization.vitality, 10 ) + value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
                     <StatsSummary name={'Str'} value={ value_multiplier( unit.base_strength, unit.specialization.strength, 5 )} />
                     <StatsSummary name={'Dex'} value={ value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )} />
                     <StatsSummary name={'Min'} value={ value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
                     <StatsSummary name={'Fth'} value={ value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
-                    <StatsSummary name={'Ess'} value={ value_multiplier( unit.base_essence, unit.specialization.essence, 10 )} />
+                    <StatsSummary name={'Ess'} value={ value_multiplier( unit.base_essence, unit.specialization.essence, 10 ) + value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
                     <StatsSummary name={'Agi'} value={ value_multiplier( unit.base_agility, unit.specialization.agility, 5 )} />                        
-                    <StatsSummary name={'Hit'} value={ value_multiplier( unit.base_hit_chance, unit.specialization.hit_chance, 5 )} />
-                    <StatsSummary name={'Eva'} value={ value_multiplier( unit.base_evasion, unit.specialization.evasion, 5 )} />
+                    <StatsSummary name={'Hit'} value={ value_multiplier( unit.base_hit_chance, unit.specialization.hit_chance, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
+                    <StatsSummary name={'Eva'} value={ value_multiplier( unit.base_evasion, unit.specialization.evasion, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
                     <StatsSummary name={'Hir'} value={ unit.specialization.hit_rate } />
                     <StatsSummary name={'Mov'} value={ unit.specialization.movement } />
                 </div>

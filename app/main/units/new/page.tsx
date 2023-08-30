@@ -15,6 +15,11 @@ export default function UnitsPage() {
         },
     })
 
+    const returnToUnits = () => {
+        router.push('/main/units');
+    }
+    
+
     if(status === "loading") return <div className="text-green-700">Loading...</div>  
     
     return (
@@ -22,7 +27,7 @@ export default function UnitsPage() {
         <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
             <h2 className={`mb-3 text-4xl font-medium`}>
                 New Unit{' '}
-                <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
+                <span className="inline-block transition-transform motion-reduce:transform-none">
                     -&gt;
                 </span>
             </h2>
@@ -34,7 +39,7 @@ export default function UnitsPage() {
            before:dark:to-purple-700 before:dark:opacity-10 after:dark:from-purple-900 after:dark:via-[#9101ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
         </div>
         <div>
-            <NewUnit user_id={session?.user_id}/>
+            <NewUnit user_id={session?.user_id} onCreate={returnToUnits} onClose={returnToUnits}/>
         </div>
     </main>
     )

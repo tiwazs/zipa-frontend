@@ -269,7 +269,7 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 selecttionQueryKey={'items'}
                                 selectionKey='item'
                                 selectionIdOnEndpoint={false}
-                                addEndpoint={`/specializations/add_item/${unit.id}?item_id=`}
+                                addEndpoint={`/units/add_item/${unit.id}?item_id=`}
                                 invalidationKey={`unit`} 
                                 extraFormParams={['quantity']}
                                 title={'Add Items'}
@@ -277,7 +277,7 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'/>}
                         </div>
                         {(unit.items && unit.items.length > 0) ? unit.items.map((item: any) => {
-                            return <ItemCard key={item.item.id} specializationitem={item} specializationId={unit.id} editable={editing} />
+                            return <ItemCard key={item.item.id} OwnerItem={item} editable={editing} deleteEndpoint={`/units/remove_item/${unit.id}?item_id=`} invaildateQueryKey={'unit'}  />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

@@ -14,6 +14,7 @@ interface CreateUnitFormOptions {
     specialization_id: string;
     name: string;
     title?: string;
+    prefix_title?: string;
     description?: string;
     base_vitality: number;
     base_strength: number;
@@ -36,7 +37,7 @@ interface NewUnitProps {
 
 const genUnitValues = async () => {
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/unit_gen/?sigma_divider=3`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/unit_gen/?sigma_divider=5`, {
             method: 'GET',
         });
 
@@ -183,6 +184,17 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
                                 type="text"
                                 name="title"
                                 placeholder="Title"
+                            />                                
+                        </div>
+                    </div>
+                    <div className=''>
+                        <div>
+                            <input 
+                                {...register("prefix_title", { required: false })}
+                                className='my-2 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                type="text"
+                                name="prefix_title"
+                                placeholder="Prefix Title"
                             />                                
                         </div>
                     </div>

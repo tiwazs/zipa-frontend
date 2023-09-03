@@ -13,6 +13,7 @@ interface UnitOptionProps {
     specialization_id: string;
     name: string;
     title?: string;
+    prefix_title?: string;
     description?: string;
     base_vitality: number;
     base_strength: number;
@@ -58,7 +59,10 @@ export default function UnitOption(unit: UnitOptionProps) {
         <div className='w-full'>
             <Link href={`/main/units/${unit.id}`}>
                 <div className='my-2'>
-                    <h3 className={`font-bold text-yellow-200/70`}>{unit.name} <span className='font-extralight italic text-orange-500'> {unit.title ? unit.title : ""} </span></h3>
+                    <h3 className={`font-bold text-yellow-200/70`}>
+                        {unit.prefix_title &&  <span className=' font-normal '> {unit.prefix_title} </span>}
+                        {unit.name} <span className='font-extralight italic text-orange-500'> {unit.title ? unit.title : ""} </span>
+                    </h3>
                     <h3 className={`text-yellow-200/70 italic font-light`}>{unit.specialization.name}</h3>
                 </div>
             </Link>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
-import SpecializationSkillCard from './SpecializationSkillCard';
-import NewSpecializationOptionDialog from './NewSpecializationOptionDialog';
+import NewOptionDialogWithSelection from '../../../_components/NewOptionDialogWithSelection';
 import TagObjectsSelector, { OjbectOptionType } from '../TagObjectsSelector';
 import { opbjectTypeOptions } from '../NewSpecializationDialog';
-import SpecializationTraitCard from './SpecializationTraitCard';
-import SpecializationItemCard from './SpecializationItemCard';
 import { paintTier, writeTier } from '@/app/_libs/text_paint_methods';
+import TraitCard from '@/app/_components/InformationCards/TraitCard';
+import SkillCard from '../../../_components/InformationCards/SkillCard';
+import ItemCard from '@/app/_components/InformationCards/ItemCard';
 
 interface Specialization {
     id: string;
@@ -284,37 +284,56 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
                             <h1>Traits</h1>
-                            {editing && <NewSpecializationOptionDialog specializationId={specialization.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
-                                title={'Add Traits'}
-                                description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
-                                selection={'traits'}/>}
+                            {editing && <NewOptionDialogWithSelection 
+                                    selectionEndpoint={'/traits/'} 
+                                    selecttionQueryKey={'traits'}
+                                    selectionKey='trait'
+                                    selectionIdOnEndpoint={true}
+                                    addEndpoint={`/specializations/add_trait/${specialization.id}?trait_id=`}
+                                    invalidationKey={`specialization`}
+                                    title={'Add Traits'}
+                                    description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'}
+                                    styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' />}
                         </div>
                         {(specialization.traits && specialization.traits.length > 0) ? specialization.traits.map((trait: any) => {
-                            return <SpecializationTraitCard key={trait.trait.id} specializationtrait={trait} specializationId={specialization.id} editable={editing} />
+                            return <TraitCard key={trait.trait.id} specializationtrait={trait} specializationId={specialization.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
                             <h1>Skills</h1>
-                            {editing && <NewSpecializationOptionDialog specializationId={specialization.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                            {editing && <NewOptionDialogWithSelection
+                                selectionEndpoint={'/skills/'} 
+                                selecttionQueryKey={'skills'}
+                                selectionKey='skill'
+                                selectionIdOnEndpoint={true}
+                                addEndpoint={`/specializations/add_skill/${specialization.id}?skill_id=`}
+                                invalidationKey={`specialization`} 
                                 title={'Add Skills'}
                                 description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
-                                selection={'skills'}/>}
+                                styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' />}
                         </div>
                         {(specialization.skills && specialization.skills.length > 0) ? specialization.skills.map((skill: any) => {
-                            return <SpecializationSkillCard key={skill.skill.id} specializationskill={skill} specializationId={specialization.id} editable={editing} />
+                            return <SkillCard key={skill.skill.id} specializationskill={skill} specializationId={specialization.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
                             <h1>Items</h1>
-                            {editing && <NewSpecializationOptionDialog specializationId={specialization.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                            {editing && <NewOptionDialogWithSelection 
+                                selectionEndpoint={'/items/'} 
+                                selecttionQueryKey={'items'}
+                                selectionKey='item'
+                                selectionIdOnEndpoint={false}
+                                addEndpoint={`/specializations/add_item/${specialization.id}?item_id=`}
+                                invalidationKey={`specialization`} 
+                                extraFormParams={['quantity']}
                                 title={'Add Items'}
                                 description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
-                                selection={'items'}/>}
+                                styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'/>}
                         </div>
                         {(specialization.items && specialization.items.length > 0) ? specialization.items.map((item: any) => {
-                            return <SpecializationItemCard key={item.item.id} specializationitem={item} specializationId={specialization.id} editable={editing} />
+                            return <ItemCard key={item.item.id} specializationitem={item} specializationId={specialization.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                 </div>

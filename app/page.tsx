@@ -20,7 +20,7 @@ export default function Home() {
         <MainOptionCard title="Skills" description="All The available abilities" link="/main/skills" />
         <MainOptionCard title="Items" description="All the available items" link="/main/items" />
         <MainOptionCard title="Effects" description="All the available Effecs" link="/main/effects" />
-        <MainOptionCard title="Unit Generation" description="All the available Effecs" link="/main/units" />
+        <MainOptionCard title="Units" description="All the available Effecs" link="/main/units" />
         <MainOptionCard title="Combat Calculator" description="All the available Effecs" link="/main/combat_calculator" />
       </div>
     </main>

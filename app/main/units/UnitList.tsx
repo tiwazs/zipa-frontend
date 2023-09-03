@@ -42,6 +42,7 @@ export default function EffectList() {
                     id={unit.id}
                     name={unit.name}
                     title={unit.title}
+                    prefix_title={unit.prefix_title}
                     description={unit.description}
                     base_vitality={unit.base_vitality}
                     base_strength={unit.base_strength}

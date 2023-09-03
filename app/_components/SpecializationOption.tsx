@@ -141,18 +141,19 @@ export default function SpecializationOption(specialization: SpecializationOptio
                 </div>
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>
+                    <img src={`/gen_icons/tier.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <p className={`px-3 ${paintTier(specialization.tier)} text-2xl font-extrabold font-serif`}>{writeTier(specialization.tier)}</p>
-                    <StatsSummary name={'Vit'} value={specialization.vitality} />
-                    <StatsSummary name={'Str'} value={specialization.strength} />
-                    <StatsSummary name={'Dex'} value={specialization.dexterity} />
-                    <StatsSummary name={'Min'} value={specialization.mind} />
-                    <StatsSummary name={'Fth'} value={specialization.faith} />
-                    <StatsSummary name={'Ess'} value={specialization.essence} />
-                    <StatsSummary name={'Agi'} value={specialization.agility} />                        
-                    <StatsSummary name={'Hit'} value={specialization.hit_chance} />
-                    <StatsSummary name={'Eva'} value={specialization.evasion} />
-                    <StatsSummary name={'Hir'} value={specialization.hit_rate} />
-                    <StatsSummary name={'Mov'} value={specialization.movement} />
+                    <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={specialization.vitality} />
+                    <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={specialization.strength} />
+                    <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={specialization.dexterity} />
+                    <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={specialization.mind} />
+                    <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={specialization.faith} />
+                    <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={specialization.essence} />
+                    <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={specialization.agility} />                        
+                    <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={specialization.hit_chance} />
+                    <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={specialization.evasion} />
+                    <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={specialization.hit_rate} />
+                    <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={specialization.movement} />
                 </div>
             </div>
         </div>

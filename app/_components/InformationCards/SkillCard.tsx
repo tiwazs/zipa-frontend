@@ -35,7 +35,7 @@ export default function SpecializationSkillCard({ specializationId, specializati
             <div className='flex items-center space-x-2'>
                 <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${specializationskill.skill.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
                 <p>
-                    <Link href={`/skills/${specializationskill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.name}</span></Link>
+                    <Link href={`/main/skills/${specializationskill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.name}</span></Link>
                 </p>
             </div>
             <p>

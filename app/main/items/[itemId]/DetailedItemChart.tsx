@@ -122,6 +122,46 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
 
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <h1>Type</h1>
+                        {editing ? <select 
+                            {...register("object_type", { required: true })}
+                            className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                            name='object_type'
+                            placeholder="CURVED_SWORD_1H"
+                        >
+                            <option value="OTHER">OTHER</option>
+                            <option value="CURVED_SWORD_1H">CURVED_SWORD_1H</option>
+                            <option value="CURVED_SWORD_2H">CURVED_SWORD_2H</option>
+                            <option value="STRAIGHT_SWORD_1H">STRAIGHT_SWORD_1H</option>
+                            <option value="STRAIGHT_SWORD_2H">STRAIGHT_SWORD_2H</option>
+                            <option value="AXE_1H">AXE_1H</option>
+                            <option value="AXE_2H">AXE_2H</option>
+                            <option value="HAMMER_1H">HAMMER_1H</option>
+                            <option value="HAMMER_2H">HAMMER_2H</option>
+                            <option value="SPEAR_1H">SPEAR_1H</option>
+                            <option value="SPEAR_2H">SPEAR_2H</option>
+                            <option value="JAVELIN_1H">JAVELIN_1H</option>
+                            <option value="STAFF_1H">STAFF_1H</option>
+                            <option value="STAFF_2H">STAFF_2H</option>
+                            <option value="BOW_2H">BOW_2H</option>
+                            <option value="CROSSBOW_2H">CROSSBOW_2H</option>
+                            <option value="DAGGER_1H">DAGGER_1H</option>
+                            <option value="SMALL_SHIELD">SMALL_SHIELD</option>
+                            <option value="MEDIUM_SHIELD">MEDIUM_SHIELD</option>
+                            <option value="LARGE_SHIELD">LARGE_SHIELD</option>
+                            <option value="LIGHT_ARMOR">LIGHT_ARMOR</option>
+                            <option value="MEDIUM_ARMOR">MEDIUM_ARMOR</option>
+                            <option value="HEAVY_ARMOR">HEAVY_ARMOR</option>
+                            <option value="AMULET">AMULET</option>
+                            <option value="TRINKET">TRINKET</option>
+                            <option value="RING">RING</option>
+                            <option value="CONSUMABLE">CONSUMABLE</option>
+                            <option value="MATERIAL">MATERIAL</option>
+                            <option value="KEY">KEY</option>                                    
+                            </select> : <h1 className={`my-2 py-3 ${item.object_type}`}>{item.object_type}</h1> }
+
+                    </div>
+                    <div className='flex items-center space-x-2'>
                         <h1>Magic Power</h1>
                         <input 
                             {...register("magic_effectiveness", { required: false })}

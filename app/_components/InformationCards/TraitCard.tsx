@@ -34,7 +34,7 @@ export default function SpecializationTraitCard({ specializationId, specializati
             <div className='flex items-center space-x-2'>
                 <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${specializationtrait.trait.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
                 <h3>
-                    <Link href={`/traits/${specializationtrait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.name}</span></Link>
+                    <Link href={`/main/traits/${specializationtrait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.name}</span></Link>
                     <div>
                         <span className='text-yellow-400/90 font-light italic text-sm'>{sub_title}</span>
                     </div>

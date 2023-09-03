@@ -63,7 +63,10 @@ export default function UnitOption(unit: UnitOptionProps) {
                         {unit.prefix_title &&  <span className=' font-normal '> {unit.prefix_title} </span>}
                         {unit.name} <span className='font-extralight italic text-orange-500'> {unit.title ? unit.title : ""} </span>
                     </h3>
-                    <h3 className={`text-yellow-200/70 italic font-light`}>{unit.specialization.name}</h3>
+                    <div className='flex items-center italic font-light text-sm'>
+                        <h3 className={`text-yellow-200/70 `}>{unit.specialization.name}</h3>
+                        <p className={`mx-2 ${paintTier(unit.specialization.tier)} font-extrabold font-serif`}>{`${writeTier(unit.specialization.tier)}`}</p>
+                    </div>
                 </div>
             </Link>
             <div className='w-full flex items-center justify-between'>
@@ -169,17 +172,17 @@ export default function UnitOption(unit: UnitOptionProps) {
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>
                     <p className={`px-3 ${paintTier(unit.rank)} text-2xl font-extrabold font-serif`}>{writeTier(unit.rank)}</p>
-                    <StatsSummary name={'Vit'} value={ value_multiplier( unit.base_vitality, unit.specialization.vitality, 10 ) + value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
-                    <StatsSummary name={'Str'} value={ value_multiplier( unit.base_strength, unit.specialization.strength, 5 )} />
-                    <StatsSummary name={'Dex'} value={ value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )} />
-                    <StatsSummary name={'Min'} value={ value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
-                    <StatsSummary name={'Fth'} value={ value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
-                    <StatsSummary name={'Ess'} value={ value_multiplier( unit.base_essence, unit.specialization.essence, 10 ) + value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
-                    <StatsSummary name={'Agi'} value={ value_multiplier( unit.base_agility, unit.specialization.agility, 5 )} />                        
-                    <StatsSummary name={'Hit'} value={ value_multiplier( unit.base_hit_chance, unit.specialization.hit_chance, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
-                    <StatsSummary name={'Eva'} value={ value_multiplier( unit.base_evasion, unit.specialization.evasion, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
-                    <StatsSummary name={'Hir'} value={ unit.specialization.hit_rate } />
-                    <StatsSummary name={'Mov'} value={ unit.specialization.movement } />
+                    <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={ value_multiplier( unit.base_vitality, unit.specialization.vitality, 10 ) + value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
+                    <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={ value_multiplier( unit.base_strength, unit.specialization.strength, 5 )} />
+                    <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={ value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )} />
+                    <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={ value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
+                    <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={ value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
+                    <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={ value_multiplier( unit.base_essence, unit.specialization.essence, 10 ) + value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
+                    <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={ value_multiplier( unit.base_agility, unit.specialization.agility, 5 )} />                        
+                    <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ value_multiplier( unit.base_hit_chance, unit.specialization.hit_chance, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
+                    <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={ value_multiplier( unit.base_evasion, unit.specialization.evasion, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
+                    <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.specialization.hit_rate } />
+                    <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.specialization.movement } />
                 </div>
             </div>
         </div>

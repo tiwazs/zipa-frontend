@@ -100,6 +100,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
             <form className='rounded-2xl' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mx-2 lg:grid lg:grid-cols-4'>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/tier.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Tier</h1>
                         {editing ?<input 
                             {...register("tier", { required: false, valueAsNumber: true })}
@@ -111,6 +112,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className={`my-2 py-3 text-2xl font-extrabold font-serif ${paintTier(specialization.tier)}`}>{writeTier(specialization.tier)}</h1> }                              
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Vitality</h1>
                         {editing ? <input 
                             {...register("vitality", { required: false, valueAsNumber: true })}
@@ -122,6 +124,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.vitality && specialization.vitality !== 0 ) ? specialization.vitality?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/strength.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Strength</h1>
                         {editing ? <input 
                             {...register("strength", { required: false, valueAsNumber: true })}
@@ -133,6 +136,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.strength && specialization.strength !== 0 ) ? specialization.strength?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/dexterity.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Dexterity</h1>
                         {editing ? <input 
                             {...register("dexterity", { required: false, valueAsNumber: true })}
@@ -144,6 +148,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.dexterity && specialization.dexterity !== 0 ) ? specialization.dexterity?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/mind.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Mind</h1>
                         {editing ? <input 
                             {...register("mind", { required: false, valueAsNumber: true })}
@@ -155,6 +160,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.mind && specialization.mind !== 0 ) ? specialization.mind?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/faith.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Faith</h1>
                         {editing ? <input 
                             {...register("faith", { required: false, valueAsNumber: true })}
@@ -166,6 +172,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.faith && specialization.faith !== 0 ) ? specialization.faith?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Armor</h1>
                         {editing ? <input 
                             {...register("armor", { required: false, valueAsNumber: true })}
@@ -177,6 +184,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.armor && specialization.armor !== 0 ) ? specialization.armor?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/magic_armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Magic Armor</h1>
                         {editing ? <input 
                             {...register("magic_armor", { required: false, valueAsNumber: true })}
@@ -188,6 +196,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.magic_armor && specialization.magic_armor !== 0 ) ? specialization.magic_armor?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Essence</h1>
                         {editing ? <input 
                             {...register("essence", { required: false, valueAsNumber: true })}
@@ -199,6 +208,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.essence && specialization.essence !== 0 ) ? specialization.essence?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/agility.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Agility</h1>
                         {editing ? <input 
                             {...register("agility", { required: false, valueAsNumber: true })}
@@ -210,6 +220,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.agility && specialization.agility !== 0 ) ? specialization.agility?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/hit_chance.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />  
                         <h1>Hit Chance</h1>
                         {editing ? <input 
                             {...register("hit_chance", { required: false, valueAsNumber: true })}
@@ -221,6 +232,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.hit_chance && specialization.hit_chance !== 0 ) ? specialization.hit_chance?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/evasion.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Evasion</h1>
                         {editing ? <input 
                             {...register("evasion", { required: false, valueAsNumber: true })}
@@ -232,6 +244,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.evasion && specialization.evasion !== 0 ) ? specialization.evasion?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/hit_rate.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Hit Rate</h1>
                         {editing ? <input 
                             {...register("hit_rate", { required: false, valueAsNumber: true })}
@@ -243,6 +256,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.hit_rate && specialization.hit_rate !== 0 ) ? specialization.hit_rate?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                         <h1>Movement</h1>
                         {editing ? <input 
                             {...register("movement", { required: false, valueAsNumber: true })}

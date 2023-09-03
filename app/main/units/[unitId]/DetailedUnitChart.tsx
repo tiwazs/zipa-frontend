@@ -4,8 +4,9 @@ import { useQueryClient } from 'react-query';
 import TraitCard from '@/app/_components/InformationCards/TraitCard';
 import SkillCard from '@/app/_components/InformationCards/SkillCard';
 import ItemCard from '@/app/_components/InformationCards/ItemCard';
-import NewSpecializationOptionDialog from '../../../_components/NewOptionDialogWithSelection';
 import NewOptionDialogWithSelection from '../../../_components/NewOptionDialogWithSelection';
+import { UnitParameters } from '@/app/_libs/equations';
+import { FaArrowAltCircleRight } from 'react-icons/fa';
 
 interface Unit {
     id: string;
@@ -50,6 +51,11 @@ export const splitWeaponProficiencies = (weapon_proficiencies: string | undefine
 export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps) {
     const [ editing, setEditing ] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors }, setValue } = useForm<Unit>();
+    let [ unitParameters, setUnitParameters ] = useState(new UnitParameters(unit));
+    useEffect(() => {
+        setUnitParameters(new UnitParameters(unit));
+    }, [unit]);
+
     const queryClient = useQueryClient();
 
     const onCancel = () => {
@@ -86,126 +92,236 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
             </h2>
             <form className='rounded-2xl' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mx-2'>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Vitality</h1>
-                        {editing ? <input 
-                            {...register("base_vitality", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_vitality"
-                            disabled={!editing}
-                            placeholder={(unit.base_vitality && unit.base_vitality !== 0 ) ? unit.base_vitality?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_vitality && unit.base_vitality !== 0 ) ? unit.base_vitality?.toString() : "0"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Strength</h1>
-                        {editing ? <input 
-                            {...register("base_strength", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_strength"
-                            disabled={!editing}
-                            placeholder={(unit.base_strength && unit.base_strength !== 0 ) ? unit.base_strength?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_strength && unit.base_strength !== 0 ) ? unit.base_strength?.toString() : "0"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Dexterity</h1>
-                        {editing ? <input 
-                            {...register("base_dexterity", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_dexterity"
-                            disabled={!editing}
-                            placeholder={(unit.base_dexterity && unit.base_dexterity !== 0 ) ? unit.base_dexterity?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_dexterity && unit.base_dexterity !== 0 ) ? unit.base_dexterity?.toString() : "0"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Mind</h1>
-                        {editing ? <input 
-                            {...register("base_mind", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_mind"
-                            disabled={!editing}
-                            placeholder={(unit.base_mind && unit.base_mind !== 0 ) ? unit.base_mind?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_mind && unit.base_mind !== 0 ) ? unit.base_mind?.toString() : "0"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Faith</h1>
-                        {editing ? <input 
-                            {...register("base_faith", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_faith"
-                            disabled={!editing}
-                            placeholder={(unit.base_faith && unit.base_faith !== 0 ) ? unit.base_faith?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_faith && unit.base_faith !== 0 ) ? unit.base_faith?.toString() : "0"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Essence</h1>
-                        {editing ? <input 
-                            {...register("base_essence", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_essence"
-                            disabled={!editing}
-                            placeholder={(unit.base_essence && unit.base_essence !== 0 ) ? unit.base_essence?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_essence && unit.base_essence !== 0 ) ? unit.base_essence?.toString() : "0"}</h1>}                           
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Agility</h1>
-                        {editing ? <input 
-                            {...register("base_agility", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_agility"
-                            disabled={!editing}
-                            placeholder={(unit.base_agility && unit.base_agility !== 0 ) ? unit.base_agility?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_agility && unit.base_agility !== 0 ) ? unit.base_agility?.toString() : "0"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Hit Chance</h1>
-                        {editing ? <input 
-                            {...register("base_hit_chance", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_hit_chance"
-                            disabled={!editing}
-                            placeholder={(unit.base_hit_chance && unit.base_hit_chance !== 0 ) ? unit.base_hit_chance?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_hit_chance && unit.base_hit_chance !== 0 ) ? unit.base_hit_chance?.toString() : "0"}</h1>}                           
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Base Evasion</h1>
-                        {editing ? <input 
-                            {...register("base_evasion", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="base_evasion"
-                            disabled={!editing}
-                            placeholder={(unit.base_evasion && unit.base_evasion !== 0 ) ? unit.base_evasion?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_evasion && unit.base_evasion !== 0 ) ? unit.base_evasion?.toString() : "0"}</h1>}                           
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Skill Picks</h1>
-                        {editing ? <input 
-                            {...register("skill_picks", { required: false})}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="text"
-                            name="skill_picks"
-                            disabled={!editing}
-                            placeholder={unit.skill_picks ? unit.skill_picks : "N/A"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.skill_picks ? unit.skill_picks : "N/A"}</h1>}
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Rank</h1>
-                        {editing ? <input 
-                            {...register("rank", { required: false, valueAsNumber: true })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
-                            name="rank"
-                            disabled={!editing}
-                            placeholder={(unit.rank && unit.rank !== 0 ) ? unit.rank?.toString() : "0"}
-                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.rank && unit.rank !== 0 ) ? unit.rank?.toString() : "0"}</h1>}
+                    {/* 2 Columns. Left for base parameters, editable - Right for Result parameters */}
+                    <div className='flex space-x-10'>
+                        {/* Left. Base Parameters */}
+                        <div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Vitality</h1>
+                                {editing ? <input 
+                                    {...register("base_vitality", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_vitality"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_vitality && unit.base_vitality !== 0 ) ? unit.base_vitality?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_vitality && unit.base_vitality !== 0 ) ? unit.base_vitality?.toString() : "0"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/strength.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Strength</h1>
+                                {editing ? <input 
+                                    {...register("base_strength", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_strength"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_strength && unit.base_strength !== 0 ) ? unit.base_strength?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_strength && unit.base_strength !== 0 ) ? unit.base_strength?.toString() : "0"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/dexterity.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Dexterity</h1>
+                                {editing ? <input 
+                                    {...register("base_dexterity", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_dexterity"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_dexterity && unit.base_dexterity !== 0 ) ? unit.base_dexterity?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_dexterity && unit.base_dexterity !== 0 ) ? unit.base_dexterity?.toString() : "0"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/mind.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Mind</h1>
+                                {editing ? <input 
+                                    {...register("base_mind", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_mind"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_mind && unit.base_mind !== 0 ) ? unit.base_mind?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_mind && unit.base_mind !== 0 ) ? unit.base_mind?.toString() : "0"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/faith.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Faith</h1>
+                                {editing ? <input 
+                                    {...register("base_faith", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_faith"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_faith && unit.base_faith !== 0 ) ? unit.base_faith?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_faith && unit.base_faith !== 0 ) ? unit.base_faith?.toString() : "0"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Essence</h1>
+                                {editing ? <input 
+                                    {...register("base_essence", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_essence"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_essence && unit.base_essence !== 0 ) ? unit.base_essence?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_essence && unit.base_essence !== 0 ) ? unit.base_essence?.toString() : "0"}</h1>}                           
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/agility.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Agility</h1>
+                                {editing ? <input 
+                                    {...register("base_agility", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_agility"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_agility && unit.base_agility !== 0 ) ? unit.base_agility?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_agility && unit.base_agility !== 0 ) ? unit.base_agility?.toString() : "0"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/hit_chance.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Hit Chance</h1>
+                                {editing ? <input 
+                                    {...register("base_hit_chance", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_hit_chance"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_hit_chance && unit.base_hit_chance !== 0 ) ? unit.base_hit_chance?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_hit_chance && unit.base_hit_chance !== 0 ) ? unit.base_hit_chance?.toString() : "0"}</h1>}                           
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/evasion.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Base Evasion</h1>
+                                {editing ? <input 
+                                    {...register("base_evasion", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="base_evasion"
+                                    disabled={!editing}
+                                    placeholder={(unit.base_evasion && unit.base_evasion !== 0 ) ? unit.base_evasion?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.base_evasion && unit.base_evasion !== 0 ) ? unit.base_evasion?.toString() : "0"}</h1>}                           
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/skill_picks.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Skill Picks</h1>
+                                {editing ? <input 
+                                    {...register("skill_picks", { required: false})}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="text"
+                                    name="skill_picks"
+                                    disabled={!editing}
+                                    placeholder={unit.skill_picks ? unit.skill_picks : "N/A"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.skill_picks ? unit.skill_picks : "N/A"}</h1>}
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/rank.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Rank</h1>
+                                {editing ? <input 
+                                    {...register("rank", { required: false, valueAsNumber: true })}
+                                    className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                                    type="number"
+                                    name="rank"
+                                    disabled={!editing}
+                                    placeholder={(unit.rank && unit.rank !== 0 ) ? unit.rank?.toString() : "0"}
+                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.rank && unit.rank !== 0 ) ? unit.rank?.toString() : "0"}</h1>}
+                            </div>
+                        </div>
+                        <div className='flex items-center px-8'>
+                            <h3 className=' text-xl  '><FaArrowAltCircleRight /></h3>
+                        </div>
+                        <div>
+                            {/* Right. Result Parameters */}
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Vitality</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.vitality}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/strength.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Strength</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.strength}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/dexterity.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Dexterity</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.dexterity}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/mind.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Mind</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.mind}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/faith.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Faith</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.faith}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Essence</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.essence}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/agility.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Agility</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.agility}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/hit_chance.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Hit Chance</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.hit_chance}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/evasion.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Evasion</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.evasion}</h1>
+                            </div>
+                        </div>
+                        <div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Armor</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.armor}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/magic_armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Magic Armor</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.magic_armor}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/hit_rate.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Hit Rate</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.hit_rate}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Movement</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.movement}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/shield.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Shield</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.shield}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/physical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Physical Damage</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.physical_damage}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/magical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Magical Damage</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.magical_damage}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Weight</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.weight}</h1>
+                            </div>
+                        </div>
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Title</h1>

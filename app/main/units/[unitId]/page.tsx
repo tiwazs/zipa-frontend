@@ -2,6 +2,7 @@
 import React from 'react'
 import { useQuery, useQueryClient } from 'react-query';
 import DetailedUnitChart from './DetailedUnitChart';
+import { paintTier, writeTier } from '@/app/_libs/text_paint_methods';
 
 type UnitPageProps = {
     params: {
@@ -44,7 +45,10 @@ export default function UnitPage({ params: { unitId } }: UnitPageProps) {
                                 -&gt;
                             </span>
                         </div>
-                        <span className='italic font-light text-2xl'>{query.data.specialization.name}</span>
+                        <div className='flex items-center italic font-light text-2xl'>
+                            <span className='italic'>{query.data.specialization.name}</span>
+                            <p className={`mx-2 ${paintTier(query.data.specialization.tier)} font-extrabold font-serif`}>{`${writeTier(query.data.specialization.tier)}`}</p>
+                        </div>
                     </h2>
                 </div>
                 <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial

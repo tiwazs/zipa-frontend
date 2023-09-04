@@ -59,6 +59,11 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
 
     const onSubmit:SubmitHandler<Item> = async (data) => {
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
+        
+        // A machete. The form requires a number (and API), but using the UI form as number doesn't let me use floats
+        // so I'm using a string from the UI which is parsed to float automatically. however, when i dont input anything
+        // the value becomes an empty string, which is not a valid number, so i need to convert it to undefined which the API accepts as "Let the previous value"
+        data.weight = (data.weight?.toString() !== "") ? data.weight : undefined;
 
         let form = new FormData();
         if(data.icon){

@@ -124,11 +124,12 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                     <div className='flex items-center space-x-2'>
                         <h1>Type</h1>
                         {editing ? <select 
-                            {...register("object_type", { required: true })}
-                            className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                            {...register("object_type", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
                             name='object_type'
                             placeholder="CURVED_SWORD_1H"
                         >
+                            <option value=""></option>
                             <option value="OTHER">OTHER</option>
                             <option value="CURVED_SWORD_1H">CURVED_SWORD_1H</option>
                             <option value="CURVED_SWORD_2H">CURVED_SWORD_2H</option>

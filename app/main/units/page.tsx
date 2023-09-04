@@ -38,7 +38,7 @@ export default function UnitsPage() {
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
         </div>
         <Suspense fallback={<div className="text-green-700">Loading...</div>}>
-            <UnitList />
+            <UnitList user_id={session?.user_id} />
         </Suspense>
     </main>
     )

@@ -37,8 +37,8 @@ export default function OptionSelection({endpoint, queryKey, onSelectionChange,s
     }
 
     return (
-      <div className={`flex flex-col items-center ${style}`}>
-        <div className="top-16 h-10 w-full overflow-visible">
+      <div className={`flex flex-col items-center ${style} overflow-y-visible`}>
+        <div className="top-16 h-40 w-full overflow-y-visible">
           <Listbox value={selected} onChange={HandleSelectionChange}>
             <div className="relative mt-1">
               <Listbox.Button className="relative w-full cursor-default rounded-lg bg-black hover:bg-purple-300/10 text-yellow-200/70 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none

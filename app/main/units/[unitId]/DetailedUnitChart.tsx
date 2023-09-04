@@ -31,6 +31,23 @@ interface Unit {
     items?: any[];
     faction: any;
     specialization: any;
+    vitality: number;
+    strength: number;
+    dexterity: number;
+    mind: number;
+    faith: number;
+    essence: number;
+    agility: number;
+    hit_chance: number;
+    evasion: number;
+    armor: number;
+    magic_armor: number;
+    hit_rate: number;
+    movement: number;
+    shield: number;
+    physical_damage: number;
+    magical_damage: number;
+    weight: number;
     removeEndpoint: string;
     endpointMethod: string;
     queryInvalidateKey?: string;
@@ -51,10 +68,6 @@ export const splitWeaponProficiencies = (weapon_proficiencies: string | undefine
 export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps) {
     const [ editing, setEditing ] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors }, setValue } = useForm<Unit>();
-    let [ unitParameters, setUnitParameters ] = useState(new UnitParameters(unit));
-    useEffect(() => {
-        setUnitParameters(new UnitParameters(unit));
-    }, [unit]);
 
     const queryClient = useQueryClient();
 
@@ -237,89 +250,89 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Vitality</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.vitality}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.vitality}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/strength.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Strength</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.strength}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.strength}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/dexterity.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Dexterity</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.dexterity}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.dexterity}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/mind.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Mind</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.mind}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.mind}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/faith.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Faith</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.faith}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.faith}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Essence</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.essence}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.essence}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/agility.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Agility</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.agility}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.agility}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/hit_chance.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Hit Chance</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.hit_chance}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.hit_chance}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/evasion.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Evasion</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.evasion}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.evasion}</h1>
                             </div>
                         </div>
                         <div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Armor</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.armor}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.armor}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/magic_armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Magic Armor</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.magic_armor}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.magic_armor}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/hit_rate.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Hit Rate</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.hit_rate}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.hit_rate}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Movement</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.movement}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.movement}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/shield.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Shield</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.shield}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.shield}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/physical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Physical Damage</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.physical_damage}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.physical_damage}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/magical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Magical Damage</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.magical_damage}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.magical_damage}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Weight</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unitParameters.weight}</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.weight}</h1>
                             </div>
                         </div>
                     </div>

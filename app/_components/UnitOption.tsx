@@ -15,15 +15,23 @@ interface UnitOptionProps {
     title?: string;
     prefix_title?: string;
     description?: string;
-    base_vitality: number;
-    base_strength: number;
-    base_dexterity: number;
-    base_mind: number;
-    base_faith: number;
-    base_essence: number;
-    base_agility: number;
-    base_hit_chance: number;
-    base_evasion: number;
+    vitality: number;
+    strength: number;
+    dexterity: number;
+    mind: number;
+    faith: number;
+    essence: number;
+    agility: number;
+    hit_chance: number;
+    evasion: number;
+    armor: number;
+    magic_armor: number;
+    hit_rate: number;
+    movement: number;
+    shield: number;
+    physical_damage: number;
+    magical_damage: number;
+    weight: number;
     skill_picks?: string;
     rank: number;
     items?: any[];
@@ -146,9 +154,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                     {/* Unit Initial Items*/}
                     { (unit.items && unit.items.length > 0) && 
                     <p className='italic font-light'>
-                        Initial Items:
+                        Items:
                     </p>}
-                    {unit.specialization.items.map((item: any) => {
+                    {unit.items!.map((item: any) => {
                         return (
                         <div key={item.item.id} className='px-4 font-light italic m-1'>
                             <div className='flex items-center space-x-3'>
@@ -172,17 +180,27 @@ export default function UnitOption(unit: UnitOptionProps) {
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>
                     <p className={`px-3 ${paintTier(unit.rank)} text-2xl font-extrabold font-serif`}>{writeTier(unit.rank)}</p>
-                    <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={ value_multiplier( unit.base_vitality, unit.specialization.vitality, 10 ) + value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
-                    <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={ value_multiplier( unit.base_strength, unit.specialization.strength, 5 )} />
-                    <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={ value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )} />
-                    <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={ value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
-                    <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={ value_multiplier( unit.base_faith, unit.specialization.faith, 5 )} />
-                    <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={ value_multiplier( unit.base_essence, unit.specialization.essence, 10 ) + value_multiplier( unit.base_mind, unit.specialization.mind, 5 )} />
-                    <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={ value_multiplier( unit.base_agility, unit.specialization.agility, 5 )} />                        
-                    <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ value_multiplier( unit.base_hit_chance, unit.specialization.hit_chance, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
-                    <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={ value_multiplier( unit.base_evasion, unit.specialization.evasion, 5 ) + value_multiplier( unit.base_dexterity, unit.specialization.dexterity, 5 )/2} />
-                    <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.specialization.hit_rate } />
-                    <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.specialization.movement } />
+                    <div className='flex flex-col items-center'>
+                    <div className='flex space-x-3 items-center'>
+                        <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={ unit.vitality } />
+                        <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={ unit.strength } />
+                        <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={ unit.dexterity } />
+                        <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={ unit.mind } />
+                        <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={ unit.faith } />
+                        <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={ unit.essence } />
+                        <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={ unit.agility } />                        
+                        <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ unit.hit_chance  } />
+                        <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={ unit.evasion } />
+                        <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.specialization.hit_rate } />
+                        <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.specialization.movement } />
+                        <StatsSummary icon="/gen_icons/armor.png" name={'Arm'} value={ unit.specialization.armor } />
+                        <StatsSummary icon="/gen_icons/magic_armor.png" name={'Mar'} value={ unit.specialization.magic_armor } />
+                    </div>
+                    <div className='flex space-x-3 items-center'>
+                        <StatsSummary icon="/gen_icons/physical_damage.png" name={'Pdg'} value={ unit.physical_damage } />
+                        <StatsSummary icon="/gen_icons/magical_damage.png" name={'Mdg'} value={ unit.magical_damage } />
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

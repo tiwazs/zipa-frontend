@@ -6,9 +6,9 @@ import UnitOption from '../../_components/UnitOption';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-const getUnits = async () => {
+const getUnits = async (user_id: string) => {
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/units/?include_traits=true&include_skills=true&include_items=true`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/units/user/extended/${user_id}?include_traits=true&include_skills=true&include_items=true`, {
             method: 'GET',
         });
 
@@ -19,8 +19,12 @@ const getUnits = async () => {
     }
 }
 
-export default function EffectList() {
-    const query = useQuery(["units", getUnits], getUnits);
+interface EffectListProps {
+    user_id: string;
+}
+
+export default function EffectList({user_id}: EffectListProps) {
+    const query = useQuery(["units", user_id], ()=> getUnits(user_id));
     const router = useRouter();
     // Fucking library. LET ME ADD THE GOD DAMMED USER ID TO THE SESSION TO MAKE REQUESTS
     const { data: session, status }:{update:any, data:any, status:any} = useSession({
@@ -44,15 +48,23 @@ export default function EffectList() {
                     title={unit.title}
                     prefix_title={unit.prefix_title}
                     description={unit.description}
-                    base_vitality={unit.base_vitality}
-                    base_strength={unit.base_strength}
-                    base_dexterity={unit.base_dexterity}
-                    base_mind={unit.base_mind}
-                    base_faith={unit.base_faith}
-                    base_essence={unit.base_essence}
-                    base_agility={unit.base_agility}
-                    base_hit_chance={unit.base_hit_chance}
-                    base_evasion={unit.base_evasion}
+                    vitality={unit.vitality}
+                    strength={unit.strength}
+                    dexterity={unit.dexterity}
+                    mind={unit.mind}
+                    faith={unit.faith}
+                    essence={unit.essence}
+                    agility={unit.agility}
+                    hit_chance={unit.hit_chance}
+                    evasion={unit.evasion}
+                    armor={unit.armor}
+                    magic_armor={unit.magic_armor}
+                    hit_rate={unit.hit_rate}
+                    movement={unit.movement}
+                    shield={unit.shield}
+                    physical_damage={unit.physical_damage}
+                    magical_damage={unit.magical_damage}
+                    weight={unit.weight}
                     items={unit.items}
                     rank={unit.rank}
                     user_id={session?.user_id}

@@ -65,6 +65,8 @@ export default function EffectList({user_id}: EffectListProps) {
                     physical_damage={unit.physical_damage}
                     magical_damage={unit.magical_damage}
                     weight={unit.weight}
+                    weight_penalty={unit.weight_penalty}
+                    skill_picks={unit.skill_picks}
                     items={unit.items}
                     rank={unit.rank}
                     user_id={session?.user_id}

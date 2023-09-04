@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
@@ -32,6 +32,7 @@ interface UnitOptionProps {
     physical_damage: number;
     magical_damage: number;
     weight: number;
+    weight_penalty: number;
     skill_picks?: string;
     rank: number;
     items?: any[];
@@ -45,6 +46,13 @@ interface UnitOptionProps {
 
 export default function UnitOption(unit: UnitOptionProps) {
     const queryClient = useQueryClient();
+    const [pickedSkills, setPickedSkills] = React.useState<number[]>([]);
+    useEffect(() => {
+        if(unit){
+            //setPickedSkills(unit.skill_picks ? parseInt(unit.skill_picks.split("|")) : []);
+            setPickedSkills(unit.skill_picks ? unit.skill_picks.split("|").map((skill: string) => parseInt(skill)-1) : []);
+        }
+    }, [unit])
 
 
     const deleteUnit = async () => {
@@ -131,24 +139,24 @@ export default function UnitOption(unit: UnitOptionProps) {
                     <p className='italic font-light'>
                         Skills:
                     </p>}
-                    {unit.specialization.skills.map((skill: any) => {
-                        return (
-                        <div key={skill.skill.id} className='px-4 font-light italic m-1'>
-                            <div className='flex items-center space-x-3'>
-                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                    {unit.specialization.skills.map((skill: any, index: number) => {
+                        return  (
+                            pickedSkills.includes(index) && <div key={skill.skill.id} className='px-4 font-light italic m-1'>
+                                <div className='flex items-center space-x-3'>
+                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <p>
+                                        <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
+                                    </p>
+                                </div>
                                 <p>
-                                    <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
+                                    <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
                                 </p>
+                                <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                    { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
+                                    { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
+                                    { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
+                                </div>
                             </div>
-                            <p>
-                                <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
-                            </p>
-                            <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                                { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
-                                { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
-                                { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
-                            </div>
-                        </div>
                         )
                     })}
                     {/* Unit Initial Items*/}
@@ -189,16 +197,17 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={ unit.faith } />
                         <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={ unit.essence } />
                         <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={ unit.agility } />                        
-                        <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ unit.hit_chance  } />
                         <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={ unit.evasion } />
-                        <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.specialization.hit_rate } />
-                        <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.specialization.movement } />
-                        <StatsSummary icon="/gen_icons/armor.png" name={'Arm'} value={ unit.specialization.armor } />
-                        <StatsSummary icon="/gen_icons/magic_armor.png" name={'Mar'} value={ unit.specialization.magic_armor } />
+                        <StatsSummary icon="/gen_icons/armor.png" name={'Arm'} value={ unit.armor } />
+                        <StatsSummary icon="/gen_icons/magic_armor.png" name={'Mar'} value={ unit.magic_armor } />
+                        <StatsSummary icon="/gen_icons/shield.png" name={'Shd'} value={ unit.shield } />
+                        <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.movement } />
                     </div>
                     <div className='flex space-x-3 items-center'>
                         <StatsSummary icon="/gen_icons/physical_damage.png" name={'Pdg'} value={ unit.physical_damage } />
                         <StatsSummary icon="/gen_icons/magical_damage.png" name={'Mdg'} value={ unit.magical_damage } />
+                        <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ unit.hit_chance  } />
+                        <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.hit_rate } />
                     </div>
                     </div>
                 </div>

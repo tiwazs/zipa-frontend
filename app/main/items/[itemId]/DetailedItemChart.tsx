@@ -418,9 +418,9 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                     <div className='flex items-center space-x-2'>
                         <h1>Weight</h1>
                         {editing ? <input 
-                            {...register("weight", { required: false, valueAsNumber: true })}
+                            {...register("weight", { required: false })}
                             className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="number"
+                            type="text"
                             name="weight"
                             disabled={!editing}
                             placeholder={(item.weight && item.weight !== 0 ) ? item.weight?.toString() : "0"}

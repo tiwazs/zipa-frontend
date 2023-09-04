@@ -5,7 +5,6 @@ import TraitCard from '@/app/_components/InformationCards/TraitCard';
 import SkillCard from '@/app/_components/InformationCards/SkillCard';
 import ItemCard from '@/app/_components/InformationCards/ItemCard';
 import NewOptionDialogWithSelection from '../../../_components/NewOptionDialogWithSelection';
-import { UnitParameters } from '@/app/_libs/equations';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 
 interface Unit {
@@ -48,6 +47,7 @@ interface Unit {
     physical_damage: number;
     magical_damage: number;
     weight: number;
+    weight_penalty: number;
     removeEndpoint: string;
     endpointMethod: string;
     queryInvalidateKey?: string;
@@ -68,6 +68,14 @@ export const splitWeaponProficiencies = (weapon_proficiencies: string | undefine
 export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps) {
     const [ editing, setEditing ] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors }, setValue } = useForm<Unit>();
+    let [ pickedSkills, setPickedSkills ] = useState<number[]>([]);
+
+    useEffect(() => {
+        if(unit){
+            //setPickedSkills(unit.skill_picks ? parseInt(unit.skill_picks.split("|")) : []);
+            setPickedSkills(unit.skill_picks ? unit.skill_picks.split("|").map((skill: string) => parseInt(skill)-1) : []);
+        }
+    }, [unit])
 
     const queryClient = useQueryClient();
 
@@ -334,6 +342,11 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <h1>Weight</h1>
                                 <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.weight}</h1>
                             </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Weight Penalty</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.weight_penalty}</h1>
+                            </div>
                         </div>
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>
@@ -386,8 +399,8 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                             <h1>Skills</h1>
                         </div>
 
-                        {(unit.specialization.skills && unit.specialization.skills.length > 0) ? unit.specialization.skills.map((skill: any) => {
-                            return <SkillCard key={skill.skill.id} specializationskill={skill} specializationId={unit.specialization.id} editable={false} />
+                        {(unit.specialization.skills && unit.specialization.skills.length > 0) ? unit.specialization.skills.map((skill: any, index: number) => {
+                            return pickedSkills.includes(index) && <SkillCard key={skill.skill.id} specializationskill={skill} specializationId={unit.specialization.id} editable={false} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>

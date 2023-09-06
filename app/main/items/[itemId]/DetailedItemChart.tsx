@@ -17,6 +17,8 @@ interface Item {
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
+    armor_piercing?: string;
+    spell_piercing?: string;
     vitality_recovery?: string;
     essence_recovery?: string;
     vitality?: string;
@@ -209,6 +211,28 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                             name="healing"
                             disabled={!editing}
                             placeholder={item.healing ? item.healing : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Armor Piercing</h1>
+                        <input 
+                            {...register("armor_piercing", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="armor_piercing"
+                            disabled={!editing}
+                            placeholder={item.armor_piercing ? item.armor_piercing : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Spell Piercing</h1>
+                        <input 
+                            {...register("spell_piercing", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="spell_piercing"
+                            disabled={!editing}
+                            placeholder={item.spell_piercing ? item.spell_piercing : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>

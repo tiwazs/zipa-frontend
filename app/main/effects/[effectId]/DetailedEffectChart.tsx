@@ -10,12 +10,14 @@ interface Effect {
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
+    armor_piercing?: string;
+    spell_piercing?: string;
     vitality?: string;
+    essence?: string;
     range?: string;
     damage?: string;
     armor?: string;
     magic_armor?: string;
-    essence?: string;
     agility?: string;
     hit_chance?: string;
     evasion?: string;
@@ -142,6 +144,28 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
+                        <h1>Armor Piercing</h1>
+                        <input 
+                            {...register("armor_piercing", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="armor_piercing"
+                            disabled={!editing}
+                            placeholder={effect.armor_piercing ? effect.armor_piercing : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Spell Piercing</h1>
+                        <input 
+                            {...register("spell_piercing", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="spell_piercing"
+                            disabled={!editing}
+                            placeholder={effect.spell_piercing ? effect.spell_piercing : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
                         <h1>Vitality</h1>
                         <input 
                             {...register("vitality", { required: false })}
@@ -150,6 +174,17 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="vitality"
                             disabled={!editing}
                             placeholder={effect.vitality ? effect.vitality : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Essence</h1>
+                        <input 
+                            {...register("essence", { required: false })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="text"
+                            name="essence"
+                            disabled={!editing}
+                            placeholder={effect.essence ? effect.essence : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>
@@ -194,17 +229,6 @@ export default function DetailedEffectChart({effect, styles}: DetailedEffectChar
                             name="magic_armor"
                             disabled={!editing}
                             placeholder={effect.magic_armor ? effect.magic_armor : "N/A"}
-                        />                                
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                        <h1>Essence</h1>
-                        <input 
-                            {...register("essence", { required: false })}
-                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                            type="text"
-                            name="essence"
-                            disabled={!editing}
-                            placeholder={effect.essence ? effect.essence : "N/A"}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>

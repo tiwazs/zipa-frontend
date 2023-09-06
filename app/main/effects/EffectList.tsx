@@ -34,12 +34,14 @@ export default function EffectList() {
                     physical_damage={effect.physical_damage}
                     magical_damage={effect.magical_damage}
                     healing={effect.healing}
+                    armor_piercing={effect.armor_piercing}
+                    spell_piercing={effect.spell_piercing}
                     vitality={effect.vitality}
+                    essence={effect.essence}
                     range={effect.range}
                     damage={effect.damage}
                     armor={effect.armor}
                     magic_armor={effect.magic_armor}
-                    essence={effect.essence}
                     agility={effect.agility}
                     hit_chance={effect.hit_chance}
                     evasion={effect.evasion}

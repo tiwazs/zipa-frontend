@@ -59,6 +59,8 @@ export default function EffectList({user_id}: EffectListProps) {
                     evasion={unit.evasion}
                     armor={unit.armor}
                     magic_armor={unit.magic_armor}
+                    armor_piercing={unit.armor_piercing}
+                    spell_piercing={unit.spell_piercing}
                     hit_rate={unit.hit_rate}
                     movement={unit.movement}
                     shield={unit.shield}

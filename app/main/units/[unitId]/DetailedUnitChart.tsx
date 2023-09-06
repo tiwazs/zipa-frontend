@@ -41,6 +41,8 @@ interface Unit {
     evasion: number;
     armor: number;
     magic_armor: number;
+    armor_piercing: number;
+    spell_piercing: number;
     hit_rate: number;
     movement: number;
     shield: number;
@@ -300,6 +302,11 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <h1>Evasion</h1>
                                 <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.evasion}</h1>
                             </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Movement</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.movement}</h1>
+                            </div>
                         </div>
                         <div>
                             <div className='flex items-center space-x-2'>
@@ -318,14 +325,19 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.hit_rate}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
-                                <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
-                                <h1>Movement</h1>
-                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.movement}</h1>
-                            </div>
-                            <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/shield.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Shield</h1>
                                 <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.shield}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/armor_piercing.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Armor Piercing</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.armor_piercing}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/spell_piercing.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Spell Piercing</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.spell_piercing}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/physical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />

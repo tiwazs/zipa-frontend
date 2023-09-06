@@ -26,6 +26,8 @@ interface UnitOptionProps {
     evasion: number;
     armor: number;
     magic_armor: number;
+    armor_piercing: number;
+    spell_piercing: number;
     hit_rate: number;
     movement: number;
     shield: number;
@@ -208,6 +210,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <StatsSummary icon="/gen_icons/magical_damage.png" name={'Mdg'} value={ unit.magical_damage } />
                         <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ unit.hit_chance  } />
                         <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.hit_rate } />
+                        <StatsSummary icon="/gen_icons/armor_piercing.png" name={'Arp'} value={ unit.armor_piercing } />
+                        <StatsSummary icon="/gen_icons/spell_piercing.png" name={'Spp'} value={ unit.spell_piercing } />
                     </div>
                     </div>
                 </div>

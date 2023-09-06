@@ -38,6 +38,8 @@ export default function EffectList() {
                     physical_damage={skill.physical_damage}
                     magical_damage={skill.magical_damage}
                     healing={skill.healing}
+                    armor_piercing={skill.armor_piercing}
+                    spell_piercing={skill.spell_piercing}
                     vitality_recovery={skill.vitality_recovery}
                     essence_recovery={skill.essence_recovery}
                     vitality={skill.vitality}

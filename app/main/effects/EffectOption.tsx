@@ -12,6 +12,8 @@ interface EffectOptionProps {
     physical_damage: string;
     magical_damage: string;
     healing: string;
+    armor_piercing: string;
+    spell_piercing: string;
     vitality: string;
     range: string;
     damage: string;
@@ -71,6 +73,8 @@ export default function EffectOption(effect: EffectOptionProps) {
                 <DisplayValue value={effect.physical_damage} after_text=' Physical Damage'/>
                 <DisplayValue value={effect.magical_damage} after_text=' Magic Damage'/>
                 <DisplayValue value={effect.healing} after_text=' Healing Power'/>
+                <DisplayValue value={effect.armor_piercing} after_text=' Armor Piercing'/>
+                <DisplayValue value={effect.spell_piercing} after_text=' Spell Piercing'/>
                 <DisplayValue value={effect.vitality} after_text=' Max Vitality'/>
                 <DisplayValue value={effect.range} after_text=' Range'/>
                 <DisplayValue value={effect.damage} after_text=' All Damage'/>

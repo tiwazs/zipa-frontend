@@ -18,6 +18,8 @@ interface CreateEffectFormOptions {
     physical_damage?: string;
     magical_damage?: string;
     healing?: string;
+    armor_piercing?: string;
+    spell_piercing?: string;
     vitality_recovery?: string;
     essence_recovery?: string;
     vitality?: string;
@@ -259,6 +261,24 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                                     type="text"
                                     name="healing"
                                     placeholder="Healing"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("armor_piercing", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="armor_piercing"
+                                    placeholder="Armor Piercing"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("spell_piercing", { required: false })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="text"
+                                    name="spell_piercing"
+                                    placeholder="Spell Piercing"
                                 />                                
                             </div>
                             <div>

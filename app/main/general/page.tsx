@@ -83,7 +83,7 @@ export default function ItemsPage() {
                 <p>MAGIC DAMAGE (MDG): Total magical damage a unit deals. Mainly is the sum of MIN+FAI, adding the bonuses from wepons, traits, skills or effects</p>
                 <p>RANGE (RAN): The range from where a unit can attack. is determined by the weapon but modified by skills.</p>
                 <p>Other Parameters</p>
-                <p>SHIELD (SHL): Indicates a direct probablity to completly avoid ranged attacks (Physical and Magical)</p>
+                <p>SHIELD (SHL): Indicates a direct probablity to reduce damage from projectiles (Physical and Magical attacks) by 50%</p>
                 <p>TIER:</p>
                 <p>Weapon Proficiencies: Which weapons a unit can equip</p>
                 <p>Traits: Traits a unit has. these give permanent effects. can modify stats, grant effects on conditions, deal damage etc.</p>

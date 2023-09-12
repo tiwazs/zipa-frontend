@@ -16,15 +16,15 @@ interface Unit {
     title?: string;
     prefix_title?: string;
     description?: string;
-    base_vitality: number;
-    base_strength: number;
-    base_dexterity: number;
-    base_mind: number;
-    base_faith: number;
-    base_essence: number;
-    base_agility: number;
-    base_hit_chance: number;
-    base_evasion: number;
+    base_vitality?: number;
+    base_strength?: number;
+    base_dexterity?: number;
+    base_mind?: number;
+    base_faith?: number;
+    base_essence?: number;
+    base_agility?: number;
+    base_hit_chance?: number;
+    base_evasion?: number;
     skill_picks?: string;
     rank: number;
     items?: any[];
@@ -91,6 +91,19 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
     const onSubmit:SubmitHandler<Unit> = async (data) => {
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
 
+        // A machete. The form requires a number (and API), but using the UI form as number doesn't let me use floats
+        // so I'm using a string from the UI which is parsed to float automatically. however, when i dont input anything
+        // the value becomes an empty string, which is not a valid number, so i need to convert it to undefined which the API accepts as "Let the previous value"
+        data.base_vitality = (data.base_vitality?.toString() !== "") ? data.base_vitality : undefined;
+        data.base_strength = (data.base_strength?.toString() !== "") ? data.base_strength : undefined;
+        data.base_dexterity = (data.base_dexterity?.toString() !== "") ? data.base_dexterity : undefined;
+        data.base_mind = (data.base_mind?.toString() !== "") ? data.base_mind : undefined;
+        data.base_faith = (data.base_faith?.toString() !== "") ? data.base_faith : undefined;
+        data.base_essence = (data.base_essence?.toString() !== "") ? data.base_essence : undefined;
+        data.base_agility = (data.base_agility?.toString() !== "") ? data.base_agility : undefined;
+        data.base_hit_chance = (data.base_hit_chance?.toString() !== "") ? data.base_hit_chance : undefined;
+        data.base_evasion = (data.base_evasion?.toString() !== "") ? data.base_evasion : undefined;
+
         try{
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/units/update/${unit.id}`, {
                 method: "PUT",
@@ -125,9 +138,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Vitality</h1>
                                 {editing ? <input 
-                                    {...register("base_vitality", { required: false, valueAsNumber: true })}
+                                    {...register("base_vitality", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_vitality"
                                     disabled={!editing}
                                     placeholder={(unit.base_vitality && unit.base_vitality !== 0 ) ? unit.base_vitality?.toString() : "0"}
@@ -137,9 +150,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/strength.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Strength</h1>
                                 {editing ? <input 
-                                    {...register("base_strength", { required: false, valueAsNumber: true })}
+                                    {...register("base_strength", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_strength"
                                     disabled={!editing}
                                     placeholder={(unit.base_strength && unit.base_strength !== 0 ) ? unit.base_strength?.toString() : "0"}
@@ -149,9 +162,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/dexterity.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Dexterity</h1>
                                 {editing ? <input 
-                                    {...register("base_dexterity", { required: false, valueAsNumber: true })}
+                                    {...register("base_dexterity", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_dexterity"
                                     disabled={!editing}
                                     placeholder={(unit.base_dexterity && unit.base_dexterity !== 0 ) ? unit.base_dexterity?.toString() : "0"}
@@ -161,9 +174,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/mind.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Mind</h1>
                                 {editing ? <input 
-                                    {...register("base_mind", { required: false, valueAsNumber: true })}
+                                    {...register("base_mind", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_mind"
                                     disabled={!editing}
                                     placeholder={(unit.base_mind && unit.base_mind !== 0 ) ? unit.base_mind?.toString() : "0"}
@@ -173,9 +186,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/faith.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Faith</h1>
                                 {editing ? <input 
-                                    {...register("base_faith", { required: false, valueAsNumber: true })}
+                                    {...register("base_faith", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_faith"
                                     disabled={!editing}
                                     placeholder={(unit.base_faith && unit.base_faith !== 0 ) ? unit.base_faith?.toString() : "0"}
@@ -185,9 +198,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Essence</h1>
                                 {editing ? <input 
-                                    {...register("base_essence", { required: false, valueAsNumber: true })}
+                                    {...register("base_essence", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_essence"
                                     disabled={!editing}
                                     placeholder={(unit.base_essence && unit.base_essence !== 0 ) ? unit.base_essence?.toString() : "0"}
@@ -197,9 +210,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/agility.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Agility</h1>
                                 {editing ? <input 
-                                    {...register("base_agility", { required: false, valueAsNumber: true })}
+                                    {...register("base_agility", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_agility"
                                     disabled={!editing}
                                     placeholder={(unit.base_agility && unit.base_agility !== 0 ) ? unit.base_agility?.toString() : "0"}
@@ -209,9 +222,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/hit_chance.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Hit Chance</h1>
                                 {editing ? <input 
-                                    {...register("base_hit_chance", { required: false, valueAsNumber: true })}
+                                    {...register("base_hit_chance", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_hit_chance"
                                     disabled={!editing}
                                     placeholder={(unit.base_hit_chance && unit.base_hit_chance !== 0 ) ? unit.base_hit_chance?.toString() : "0"}
@@ -221,9 +234,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/evasion.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Base Evasion</h1>
                                 {editing ? <input 
-                                    {...register("base_evasion", { required: false, valueAsNumber: true })}
+                                    {...register("base_evasion", { required: false })}
                                     className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
-                                    type="number"
+                                    type="text"
                                     name="base_evasion"
                                     disabled={!editing}
                                     placeholder={(unit.base_evasion && unit.base_evasion !== 0 ) ? unit.base_evasion?.toString() : "0"}

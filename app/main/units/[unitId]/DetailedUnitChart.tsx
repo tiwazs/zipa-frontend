@@ -50,6 +50,8 @@ interface Unit {
     magical_damage: number;
     weight: number;
     weight_penalty: number;
+    ascended: boolean;
+    ascended_params: string;
     removeEndpoint: string;
     endpointMethod: string;
     queryInvalidateKey?: string;
@@ -379,6 +381,27 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                             name="prefix_title"
                             disabled={!editing}
                             placeholder={ unit.prefix_title ? unit.prefix_title : "Prefix Title" }
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Ascended</h1>
+                        {editing ? <input 
+                            {...register("ascended", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="ascended"
+                            disabled={!editing}
+                            placeholder={unit.ascended ? "Yes" : "No"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.ascended ? "Yes" : "No"}</h1>}
+                    </div>
+                    <div className='flex items-center space-x-2 col-span-4'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Ascended Parameters</h1>
+                        <input 
+                            {...register("ascended_params", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
+                            name="ascended_params"
+                            disabled={!editing}
+                            placeholder={ unit.ascended_params ? unit.ascended_params : "Ascended Parameters" }
                         />                                
                     </div>
                     <div className='flex items-center space-x-2 col-span-4'>

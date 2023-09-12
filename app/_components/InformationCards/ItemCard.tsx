@@ -51,6 +51,8 @@ export default function ItemCard({ OwnerItem, deleteEndpoint, invaildateQueryKey
                     <DisplayValue value={item.physical_damage} after_text=' Physical Damage' />
                     <DisplayValue value={item.magical_damage} after_text=' Magical Damage' />
                     <DisplayValue value={item.healing} after_text=' Healing Power' />
+                    <DisplayValue value={item.armor_piercing} after_text=' Armor Piercing' />
+                    <DisplayValue value={item.spell_piercing} after_text=' Spell Piercing' />
                     <DisplayValue value={item.vitality_recovery} after_text=' Vitality' />
                     <DisplayValue value={item.essence_recovery} after_text=' Essence' />
                     <DisplayValue value={item.vitality} after_text=' Max Vitality' />

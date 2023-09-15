@@ -24,7 +24,7 @@ export default function NewUnitDialog({user_id, styles, onAddClick}: NewUnitDial
 
 	const HandleAddClick = () => {
 		onAddClick(selected)
-		setIsOpen(false)
+		//setIsOpen(false)
 	}
 
     const HandleSelectionChange = (selection: any) => {

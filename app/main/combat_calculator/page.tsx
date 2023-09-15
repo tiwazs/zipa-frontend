@@ -25,7 +25,7 @@ interface DamageForm {
 export default function UnitsPage() {
     const router = useRouter();
     const [unitIdCounter, setUnitIdCounter] = React.useState(1);
-    const [units, setUnits] = React.useState<any[]>([]);
+    const [units, setUnits] = React.useState<any[]>([{combat_id:0, name:"none"}]);
     // Fucking library. LET ME ADD THE GOD DAMMED USER ID TO THE SESSION TO MAKE REQUESTS
     const { data: session, status }:{update:any, data:any, status:any} = useSession({
         required: true,
@@ -35,10 +35,9 @@ export default function UnitsPage() {
     })
 
     const HandleAddUnit = (unit: any) => {
-        let unitDict = {
-            combat_id: unitIdCounter + 1,
-            unit: unit
-        }
+        let unitDict = unit
+        unitDict["combat_id"] = unitIdCounter + 1
+
         setUnitIdCounter(unitIdCounter+1)
 
         let unitList = units
@@ -58,8 +57,8 @@ export default function UnitsPage() {
 
     if(status === "loading") return <div className="text-green-700">Loading...</div>    
     return (
-    <main className="items-center justify-between p-24">
-        <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
+    <main className="items-center justify-between px-20 py-10">
+        <div className="grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
             <h2 className={`mb-3 text-4xl font-medium`}>
                 Combat Calculator{' '}
                 <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
@@ -78,13 +77,13 @@ export default function UnitsPage() {
                             onAddClick={HandleAddUnit}
                             styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
-            <DamageCard HandleDamageDealClick={HandleDamageDeal} style='my-1'/>
+            <DamageCard units={units} HandleDamageDealClick={HandleDamageDeal} style='my-1'/>
         </div>
 
 
         <div className='flex space-x-2'>
             {units && units.map((unit) => (
-                <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit.unit} onRemoveClick={HandleRemoveUnit} />
+                (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} />
             ))}
         </div>
     </main>

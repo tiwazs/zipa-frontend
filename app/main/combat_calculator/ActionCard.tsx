@@ -26,15 +26,15 @@ interface DamageCardProps {
 }
 
 const BaseActions = [
-    {name:"Normal Attack", id:0},
-    {name:"Skill", id:1},
-    {name:"Pure Effect", id:2}
+    {name:"Normal Attack", id:1},
+    {name:"Skill", id:2},
+    {name:"Pure Effect", id:3}
 ]
 
 export default function DamageCard({units, onActClick, style}: DamageCardProps) {
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<DamageForm>();
     const [unit, setUnit] = useState<any>(undefined)
-    const [action, setAction] = useState<any>(0)
+    const [action, setAction] = useState<any>(undefined)
     const [skill, setSkill] = useState<any>(undefined)
     const [availableSkills, setAvailableSkills] = useState<any[]>([])
 
@@ -64,7 +64,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
     }, [unit])
 
     const HandleActClick:SubmitHandler<DamageForm> = async (data) => {
-        if(action===0 && unit){
+        if(action===1 && unit){
             data = {
                 origin: unit.combat_id,
                 targets: [data.targets.toString().split("|").map((target: string) => parseInt(target) )[0]],
@@ -76,7 +76,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 armor_piercing: unit.armor_piercing,
                 spell_piercing: 0,
             }
-        }else if(action===1 && unit && skill){
+        }else if(action===2 && unit && skill){
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
@@ -87,6 +87,18 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 hit_chance: unit.hit_chance,
                 armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
+            }
+        }else if(action===3 && unit && skill){
+            data = {
+                origin: unit.combat_id,
+                targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
+                phisical_damage: 0,
+                magical_damage: 0,
+                physical_damage_modifiers: "",
+                magical_damage_modifiers: "",
+                hit_chance: 0,
+                armor_piercing: 0,
+                spell_piercing: 0,
             }
         }
 
@@ -123,7 +135,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                     <OptionSelectionList options={BaseActions} queryKey={'Action'} onSelectionChange={HandleActionSelection} style='w-56' />
                 </div>}
                 {/* Skill Selection */}
-                {(action==1) && <div className='flex items-center'>
+                {(action==2) && <div className='flex items-center'>
                         <h3 className='text-yellow-500/80 font-medium'>Skill:</h3>
                         <OptionSelectionList options={availableSkills} queryKey={'Skills'} onSelectionChange={HandleSkillSelection} style='w-56' />
                     </div>}
@@ -137,10 +149,11 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                     />                                
                 </div>
             </div>
-            <div className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
-                                cursor-pointer'>
-                    <input type="submit" value="Act" className='text-gray-400 text-sm cursor-pointer'/>
-            </div>
+            <button className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
+                                cursor-pointer disabled:bg-black' disabled={!unit || !action}>
+                                    
+                    <input type="submit" value="Act" className='text-gray-400 text-sm cursor-pointer' disabled={!unit || !action}/>
+            </button>
         </form>
     </div>
   )

@@ -12,7 +12,7 @@ export default function FactionUnitsDisclosure({ title, children, style }: Facti
 
 	return (
 	<div className={`w-full ${style}`}>
-		<div className="mx-auto w-full rounded-2xl bg-[url('/bg1.jpg')] py-2">
+		<div className="mx-auto w-full rounded-2xl bg-[url('/bg1.jpg')] py-1">
 		{/* Disclosure Options*/}
 			<Disclosure>
 			{({ open }) => (
@@ -25,7 +25,7 @@ export default function FactionUnitsDisclosure({ title, children, style }: Facti
 					<span className={`text-base text-yellow-200/70`}>{title}</span>
 					<AiOutlineDown clatext-base ={`${ open ? 'rotate-180 transform' : ''} h-5 w-5 text-yellow-200/70`} />
 				</Disclosure.Button>
-				<Disclosure.Panel className="px-1 pt-1 pb-1 text-sm text-gray-500">
+				<Disclosure.Panel className="px-1 pt-1 pb-1">
 					{/*Disclosure Children go Here*/}
 					{children}
 				</Disclosure.Panel>

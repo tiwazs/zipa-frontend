@@ -22,6 +22,7 @@ interface CreateEffectFormOptions {
     vitality_cost?: string;
     cooldown?: string;
     channeled?: string;
+    projectile?: string;
     target?: string;
     skill_on?: string;
     skill_types?: string[];
@@ -247,6 +248,15 @@ export default function NewEffectDialog({styles}: NewEffectDialogProps) {
                                     type="text"
                                     name="channeled"
                                     placeholder="Channeled"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("projectile", { required: false, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="projectile"
+                                    placeholder="Projectile"
                                 />                                
                             </div>
                             <div>

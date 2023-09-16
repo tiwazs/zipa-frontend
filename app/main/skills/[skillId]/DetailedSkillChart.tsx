@@ -22,6 +22,7 @@ interface Skill {
     vitality_cost?: string;
     cooldown?: string;
     channeled?: string;
+    projectile?: number;
     target?: string
     skill_on?: string
     skill_types?: any[]
@@ -211,6 +212,17 @@ export default function DetailedSkillChart({skill, styles}: DetailedSkillChartPr
                             name="channeled"
                             disabled={!editing}
                             placeholder={skill.channeled ? skill.channeled : "N/A"}
+                        />                                
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <h1>Projectile</h1>
+                        <input 
+                            {...register("projectile", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="projectile"
+                            disabled={!editing}
+                            placeholder={skill.projectile?.toString()}
                         />                                
                     </div>
                     <div className='flex items-center space-x-2'>

@@ -198,10 +198,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
         <div>
             <Disclosure title={'Traits'} >
             {/* Unit Tratis*/}
-            { (unit.specialization.traits && unit.specialization.traits.length > 0) && 
-            <p className='italic font-light'>
-                Traits:
-            </p>}
+            { (unit.specialization.traits && unit.specialization.traits.length > 0)}
             {/* Faction Tratis*/}
             {unit.faction.traits.map((trait: any) => {
                 return (
@@ -246,10 +243,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
             </Disclosure>
             <Disclosure title={'Skills'} >
             {/* Unit Skills*/}
-            { (unit.specialization.skills && unit.specialization.skills.length > 0) && 
-            <p className='italic font-light'>
-                Skills:
-            </p>}
+            { (unit.specialization.skills && unit.specialization.skills.length > 0)}
             {unit.specialization.skills.map((skill: any, index: number) => {
                 return  (
                     pickedSkills.includes(index) && <div key={skill.skill.id} className='px-4 font-light italic m-1'>
@@ -273,10 +267,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
             </Disclosure>
             <Disclosure title={'Items'} >
             {/* Unit Initial Items*/}
-            { (unit.items && unit.items.length > 0) && 
-            <p className='italic font-light'>
-                Items:
-            </p>}
+            { (unit.items && unit.items.length > 0)}
             {unit.items!.map((item: any) => {
                 return (
                 <div key={item.item.id} className='px-4 font-light italic m-1'>
@@ -297,6 +288,15 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                 </div>
                 )
             })}
+            </Disclosure>
+            <Disclosure title={'Combat Status'} >
+                <div className='w-full flex items-center space-x-2'>
+                    <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                    <div className='w-full flex justify-between items-center'>
+                        <h1>Vitality</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.combat_status.vitality}</h1>
+                    </div>
+                </div>
             </Disclosure>
         </div>
     </div>

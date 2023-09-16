@@ -14,6 +14,7 @@ interface DamageForm {
     magical_damage: number | null;
     physical_damage_modifiers: string | null;
     magical_damage_modifiers: string | null;
+    is_projectile: boolean | null;
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
@@ -72,6 +73,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 magical_damage: 0,
                 physical_damage_modifiers: "",
                 magical_damage_modifiers: "",
+                is_projectile: false,
                 hit_chance: unit.hit_chance,
                 armor_piercing: unit.armor_piercing,
                 spell_piercing: 0,
@@ -84,6 +86,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 magical_damage: skill.magical_damage ? unit.magical_damage : 0,
                 physical_damage_modifiers: skill.physical_damage,
                 magical_damage_modifiers: skill.magical_damage,
+                is_projectile: skill.projectile,
                 hit_chance: unit.hit_chance,
                 armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
@@ -96,6 +99,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 magical_damage: 0,
                 physical_damage_modifiers: "",
                 magical_damage_modifiers: "",
+                is_projectile: false,
                 hit_chance: 0,
                 armor_piercing: 0,
                 spell_piercing: 0,

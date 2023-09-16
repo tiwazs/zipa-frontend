@@ -19,6 +19,7 @@ interface DamageForm {
     magical_damage: number | null;
     physical_damage_modifiers: string | null;
     magical_damage_modifiers: string | null;
+    is_projectile: boolean | null;
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
@@ -39,6 +40,8 @@ export default function UnitsPage() {
     const HandleAddUnit = (unit: any) => {
         let unitDict = unit
         unitDict["combat_id"] = unitIdCounter + 1
+        unitDict["combat_status"] = { vitality:unit.vitality, effects:[] }
+        
 
         setUnitIdCounter(unitIdCounter+1)
 

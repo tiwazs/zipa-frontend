@@ -1,7 +1,7 @@
 import OptionSelection from '@/app/_components/OptionSelection';
 import OptionSelectionList from '@/app/_components/OptionSelectionList';
 import React, { Suspense, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Effect {
 
@@ -17,12 +17,11 @@ interface DamageForm {
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
-    is_magical: boolean | null;
 }
 
 interface DamageCardProps {
     units: any[];
-    HandleDamageDealClick?: any;
+    onActClick?: any;
     style?: string;
 }
 
@@ -32,7 +31,7 @@ const BaseActions = [
     {name:"Pure Effect", id:2}
 ]
 
-export default function DamageCard({units, HandleDamageDealClick, style}: DamageCardProps) {
+export default function DamageCard({units, onActClick, style}: DamageCardProps) {
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<DamageForm>();
     const [unit, setUnit] = useState<any>(undefined)
     const [action, setAction] = useState<any>(0)
@@ -64,6 +63,37 @@ export default function DamageCard({units, HandleDamageDealClick, style}: Damage
         }
     }, [unit])
 
+    const HandleActClick:SubmitHandler<DamageForm> = async (data) => {
+        if(action===0 && unit){
+            data = {
+                origin: unit.combat_id,
+                targets: [data.targets.toString().split("|").map((target: string) => parseInt(target) )[0]],
+                phisical_damage: unit.physical_damage,
+                magical_damage: 0,
+                physical_damage_modifiers: "",
+                magical_damage_modifiers: "",
+                hit_chance: unit.hit_chance,
+                armor_piercing: unit.armor_piercing,
+                spell_piercing: 0,
+            }
+        }else if(action===1 && unit && skill){
+            data = {
+                origin: unit.combat_id,
+                targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
+                phisical_damage: skill.physical_damage ? unit.physical_damage : 0,
+                magical_damage: skill.magical_damage ? unit.magical_damage : 0,
+                physical_damage_modifiers: skill.physical_damage,
+                magical_damage_modifiers: skill.magical_damage,
+                hit_chance: unit.hit_chance,
+                armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
+                spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
+            }
+        }
+
+        onActClick(data)
+    }
+
+
     const HandleUnitSelection = (selection: any) => {
         setUnit(selection)
     }
@@ -80,7 +110,7 @@ export default function DamageCard({units, HandleDamageDealClick, style}: Damage
     return (
     <div className={`flex flex-col items-center p-2 border-4 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')] w-2/3 ${style}`}>
         <h2>Action</h2>
-        <form className='w-full space-y-2' onSubmit={handleSubmit(HandleDamageDealClick)}>
+        <form className='w-full space-y-2' onSubmit={handleSubmit(HandleActClick)}>
             <div className='flex justify-between'>
                 {/* Unit Selection */}
                 {units && <div className='flex items-center'>
@@ -109,7 +139,7 @@ export default function DamageCard({units, HandleDamageDealClick, style}: Damage
             </div>
             <div className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
                                 cursor-pointer'>
-                    <input type="submit" value="Deal" className='text-gray-400 text-sm cursor-pointer'/>
+                    <input type="submit" value="Act" className='text-gray-400 text-sm cursor-pointer'/>
             </div>
         </form>
     </div>

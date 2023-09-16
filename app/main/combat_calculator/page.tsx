@@ -14,12 +14,14 @@ interface Effect {
 
 interface DamageForm {
 	origin: number | null;
-	victims: number[];
-    damage_pure: number | null;
-    damage_modifiers: string | null;
+	targets: number[];
+    phisical_damage: number | null;
+    magical_damage: number | null;
+    physical_damage_modifiers: string | null;
+    magical_damage_modifiers: string | null;
     hit_chance: number | null;
     armor_piercing: number | null;
-    is_magical: boolean | null;
+    spell_piercing: number | null;
 }
 
 export default function UnitsPage() {
@@ -77,7 +79,7 @@ export default function UnitsPage() {
                             onAddClick={HandleAddUnit}
                             styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
-            <ActionCard units={units} HandleDamageDealClick={HandleDamageDeal} style='my-1'/>
+            <ActionCard units={units} onActClick={HandleDamageDeal} style='my-1'/>
         </div>
 
 

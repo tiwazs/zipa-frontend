@@ -1,3 +1,4 @@
+import Disclosure from '@/app/_components/Disclosure';
 import { paintRarity, paintTier, writeTier } from '@/app/_libs/text_paint_methods';
 import Link from 'next/link';
 import React, { useEffect } from 'react'
@@ -23,6 +24,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
     }
     
     return (
+    
     <div className="group w-96 rounded-2xl p-2 text-left shadow-xl 
                     border-transparent border-4 dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
         <div className='flex justify-between'>
@@ -192,7 +194,9 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                 </div>
             </div>
         </div>
+        
         <div>
+            <Disclosure title={'Traits'} >
             {/* Unit Tratis*/}
             { (unit.specialization.traits && unit.specialization.traits.length > 0) && 
             <p className='italic font-light'>
@@ -221,7 +225,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
             })}
             {unit.specialization.traits.map((trait: any) => {
                 return (
-                <div key={trait.trait.id} className='px-4 font-light italic m-1'>
+                    <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                     <div className='flex items-center space-x-3'>
                         <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
                         <p>
@@ -239,6 +243,8 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                 </div>
                 )
             })}
+            </Disclosure>
+            <Disclosure title={'Skills'} >
             {/* Unit Skills*/}
             { (unit.specialization.skills && unit.specialization.skills.length > 0) && 
             <p className='italic font-light'>
@@ -264,6 +270,8 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                     </div>
                 )
             })}
+            </Disclosure>
+            <Disclosure title={'Items'} >
             {/* Unit Initial Items*/}
             { (unit.items && unit.items.length > 0) && 
             <p className='italic font-light'>
@@ -289,6 +297,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                 </div>
                 )
             })}
+            </Disclosure>
         </div>
     </div>
   )

@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import AddUnitDialog from './AddUnitDialog';
 import UnitCombatCard from './UnitCombatCard';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import DamageCard from './DamageCard';
+import ActionCard from './ActionCard';
 
 interface Effect {
 
@@ -77,7 +77,7 @@ export default function UnitsPage() {
                             onAddClick={HandleAddUnit}
                             styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
-            <DamageCard units={units} HandleDamageDealClick={HandleDamageDeal} style='my-1'/>
+            <ActionCard units={units} HandleDamageDealClick={HandleDamageDeal} style='my-1'/>
         </div>
 
 

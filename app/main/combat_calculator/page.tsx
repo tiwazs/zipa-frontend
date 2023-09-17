@@ -40,6 +40,7 @@ export default function UnitsPage() {
     const router = useRouter();
     const [unitIdCounter, setUnitIdCounter] = React.useState(1);
     const [units, setUnits] = React.useState<any[]>([{combat_id:0, name:"none"}]);
+    const [phase, setPhase] = React.useState<number>(0);
     // Fucking library. LET ME ADD THE GOD DAMMED USER ID TO THE SESSION TO MAKE REQUESTS
     const { data: session, status }:{update:any, data:any, status:any} = useSession({
         required: true,
@@ -57,7 +58,6 @@ export default function UnitsPage() {
             effects:[] 
         }
         
-
         setUnitIdCounter(unitIdCounter+1)
 
         let unitList = units
@@ -69,6 +69,49 @@ export default function UnitsPage() {
         let unitList = units.filter((unit)=> unit.combat_id!==combat_id )
         setUnits(unitList)
         console.log(units)
+    }
+
+    const HandlePhase = async () => {
+        let unitList = [...units]
+
+        for( const unit of unitList){
+            if(unit.combat_id===0 || unit.combat_id===1) continue
+
+            // Remove effects
+            if(unit.combat_status.effects.length > 0){
+                for( const effect of unit.combat_status.effects) {
+                    // Effect Damage or Heal
+                    //if(effect.instant_vitality_recovery){
+                    //    unit.combat_status.vitality += effect.instant_vitality_recovery
+                    //}
+                    //if(effect.instant_essence_recovery){
+                    //    unit.combat_status.essence += effect.instant_essence_recovery
+                    //}
+                    if(effect.effect.instant_magical_damage){
+                        let damageCalculationRequest: DamageCalculationRequest = {
+                            damage: effect.magical_power,
+                            hit_chance: 100,
+                            armor: unit.magic_armor ? unit.magic_armor : 0,
+                            evasion: 0,
+                            damage_modifiers: [effect.effect.instant_magical_damage]
+                        }
+                        let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
+                        unit.combat_status.vitality -= response.final_damage
+                        
+                    }
+
+                    // Effect Fading
+                    if(effect.duration > 1){
+                        effect.duration -= 1
+                    }else{
+                        unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.duration > 1 )
+                    }
+                }
+            }
+        }
+
+        setUnits(unitList)
+        setPhase(phase + 1)
     }
 
     const HandleDamageDeal = async (damageForm: DamageForm) => {
@@ -125,7 +168,7 @@ export default function UnitsPage() {
                     if(damageForm.effects.length > 0){
                         damageForm.effects.forEach((effect)=>{
                             effect.magical_power = damageForm.magical_damage
-                            unit.combat_status.effects.push(effect)
+                            unit.combat_status.effects.push({...effect})
                         })
                     }
                 }
@@ -159,13 +202,20 @@ export default function UnitsPage() {
     if(status === "loading") return <div className="text-green-700">Loading...</div>    
     return (
     <main className="items-center justify-between px-20 py-10">
-        <div className="grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
+        <div className="flex items-center justify-between text-center lg:mb-0 lg:grid-cols-4 lg:text-left text-yellow-200/70 ">
             <h2 className={`mb-3 text-4xl font-medium`}>
                 Combat Calculator{' '}
                 <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
                     -&gt;
                 </span>
             </h2>
+            <div className="flex items-center space-x-2 p-1 border-2 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
+                <h1>phase {phase} </h1>
+                <button className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
+                                cursor-pointer disabled:bg-black' onClick={HandlePhase}>
+                -&gt;
+                </button>
+            </div>
         </div>
 
         <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial
@@ -180,7 +230,6 @@ export default function UnitsPage() {
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
             <ActionCard units={units} onActClick={HandleDamageDeal} style='my-1'/>
         </div>
-
 
         <div className='flex space-x-2'>
             {units && units.map((unit) => (

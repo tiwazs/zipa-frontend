@@ -98,7 +98,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
                 vitality_cost: skill.vitality_cost,
                 essence_cost: skill.essence_cost,
-                effects: skill.effects ? skill.effects : []
+                effects: skill.effects ? [...skill.effects] : []
             }
         }else if(action===3 && unit && skill){
             data = {

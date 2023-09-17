@@ -7,6 +7,7 @@ import AddUnitDialog from './AddUnitDialog';
 import UnitCombatCard from './UnitCombatCard';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ActionCard from './ActionCard';
+import { mod_parameter_operation } from '@/app/_libs/equations';
 
 interface Effect {
 
@@ -81,12 +82,25 @@ export default function UnitsPage() {
             if(unit.combat_status.effects.length > 0){
                 for( const effect of unit.combat_status.effects) {
                     // Effect Damage or Heal
-                    //if(effect.instant_vitality_recovery){
-                    //    unit.combat_status.vitality += effect.instant_vitality_recovery
-                    //}
-                    //if(effect.instant_essence_recovery){
-                    //    unit.combat_status.essence += effect.instant_essence_recovery
-                    //}
+                    if(effect.effect.instant_vitality_recovery){
+                        unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
+                    }
+                    if(effect.effect.instant_essence_recovery){
+                        unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_essence_recovery, unit.combat_status.vitality)
+                    }
+
+                    // Effect Physical Damage
+                    if(effect.effect.instant_physical_damage){
+                        let damageCalculationRequest: DamageCalculationRequest = {
+                            damage: effect.physical_damage,
+                            hit_chance: 100,
+                            armor: unit.armor ? unit.armor : 0,
+                            evasion: 0,
+                            damage_modifiers: [effect.effect.instant_physical_damage]
+                        }
+                        let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
+                        unit.combat_status.vitality -= response.final_damage
+                    }
 
                     // Effect Magical Damage
                     if(effect.effect.instant_magical_damage){
@@ -102,12 +116,10 @@ export default function UnitsPage() {
                     }
 
                     // Effect Fading
-                    if(effect.duration > 1){
-                        effect.duration -= 1
-                    }else{
-                        unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.duration > 1 )
-                    }
+                    effect.duration -= 1
+                    
                 }
+                unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.duration > 0 )
             }
         }
 
@@ -170,6 +182,7 @@ export default function UnitsPage() {
                     if(damageForm.effects.length > 0){
                         for(const effectNew of damageForm.effects){
                             effectNew.magical_power = damageForm.magical_damage
+                            effectNew.physical_damage = damageForm.phisical_damage
 
                             // Separate effects similar to the new effect from the rest of the effects on the unit
                             console.log(unit.combat_status.effects)

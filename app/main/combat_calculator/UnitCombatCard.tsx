@@ -304,6 +304,20 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                         <h1 className='my-2 py-1 text-orange-500 font-light'>{Math.round(unit.combat_status.essence)} / {Math.round(unit.essence)}</h1>
                     </div>
                 </div>
+                {/* Current Effects */}
+                {unit.combat_status.effects.map((effect: any) => {
+                    return (
+                        <div key={effect.id} className='mx-2 font-extralight flex items-center justify-between'>
+                            <div className='flex items-center space-x-'>
+                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.effect.id}.jpg`} alt="" className='w-8 h-8 rounded-md border-2 border-gray-500/60 ' />
+                                <h3>
+                                    <Link href={`/main/effects/${effect.effect.id}`}><span className='text-yellow-400'>{effect.effect.name}</span></Link>
+                                </h3>
+                            </div>
+                            <h3 className='text-blue-500 font-normal'>{effect.duration} T</h3>
+                        </div>
+                    )
+                })}
             </Disclosure>
         </div>
     </div>

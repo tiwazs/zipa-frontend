@@ -25,6 +25,7 @@ interface DamageForm {
     spell_piercing: number | null;
     essence_cost: number | null;
     vitality_cost: number | null;
+    effects: any[];
 }
 
 interface DamageCalculationRequest {
@@ -46,10 +47,6 @@ export default function UnitsPage() {
             router.push('/login');
         },
     })
-
-    useEffect(()=>{
-                
-    }, [units])
 
     const HandleAddUnit = (unit: any) => {
         let unitDict = unit
@@ -119,10 +116,18 @@ export default function UnitsPage() {
             let unitList = [...units]
             unitList.forEach((unit)=>{
                 if(unit.combat_id === target){
+                    // Damage the unit
                     unit.combat_status.vitality -= total_damage
                     if(unit.combat_status.vitality <= 0){
                         unit.combat_status.vitality = 0
                     }   
+                    // Apply effects
+                    if(damageForm.effects.length > 0){
+                        damageForm.effects.forEach((effect)=>{
+                            effect.magical_power = damageForm.magical_damage
+                            unit.combat_status.effects.push(effect)
+                        })
+                    }
                 }
             })
 

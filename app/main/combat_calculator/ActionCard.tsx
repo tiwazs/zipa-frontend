@@ -20,6 +20,7 @@ interface DamageForm {
     spell_piercing: number | null;
     essence_cost: number | null;
     vitality_cost: number | null;
+    effects: any[];
 }
 
 interface DamageCardProps {
@@ -80,7 +81,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 armor_piercing: unit.armor_piercing,
                 spell_piercing: 0,
                 vitality_cost: 0,
-                essence_cost: 0
+                essence_cost: 0,
+                effects: []
             }
         }else if(action===2 && unit && skill){
             data = {
@@ -95,7 +97,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
                 vitality_cost: skill.vitality_cost,
-                essence_cost: skill.essence_cost
+                essence_cost: skill.essence_cost,
+                effects: skill.effects ? skill.effects : []
             }
         }else if(action===3 && unit && skill){
             data = {
@@ -110,7 +113,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 armor_piercing: 0,
                 spell_piercing: 0,
                 vitality_cost: 0,
-                essence_cost: 0
+                essence_cost: 0,
+                effects: []
             }
         }
 

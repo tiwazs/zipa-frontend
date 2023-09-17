@@ -99,7 +99,7 @@ export default function UnitsPage() {
                     damage_modifiers: damageForm.physical_damage_modifiers ? damageForm.physical_damage_modifiers.split(",") : []
                 }
 
-                let response = await DamageCalculationRequest(damageCalculationRequest)
+                let response = await DamageCalculationRequest(damageCalculationRequest, target_unit[0].shield, damageForm.armor_piercing ? damageForm.armor_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
                 total_damage += response.final_damage
             }
             // Magical Damage
@@ -112,7 +112,7 @@ export default function UnitsPage() {
                     damage_modifiers: damageForm.magical_damage_modifiers ? damageForm.magical_damage_modifiers.split(",") : []
                 }
 
-                let response = await DamageCalculationRequest(damageCalculationRequest)
+                let response = await DamageCalculationRequest(damageCalculationRequest, target_unit[0].shield, damageForm.spell_piercing ? damageForm.spell_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
                 total_damage += response.final_damage
             }
 
@@ -131,12 +131,12 @@ export default function UnitsPage() {
 
     }
     
-    const DamageCalculationRequest = async (damageCalculationRequest: DamageCalculationRequest) => {
+    const DamageCalculationRequest = async (damageCalculationRequest: DamageCalculationRequest, shield: number, armor_piercing:number, is_projectile: boolean) => {
 
         let response = null
         // Request to damage Calculation Endpoint
         try{
-            response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/damage_calculation/`, {
+            response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/damage_calculation/?shield=${shield}&armor_penetration=${armor_piercing}&is_projectile=${is_projectile}&block_reduction=50&deflect_reduction=50`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

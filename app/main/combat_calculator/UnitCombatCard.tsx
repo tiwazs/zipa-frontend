@@ -307,7 +307,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                 {/* Current Effects */}
                 {unit.combat_status.effects.map((effect: any) => {
                     return (
-                        <div key={effect.id} className='mx-2 font-extralight flex items-center justify-between'>
+                        <div key={`${effect.id}-${effect.stack_counter}`} className='mx-2 font-extralight flex items-center justify-between'>
                             <div className='flex items-center space-x-'>
                                 <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.effect.id}.jpg`} alt="" className='w-8 h-8 rounded-md border-2 border-gray-500/60 ' />
                                 <h3>

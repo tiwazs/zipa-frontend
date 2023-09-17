@@ -76,8 +76,8 @@ export default function UnitsPage() {
 
         for( const unit of unitList){
             if(unit.combat_id===0 || unit.combat_id===1) continue
-
-            // Remove effects
+            
+            // Apply effects
             if(unit.combat_status.effects.length > 0){
                 for( const effect of unit.combat_status.effects) {
                     // Effect Damage or Heal
@@ -87,6 +87,8 @@ export default function UnitsPage() {
                     //if(effect.instant_essence_recovery){
                     //    unit.combat_status.essence += effect.instant_essence_recovery
                     //}
+
+                    // Effect Magical Damage
                     if(effect.effect.instant_magical_damage){
                         let damageCalculationRequest: DamageCalculationRequest = {
                             damage: effect.magical_power,
@@ -97,7 +99,6 @@ export default function UnitsPage() {
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
                         unit.combat_status.vitality -= response.final_damage
-                        
                     }
 
                     // Effect Fading
@@ -157,22 +158,58 @@ export default function UnitsPage() {
             }
 
             let unitList = [...units]
-            unitList.forEach((unit)=>{
+            for(const unit of unitList){
                 if(unit.combat_id === target){
                     // Damage the unit
                     unit.combat_status.vitality -= total_damage
                     if(unit.combat_status.vitality <= 0){
                         unit.combat_status.vitality = 0
-                    }   
+                    } 
+                      
                     // Apply effects
                     if(damageForm.effects.length > 0){
-                        damageForm.effects.forEach((effect)=>{
-                            effect.magical_power = damageForm.magical_damage
-                            unit.combat_status.effects.push({...effect})
-                        })
+                        for(const effectNew of damageForm.effects){
+                            effectNew.magical_power = damageForm.magical_damage
+
+                            // Separate effects similar to the new effect from the rest of the effects on the unit
+                            console.log(unit.combat_status.effects)
+                            // Similar effects on the unit
+                            let sameEffectsOnUnit = unit.combat_status.effects.filter( (effect:any) => effect.effect.name === effectNew.effect.name )
+                            console.log(sameEffectsOnUnit)
+                            // Rest of the effects on the unit
+                            unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.effect.name !== effectNew.effect.name )
+                            console.log(unit.combat_status.effects)
+
+                            if(sameEffectsOnUnit.length > 0){
+                                // If there are similar effects on the unit, Update the stack counter of the current effects and add them back to the unit
+                                // And add the new effect to the unit with a stack counter of 0
+
+                                // Add the new effect to the unit
+                                let effectToApply = {...effectNew}
+                                effectToApply.stack_counter = 0
+                                unit.combat_status.effects.push(effectToApply)                                
+
+                                // Increase the stack counter of the effects on the unit 
+                                // and add them back to the unit if they don't surpass the max stacks
+                                sameEffectsOnUnit.forEach( (effectOnUnit:any) => {
+                                    effectOnUnit.stack_counter += 1
+                                    if(effectOnUnit.stack_counter < effectOnUnit.effect.max_stack){
+                                        unit.combat_status.effects.push(effectOnUnit)
+                                    }
+                                })
+                            }else{
+                                // If there are no similar effects on the unit, just add the new effect to the unit
+                                let effectToApply = {...effectNew}
+                                effectToApply.stack_counter = 0
+                                unit.combat_status.effects.push(effectToApply)
+                            }
+                            //
+                            // Remove effects with the same name if they exist, but only if the effect doesn't stack
+
+                        }
                     }
                 }
-            })
+            }
 
             setUnits(unitList)
         }

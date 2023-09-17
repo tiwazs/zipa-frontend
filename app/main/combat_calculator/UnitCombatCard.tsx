@@ -294,7 +294,14 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                     <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Vitality</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.combat_status.vitality}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>{Math.round(unit.combat_status.vitality)} / {Math.round(unit.vitality)}</h1>
+                    </div>
+                </div>
+                <div className='w-full flex items-center space-x-2'>
+                    <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                    <div className='w-full flex justify-between items-center'>
+                        <h1>Essence</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>{Math.round(unit.combat_status.essence)} / {Math.round(unit.essence)}</h1>
                     </div>
                 </div>
             </Disclosure>

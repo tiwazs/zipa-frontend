@@ -18,6 +18,8 @@ interface DamageForm {
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
+    essence_cost: number | null;
+    vitality_cost: number | null;
 }
 
 interface DamageCardProps {
@@ -71,12 +73,14 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 targets: [data.targets.toString().split("|").map((target: string) => parseInt(target) )[0]],
                 phisical_damage: unit.physical_damage,
                 magical_damage: 0,
-                physical_damage_modifiers: "",
+                physical_damage_modifiers: data.physical_damage_modifiers,
                 magical_damage_modifiers: "",
                 is_projectile: false,
                 hit_chance: unit.hit_chance,
                 armor_piercing: unit.armor_piercing,
                 spell_piercing: 0,
+                vitality_cost: 0,
+                essence_cost: 0
             }
         }else if(action===2 && unit && skill){
             data = {
@@ -90,6 +94,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 hit_chance: unit.hit_chance,
                 armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
+                vitality_cost: skill.vitality_cost,
+                essence_cost: skill.essence_cost
             }
         }else if(action===3 && unit && skill){
             data = {
@@ -103,6 +109,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 hit_chance: 0,
                 armor_piercing: 0,
                 spell_piercing: 0,
+                vitality_cost: 0,
+                essence_cost: 0
             }
         }
 
@@ -143,7 +151,18 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                         <h3 className='text-yellow-500/80 font-medium'>Skill:</h3>
                         <OptionSelectionList options={availableSkills} queryKey={'Skills'} onSelectionChange={HandleSkillSelection} style='w-56' />
                     </div>}
-                <div className=''>
+                {(action==1) && <div className='flex items-center'>
+                    <h3 className='text-yellow-500/80 font-medium'>Modifiers:</h3>
+                    <input 
+                        {...register("physical_damage_modifiers", { required: false })}
+                        className='w-full rounded-lg p-1 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                        type="text"
+                        name="physical_damage_modifiers"
+                        placeholder="Physical Modifiers"
+                    />                                
+                </div>}
+                <div className='flex items-center'>
+                    <h3 className='text-yellow-500/80 font-medium'>Target(s):</h3>
                     <input 
                         {...register("targets", { required: false })}
                         className='w-full rounded-lg p-1 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'

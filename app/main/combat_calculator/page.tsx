@@ -23,6 +23,8 @@ interface DamageForm {
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
+    essence_cost: number | null;
+    vitality_cost: number | null;
 }
 
 interface DamageCalculationRequest {
@@ -52,7 +54,11 @@ export default function UnitsPage() {
     const HandleAddUnit = (unit: any) => {
         let unitDict = unit
         unitDict["combat_id"] = unitIdCounter + 1
-        unitDict["combat_status"] = { vitality:parseFloat(unit.vitality), effects:[] }
+        unitDict["combat_status"] = { 
+            vitality:parseFloat(unit.vitality), 
+            essence:parseFloat(unit.essence),
+            effects:[] 
+        }
         
 
         setUnitIdCounter(unitIdCounter+1)
@@ -69,6 +75,16 @@ export default function UnitsPage() {
     }
 
     const HandleDamageDeal = async (damageForm: DamageForm) => {
+        // Remove Vitality and Essence from origin based on cost
+        let unitList = [...units]
+        unitList.forEach((unit)=>{
+            if(unit.combat_id === damageForm.origin){
+                unit.combat_status.vitality -= damageForm.vitality_cost ? damageForm.vitality_cost : 0
+                unit.combat_status.essence -= damageForm.essence_cost ? damageForm.essence_cost : 0
+            }
+        })
+        setUnits(unitList)
+
         for( let target of damageForm.targets ){
             let target_unit = units.filter( (unit:any) => unit.combat_id === target )
 
@@ -104,6 +120,9 @@ export default function UnitsPage() {
             unitList.forEach((unit)=>{
                 if(unit.combat_id === target){
                     unit.combat_status.vitality -= total_damage
+                    if(unit.combat_status.vitality <= 0){
+                        unit.combat_status.vitality = 0
+                    }   
                 }
             })
 

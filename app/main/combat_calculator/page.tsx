@@ -25,6 +25,14 @@ interface DamageForm {
     spell_piercing: number | null;
 }
 
+interface DamageCalculationRequest {
+    damage: number;
+    hit_chance: number;
+    armor: number;
+    evasion: number;
+    damage_modifiers: string[];
+}
+
 export default function UnitsPage() {
     const router = useRouter();
     const [unitIdCounter, setUnitIdCounter] = React.useState(1);
@@ -37,10 +45,14 @@ export default function UnitsPage() {
         },
     })
 
+    useEffect(()=>{
+                
+    }, [units])
+
     const HandleAddUnit = (unit: any) => {
         let unitDict = unit
         unitDict["combat_id"] = unitIdCounter + 1
-        unitDict["combat_status"] = { vitality:unit.vitality, effects:[] }
+        unitDict["combat_status"] = { vitality:parseFloat(unit.vitality), effects:[] }
         
 
         setUnitIdCounter(unitIdCounter+1)
@@ -56,8 +68,68 @@ export default function UnitsPage() {
         console.log(units)
     }
 
-    const HandleDamageDeal: SubmitHandler<DamageForm> = async data => {
-        console.log(data);
+    const HandleDamageDeal = async (damageForm: DamageForm) => {
+        for( let target of damageForm.targets ){
+            let target_unit = units.filter( (unit:any) => unit.combat_id === target )
+
+            let total_damage = 0
+            // Physical Damage
+            if(damageForm.phisical_damage){
+                let damageCalculationRequest: DamageCalculationRequest = {
+                    damage: damageForm.phisical_damage ? damageForm.phisical_damage : 0,
+                    hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
+                    armor: target_unit[0].armor ? target_unit[0].armor : 0,
+                    evasion: target_unit[0].evasion ? target_unit[0].evasion : 0,
+                    damage_modifiers: damageForm.physical_damage_modifiers ? damageForm.physical_damage_modifiers.split(",") : []
+                }
+
+                let response = await DamageCalculationRequest(damageCalculationRequest)
+                total_damage += response.final_damage
+            }
+            // Magical Damage
+            if(damageForm.magical_damage){
+                let damageCalculationRequest: DamageCalculationRequest = {
+                    damage: damageForm.magical_damage ? damageForm.magical_damage : 0,
+                    hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
+                    armor: target_unit[0].magic_armor ? target_unit[0].magic_armor : 0,
+                    evasion: target_unit[0].evasion ? target_unit[0].evasion : 0,
+                    damage_modifiers: damageForm.magical_damage_modifiers ? damageForm.magical_damage_modifiers.split(",") : []
+                }
+
+                let response = await DamageCalculationRequest(damageCalculationRequest)
+                total_damage += response.final_damage
+            }
+
+            let unitList = [...units]
+            unitList.forEach((unit)=>{
+                if(unit.combat_id === target){
+                    unit.combat_status.vitality -= total_damage
+                }
+            })
+
+            setUnits(unitList)
+        }
+
+    }
+    
+    const DamageCalculationRequest = async (damageCalculationRequest: DamageCalculationRequest) => {
+
+        let response = null
+        // Request to damage Calculation Endpoint
+        try{
+            response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/damage_calculation/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(damageCalculationRequest)
+            });
+            
+            response = await response.json();
+        }catch(e){
+            console.log(`Error: ${e}`);
+        }
+        return response
     }
 
     if(status === "loading") return <div className="text-green-700">Loading...</div>    

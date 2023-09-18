@@ -118,13 +118,19 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 effect.origin_physical_damage = unit.phisical_damage;
             })
 
+            let physical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
+            let magical_modifiers = data.magical_damage_modifiers ? data.magical_damage_modifiers : ""
+
+            physical_modifiers = `${physical_modifiers}|${skill.physical_damage}`
+            magical_modifiers = `${magical_modifiers}|${skill.magical_damage}`
+
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
                 phisical_damage: skill.physical_damage ? unit.physical_damage : 0,
                 magical_damage: skill.magical_damage ? unit.magical_damage : 0,
-                physical_damage_modifiers: skill.physical_damage,
-                magical_damage_modifiers: skill.magical_damage,
+                physical_damage_modifiers: physical_modifiers,
+                magical_damage_modifiers: magical_modifiers,
                 is_projectile: skill.projectile,
                 hit_chance: unit.hit_chance,
                 armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
@@ -209,7 +215,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
     <div className={`flex flex-col items-center p-2 border-4 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')] w-2/3 ${style}`}>
         <h2>Action</h2>
         <form className='w-full space-y-2' onSubmit={handleSubmit(HandleActClick)}>
-            <div className='flex justify-between'>
+            <div className='flex justify-between space-x-3'>
                 {/* Unit Selection */}
                 {units && <div className='flex items-center'>
                     <h3 className='text-yellow-500/80 font-medium'>Origin:</h3>
@@ -235,6 +241,16 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 {(action==2) && <div className='flex items-center'>
                     <h3 className='text-yellow-500/80 font-medium'>Skill:</h3>
                     <OptionSelectionList options={availableSkills} queryKey={'Skills'} onSelectionChange={HandleSkillSelection} style='w-56' />
+                </div>}
+                {(action==2) && <div className='flex items-center'>
+                    <h3 className='text-yellow-500/80 font-medium'>Modifiers:</h3>
+                    <input 
+                        {...register("physical_damage_modifiers", { required: false })}
+                        className='w-full rounded-lg p-1 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                        type="text"
+                        name="physical_damage_modifiers"
+                        placeholder="Modifiers"
+                    />                                
                 </div>}
                 {/* Effect Selection */}
                 {(action==3) && <div className='flex items-center'>

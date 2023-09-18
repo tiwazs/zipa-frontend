@@ -159,7 +159,7 @@ export default function UnitsPage() {
                     hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
                     armor: target_unit[0].armor ? target_unit[0].armor : 0,
                     evasion: target_unit[0].evasion ? target_unit[0].evasion : 0,
-                    damage_modifiers: damageForm.physical_damage_modifiers ? damageForm.physical_damage_modifiers.split(",") : []
+                    damage_modifiers: damageForm.physical_damage_modifiers ? damageForm.physical_damage_modifiers.split("|") : []
                 }
 
                 let response = await DamageCalculationRequest(damageCalculationRequest, target_unit[0].shield, damageForm.armor_piercing ? damageForm.armor_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
@@ -172,7 +172,7 @@ export default function UnitsPage() {
                     hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
                     armor: target_unit[0].magic_armor ? target_unit[0].magic_armor : 0,
                     evasion: target_unit[0].evasion ? target_unit[0].evasion : 0,
-                    damage_modifiers: damageForm.magical_damage_modifiers ? damageForm.magical_damage_modifiers.split(",") : []
+                    damage_modifiers: damageForm.magical_damage_modifiers ? damageForm.magical_damage_modifiers.split("|") : []
                 }
 
                 let response = await DamageCalculationRequest(damageCalculationRequest, target_unit[0].shield, damageForm.spell_piercing ? damageForm.spell_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)

@@ -8,8 +8,10 @@ interface Effect {
 }
 
 interface DamageForm {
-	origin: number | null;
+	origin: number;
 	targets: number[];
+    action: number;
+    skill_effect: string | null;
     phisical_damage: number | null;
     magical_damage: number | null;
     physical_damage_modifiers: string | null;
@@ -99,6 +101,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             data = {
                 origin: unit.combat_id,
                 targets: [data.targets.toString().split("|").map((target: string) => parseInt(target) )[0]],
+                action: 1,
+                skill_effect: null,
                 phisical_damage: unit.physical_damage,
                 magical_damage: 0,
                 physical_damage_modifiers: data.physical_damage_modifiers,
@@ -119,7 +123,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             })
 
             let physical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
-            let magical_modifiers = data.magical_damage_modifiers ? data.magical_damage_modifiers : ""
+            let magical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
 
             physical_modifiers = `${physical_modifiers}|${skill.physical_damage}`
             magical_modifiers = `${magical_modifiers}|${skill.magical_damage}`
@@ -127,6 +131,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
+                action: 2,
+                skill_effect: skill.name,
                 phisical_damage: skill.physical_damage ? unit.physical_damage : 0,
                 magical_damage: skill.magical_damage ? unit.magical_damage : 0,
                 physical_damage_modifiers: physical_modifiers,
@@ -152,6 +158,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
+                action: 3,
+                skill_effect: skill.name,
                 phisical_damage: 0,
                 magical_damage: 0,
                 physical_damage_modifiers: "",

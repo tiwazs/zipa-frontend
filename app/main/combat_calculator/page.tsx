@@ -14,8 +14,10 @@ interface Effect {
 }
 
 interface DamageForm {
-	origin: number | null;
+	origin: number;
 	targets: number[];
+    action: number;
+    skill_effect: string | null;
     phisical_damage: number | null;
     magical_damage: number | null;
     physical_damage_modifiers: string | null;
@@ -42,6 +44,8 @@ export default function UnitsPage() {
     const [unitIdCounter, setUnitIdCounter] = React.useState(1);
     const [units, setUnits] = React.useState<any[]>([{combat_id:0, name:"none"}]);
     const [phase, setPhase] = React.useState<number>(0);
+    const [combatLog, setCombatLog] = React.useState<any[]>([]);
+    const [phaseLog, setPhaseLog] = React.useState<any[]>([]);
     // Fucking library. LET ME ADD THE GOD DAMMED USER ID TO THE SESSION TO MAKE REQUESTS
     const { data: session, status }:{update:any, data:any, status:any} = useSession({
         required: true,
@@ -73,6 +77,7 @@ export default function UnitsPage() {
 
     const HandlePhase = async () => {
         let unitList = [...units]
+        let actionLogs = []
 
         for( const unit of unitList){
             if(unit.combat_id===0 || unit.combat_id===1) continue
@@ -86,11 +91,17 @@ export default function UnitsPage() {
                             let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.effect.origin_magical_power)
                             unit.combat_status.vitality += healing
                         }else{
+                            let vitality_text = effect.effect.instant_vitality_recovery.includes("+") ? "Recovers " : "Loses "
                             unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
+                            actionLogs.push(`${unit.name} ${vitality_text} ${Math.round(effect.effect.instant_vitality_recovery)} Vit from ${effect.effect.name}`)
+                            actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (${effect.effect.instant_vitality_recovery})`)
                         }
                     }
                     if(effect.effect.instant_essence_recovery){
+                        let essence_text = effect.effect.instant_essence_recovery.includes("+") ? "Recovers " : "Loses "
                         unit.combat_status.essence = mod_parameter_operation(effect.effect.instant_essence_recovery, unit.combat_status.essence)
+                        actionLogs.push(`${unit.name} ${essence_text} ${Math.round(effect.effect.instant_essence_recovery)} Ess from ${effect.effect.name}`)
+                        actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.essence)} Ess (${effect.effect.instant_essence_recovery})`)
                     }
 
                     // Effect Physical Damage
@@ -104,6 +115,9 @@ export default function UnitsPage() {
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
                         unit.combat_status.vitality -= response.final_damage
+
+                        actionLogs.push(`${GetDamageText(unit.name, response, 1)}  from ${effect.effect.name}`)
+                        actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (-${Math.round(response.final_damage)})`)
                     }
 
                     // Effect Magical Damage
@@ -117,6 +131,9 @@ export default function UnitsPage() {
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
                         unit.combat_status.vitality -= response.final_damage
+
+                        actionLogs.push(`${GetDamageText(unit.name, response, 2)}  from ${effect.effect.name}`)
+                        actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (-${Math.round(response.final_damage)})`)
                     }
 
                     // Max and Min values
@@ -134,63 +151,109 @@ export default function UnitsPage() {
         }
 
         setUnits(unitList)
+        let combatLogList = [...phaseLog]
+        actionLogs.forEach((log)=>{
+            combatLogList.push(log)
+        })
+        setPhaseLog(combatLogList)
         setPhase(phase + 1)
+    }
+
+    const GetDamageText = (targetName: string, damage_result: any, type: number) => {
+        let damage_type = type===1 ? "Pdg" : "Mdg"
+        let armor_type = type===1 ? "A" : "MA"
+        let piercing_type = type===1 ? "Arp" : "Spp"
+        
+        let physical_damage_text = `${targetName} suffers ${Math.round(damage_result.final_damage)} ${damage_type} \
+            (${Math.round(damage_result.result_details.critical_probability)}% Crit, \
+            ${Math.round(damage_result.result_details.hit_probability)}% Hit, \
+            ${Math.round(damage_result.result_details.deflect_probability)}% Dfl, \
+            ${Math.round(damage_result.result_details.evasion_probability)}% Eva) \
+            (${Math.round(damage_result.damage_after_modifiers)} Base, \
+            ${damage_result.result_details.hit_evasion_result} -> ${Math.round(damage_result.result_details.damage_after_hit_evasion)} ${damage_type}, \
+            ${Math.round(damage_result.result_details.armor)} ${armor_type} -> ${Math.round(damage_result.result_details.damage_after_base_armor)} ${damage_type},\
+            ${Math.round(damage_result.armor_penetration)} ${piercing_type} -> ${Math.round(damage_result.result_details.damage_after_total_armor)} ${damage_type})`
+        
+        return physical_damage_text
     }
 
     const HandleDamageDeal = async (damageForm: DamageForm) => {
         // Remove Vitality and Essence from origin based on cost
         let unitList = [...units]
+        let origin = unitList.filter( (unit:any) => unit.combat_id === damageForm.origin )[0]
+        let targets = unitList.filter( (unit:any) => damageForm.targets.includes(unit.combat_id) )
+
+        
+        let vitality_cost = damageForm.vitality_cost ? damageForm.vitality_cost : 0
+        let essence_cost = damageForm.essence_cost ? damageForm.essence_cost : 0
         unitList.forEach((unit)=>{
             if(unit.combat_id === damageForm.origin){
-                unit.combat_status.vitality -= damageForm.vitality_cost ? damageForm.vitality_cost : 0
-                unit.combat_status.essence -= damageForm.essence_cost ? damageForm.essence_cost : 0
+                
+                unit.combat_status.vitality -= vitality_cost
+                unit.combat_status.essence -= essence_cost
             }
         })
         setUnits(unitList)
+        
+        // Create Log
+        let vitality_cost_text = vitality_cost ? `(-${vitality_cost} Vit)` : ""
+        let essence_cost_text = essence_cost ? `(-${essence_cost} Ess)` : ""
+        let action_text = (damageForm.action===1) ? "Striked" : (damageForm.action===2) ? "Used" : "Inflicted"
+        let actionLogs = []
+        actionLogs.push(`${origin.name} ${action_text} ${damageForm.skill_effect ? damageForm.skill_effect : ""} ${vitality_cost_text} ${essence_cost_text} on ${targets.map((target)=> target.name)}`)
 
-        for( let target of damageForm.targets ){
-            let target_unit = units.filter( (unit:any) => unit.combat_id === target )
-
+        for( let target of targets ){
             let total_damage = 0
+
             // Physical Damage
+            let physical_damage_text = ""
             if(damageForm.phisical_damage){
                 let damageCalculationRequest: DamageCalculationRequest = {
                     damage: damageForm.phisical_damage ? damageForm.phisical_damage : 0,
                     hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
-                    armor: target_unit[0].armor ? target_unit[0].armor : 0,
-                    evasion: target_unit[0].evasion ? target_unit[0].evasion : 0,
+                    armor: target.armor ? target.armor : 0,
+                    evasion: target.evasion ? target.evasion : 0,
                     damage_modifiers: damageForm.physical_damage_modifiers ? damageForm.physical_damage_modifiers.split("|") : []
                 }
 
-                let response = await DamageCalculationRequest(damageCalculationRequest, target_unit[0].shield, damageForm.armor_piercing ? damageForm.armor_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
+                let response = await DamageCalculationRequest(damageCalculationRequest, target.shield, damageForm.armor_piercing ? damageForm.armor_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
                 total_damage += response.final_damage
+
+                actionLogs.push(GetDamageText(target.name, response, 1))
             }
+
             // Magical Damage
+            let magical_damage_text = ""
             if(damageForm.magical_damage){
                 let damageCalculationRequest: DamageCalculationRequest = {
                     damage: damageForm.magical_damage ? damageForm.magical_damage : 0,
                     hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
-                    armor: target_unit[0].magic_armor ? target_unit[0].magic_armor : 0,
-                    evasion: target_unit[0].evasion ? target_unit[0].evasion : 0,
+                    armor: target.magic_armor ? target.magic_armor : 0,
+                    evasion: target.evasion ? target.evasion : 0,
                     damage_modifiers: damageForm.magical_damage_modifiers ? damageForm.magical_damage_modifiers.split("|") : []
                 }
 
-                let response = await DamageCalculationRequest(damageCalculationRequest, target_unit[0].shield, damageForm.spell_piercing ? damageForm.spell_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
+                let response = await DamageCalculationRequest(damageCalculationRequest, target.shield, damageForm.spell_piercing ? damageForm.spell_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
                 total_damage += response.final_damage
-            }
 
+                actionLogs.push(GetDamageText(target.name, response, 2))
+            }
+            
             let unitList = [...units]
             for(const unit of unitList){
-                if(unit.combat_id === target){
+                if(unit.combat_id === target.combat_id){
                     // Damage the unit
                     unit.combat_status.vitality -= total_damage
                     if(unit.combat_status.vitality <= 0){
                         unit.combat_status.vitality = 0
                     } 
+                    actionLogs.push(`${target.name} ${Math.round(target.combat_status.vitality)} Vit (-${Math.round(total_damage)})`)
                       
                     // Apply effects
                     if(damageForm.effects.length > 0){
                         for(const effectNew of damageForm.effects){
+                            actionLogs.push(`${target.name} gets ${effectNew.effect.name} for ${effectNew.duration} turns`)    
+
                             // Separate effects similar to the new effect from the rest of the effects on the unit
                             // Similar effects on the unit
                             let sameEffectsOnUnit = unit.combat_status.effects.filter( (effect:any) => effect.effect.name === effectNew.effect.name )
@@ -230,7 +293,12 @@ export default function UnitsPage() {
 
             setUnits(unitList)
         }
-
+        
+        let combatLogList = [...phaseLog]
+        actionLogs.forEach((log)=>{
+            combatLogList.push(log)
+        })
+        setPhaseLog(combatLogList)
     }
     
     const DamageCalculationRequest = async (damageCalculationRequest: DamageCalculationRequest, shield: number, armor_piercing:number, is_projectile: boolean) => {
@@ -289,6 +357,14 @@ export default function UnitsPage() {
             {units && units.map((unit) => (
                 (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} />
             ))}
+        </div>
+        <div className="space-x-2 p-1 border-2 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
+            <h1 className='text-center text-yellow-200/70'>Combat Log</h1>
+            <div className='bg-black rounded-lg p-2 border border-yellow-900/50 flex flex-col'>
+                {phaseLog.map((Log: string, index: number) => (
+                    <p key={index} className='text-yellow-200/70 text-sm'>{Log}</p>
+                ))}
+            </div>
         </div>
     </main>
     )

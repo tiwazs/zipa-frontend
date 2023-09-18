@@ -7,7 +7,7 @@ export const value_multiplier = (base_value: number, multiplier: number, offset:
 }
 
 export const mod_parameter_operation = (mod_parameter_string: string, parameter: number) => {
-    const regex = /(?<sign>[+-])?(?<value>(\d+|ND|MD|HP))?(?<porcentage>\s*%)?(?<max>\s*max)?/gm
+    const regex = /(?<sign>[+-])?(?<value>([\d+.]+|ND|MD|HP))?(?<porcentage>\s*%)?(?<max>\s*max)?/gm
     const match = regex.exec(mod_parameter_string);
     const sign = match?.groups?.sign;
     const max = match?.groups?.max;
@@ -19,13 +19,15 @@ export const mod_parameter_operation = (mod_parameter_string: string, parameter:
     let result = parameter;
 
     if(porcentage && sign === '+'){
-            result += result * (parseInt(value) / 100);
+            result += result * (parseFloat(value) / 100);
     }else if(porcentage && sign === '-'){
-            result -= result * (parseInt(value) / 100);
+            result -= result * (parseFloat(value) / 100);
     }else if(sign === '+'){
-            result += parseInt(value);
+            result += parseFloat(value);
     }else if(sign === '-'){
-            result -= parseInt(value);
+            result -= parseFloat(value);
+    }else if(porcentage){
+            result = result * (parseFloat(value) / 100);
     }
 
     return result;

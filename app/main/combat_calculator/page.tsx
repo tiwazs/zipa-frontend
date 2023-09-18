@@ -83,14 +83,19 @@ export default function UnitsPage() {
                 for( const effect of unit.combat_status.effects) {
                     // Effect Damage or Heal
                     if(effect.effect.instant_vitality_recovery){
-                        unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
+                        if(effect.effect.instant_vitality_recovery.includes("%")){
+                            let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.effect.magical_power)
+                            unit.combat_status.vitality += healing
+                        }else{
+                            unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
+                        }
                     }
                     if(effect.effect.instant_essence_recovery){
                         unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_essence_recovery, unit.combat_status.vitality)
                     }
 
                     // Effect Physical Damage
-                    if(effect.effect.instant_physical_damage){
+                    if(effect.effect.instant_physical_damage && effect.effect.instant_physical_damage !== "0"){
                         let damageCalculationRequest: DamageCalculationRequest = {
                             damage: effect.physical_damage,
                             hit_chance: 100,
@@ -103,7 +108,7 @@ export default function UnitsPage() {
                     }
 
                     // Effect Magical Damage
-                    if(effect.effect.instant_magical_damage){
+                    if(effect.effect.instant_magical_damage && effect.effect.instant_magical_damage !== "0"){
                         let damageCalculationRequest: DamageCalculationRequest = {
                             damage: effect.magical_power,
                             hit_chance: 100,
@@ -185,13 +190,10 @@ export default function UnitsPage() {
                             effectNew.physical_damage = damageForm.phisical_damage
 
                             // Separate effects similar to the new effect from the rest of the effects on the unit
-                            console.log(unit.combat_status.effects)
                             // Similar effects on the unit
                             let sameEffectsOnUnit = unit.combat_status.effects.filter( (effect:any) => effect.effect.name === effectNew.effect.name )
-                            console.log(sameEffectsOnUnit)
                             // Rest of the effects on the unit
                             unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.effect.name !== effectNew.effect.name )
-                            console.log(unit.combat_status.effects)
 
                             if(sameEffectsOnUnit.length > 0){
                                 // If there are similar effects on the unit, Update the stack counter of the current effects and add them back to the unit

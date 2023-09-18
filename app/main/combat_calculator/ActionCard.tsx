@@ -113,6 +113,11 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 duration: null
             }
         }else if(action===2 && unit && skill){
+            skill.effects.forEach( (effect:any) => {
+                effect.origin_magical_power = unit.magical_damage;
+                effect.origin_physical_damage = unit.phisical_damage;
+            })
+
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
@@ -130,9 +135,13 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 duration: null
             }
         }else if(action===3 && unit && skill){
-            skill.effects.forEach( (effect:any) => {
-                effect.duration = data.duration
-            })
+            let effects = [...skill.effects]
+
+            for( const effect of effects){
+                effect.duration = data.duration;
+                effect.origin_magical_power = unit.magical_damage;
+                effect.origin_physical_damage = unit.physical_damage;
+            }
 
             data = {
                 origin: unit.combat_id,
@@ -151,6 +160,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 duration: null                               
             }
         }
+
 
         onActClick(data)
     }

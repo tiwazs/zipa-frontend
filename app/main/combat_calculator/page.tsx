@@ -69,7 +69,6 @@ export default function UnitsPage() {
     const HandleRemoveUnit = (combat_id: number) => {
         let unitList = units.filter((unit)=> unit.combat_id!==combat_id )
         setUnits(unitList)
-        console.log(units)
     }
 
     const HandlePhase = async () => {
@@ -84,7 +83,7 @@ export default function UnitsPage() {
                     // Effect Damage or Heal
                     if(effect.effect.instant_vitality_recovery){
                         if(effect.effect.instant_vitality_recovery.includes("%")){
-                            let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.effect.magical_power)
+                            let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.effect.origin_magical_power)
                             unit.combat_status.vitality += healing
                         }else{
                             unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
@@ -97,7 +96,7 @@ export default function UnitsPage() {
                     // Effect Physical Damage
                     if(effect.effect.instant_physical_damage && effect.effect.instant_physical_damage !== "0"){
                         let damageCalculationRequest: DamageCalculationRequest = {
-                            damage: effect.physical_damage,
+                            damage: effect.origin_physical_damage,
                             hit_chance: 100,
                             armor: unit.armor ? unit.armor : 0,
                             evasion: 0,
@@ -110,7 +109,7 @@ export default function UnitsPage() {
                     // Effect Magical Damage
                     if(effect.effect.instant_magical_damage && effect.effect.instant_magical_damage !== "0"){
                         let damageCalculationRequest: DamageCalculationRequest = {
-                            damage: effect.magical_power,
+                            damage: effect.origin_magical_power,
                             hit_chance: 100,
                             armor: unit.magic_armor ? unit.magic_armor : 0,
                             evasion: 0,
@@ -192,9 +191,6 @@ export default function UnitsPage() {
                     // Apply effects
                     if(damageForm.effects.length > 0){
                         for(const effectNew of damageForm.effects){
-                            effectNew.magical_power = damageForm.magical_damage
-                            effectNew.physical_damage = damageForm.phisical_damage
-
                             // Separate effects similar to the new effect from the rest of the effects on the unit
                             // Similar effects on the unit
                             let sameEffectsOnUnit = unit.combat_status.effects.filter( (effect:any) => effect.effect.name === effectNew.effect.name )

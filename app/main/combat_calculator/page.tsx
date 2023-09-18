@@ -91,7 +91,7 @@ export default function UnitsPage() {
                         }
                     }
                     if(effect.effect.instant_essence_recovery){
-                        unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_essence_recovery, unit.combat_status.vitality)
+                        unit.combat_status.essence = mod_parameter_operation(effect.effect.instant_essence_recovery, unit.combat_status.essence)
                     }
 
                     // Effect Physical Damage
@@ -120,11 +120,17 @@ export default function UnitsPage() {
                         unit.combat_status.vitality -= response.final_damage
                     }
 
-                    // Effect Fading
-                    effect.duration -= 1
+                    // Max and Min values
+                    if(unit.combat_status.vitality < 0) unit.combat_status.vitality = 0
+                    if(unit.combat_status.vitality > unit.vitality) unit.combat_status.vitality = unit.vitality
+                    if(unit.combat_status.essence < 0) unit.combat_status.essence = 0
+                    if(unit.combat_status.essence > unit.essence) unit.combat_status.essence = unit.essence
+
+                    // Effect Fading. Duration usually is a number, but if it's INF, it will never fade
+                    if(effect.duration!=="INF"){ effect.duration -= 1 }
                     
                 }
-                unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.duration > 0 )
+                unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.duration > 0 || effect.duration==="INF" )
             }
         }
 

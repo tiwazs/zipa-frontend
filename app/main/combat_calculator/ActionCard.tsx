@@ -21,6 +21,7 @@ interface DamageForm {
     essence_cost: number | null;
     vitality_cost: number | null;
     effects: any[];
+    duration: string | null;
 }
 
 interface DamageCardProps {
@@ -41,10 +42,11 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
     const [action, setAction] = useState<any>(undefined)
     const [skill, setSkill] = useState<any>(undefined)
     const [availableSkills, setAvailableSkills] = useState<any[]>([])
+    const [availableEffects, setAvailableEffects] = useState<any[]>([])
 
     useEffect(() => {
-        // Skills List
         if(unit){
+            // Skills List
             let skills:any = []
             // Specialization Skills
             if(unit.specialization){ 
@@ -64,6 +66,31 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             }
 
             setAvailableSkills(skills);
+
+            // Effects List
+            let effects:any = []
+            // Specialization Trait Effects
+            if(unit.specialization){
+                unit.specialization.traits.forEach( (trait:any) =>{
+                    if(trait.trait.effects){
+                        trait.trait.effects.forEach( (effect:any) =>{
+                            effects.push(effect.effect)
+                        })
+                    }
+                })
+            }
+            // Race Trait Effects
+            if(unit.faction){
+                unit.faction.traits.forEach( (trait:any) =>{
+                    if(trait.trait.effects){
+                        trait.trait.effects.forEach( (effect:any) =>{
+                            effects.push(effect.effect)
+                        })
+                    }
+                })
+            }
+
+            setAvailableEffects(effects);
         }
     }, [unit])
 
@@ -82,7 +109,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 spell_piercing: 0,
                 vitality_cost: 0,
                 essence_cost: 0,
-                effects: []
+                effects: [],
+                duration: null
             }
         }else if(action===2 && unit && skill){
             data = {
@@ -98,9 +126,14 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
                 vitality_cost: skill.vitality_cost,
                 essence_cost: skill.essence_cost,
-                effects: skill.effects ? [...skill.effects] : []
+                effects: skill.effects ? [...skill.effects] : [],
+                duration: null
             }
         }else if(action===3 && unit && skill){
+            skill.effects.forEach( (effect:any) => {
+                effect.duration = data.duration
+            })
+
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
@@ -114,7 +147,8 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 spell_piercing: 0,
                 vitality_cost: 0,
                 essence_cost: 0,
-                effects: []
+                effects: skill.effects ? [...skill.effects] : [],
+                duration: null                               
             }
         }
 
@@ -135,6 +169,32 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
         setSkill(selection)
     }
 
+    const HandleEffectSelection = (selection: any) => {
+        // Create a fake skill to carry the effect
+
+        let effect = {
+            id: selection.id,
+            name: selection.name,
+            duration: 0,
+            effect: selection
+        }
+
+        let skill = {
+            name: selection.name,
+            physical_damage: 0,
+            magical_damage: 0,
+            projectile: false,
+            hit_chance: 0,
+            armor_piercing: 0,
+            spell_piercing: 0,
+            vitality_cost: 0,
+            essence_cost: 0,
+            effects: [effect]
+        }
+
+        setSkill(skill)
+    }
+
     return (
     <div className={`flex flex-col items-center p-2 border-4 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')] w-2/3 ${style}`}>
         <h2>Action</h2>
@@ -142,19 +202,15 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             <div className='flex justify-between'>
                 {/* Unit Selection */}
                 {units && <div className='flex items-center'>
-                        <h3 className='text-yellow-500/80 font-medium'>Origin:</h3>
-                        <OptionSelectionList options={units} queryKey={'Units'} onSelectionChange={HandleUnitSelection} style='w-36' />
-                    </div>}
-                {/* Skill Selection */}
+                    <h3 className='text-yellow-500/80 font-medium'>Origin:</h3>
+                    <OptionSelectionList options={units} queryKey={'Units'} onSelectionChange={HandleUnitSelection} style='w-36' />
+                </div>}
+                {/* Action Selection */}
                 {unit && <div className='flex items-center'>
                     <h3 className='text-yellow-500/80 font-medium'>Action:</h3>
                     <OptionSelectionList options={BaseActions} queryKey={'Action'} onSelectionChange={HandleActionSelection} style='w-56' />
                 </div>}
-                {/* Skill Selection */}
-                {(action==2) && <div className='flex items-center'>
-                        <h3 className='text-yellow-500/80 font-medium'>Skill:</h3>
-                        <OptionSelectionList options={availableSkills} queryKey={'Skills'} onSelectionChange={HandleSkillSelection} style='w-56' />
-                    </div>}
+                {/* Normal Attack */}
                 {(action==1) && <div className='flex items-center'>
                     <h3 className='text-yellow-500/80 font-medium'>Modifiers:</h3>
                     <input 
@@ -163,6 +219,26 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                         type="text"
                         name="physical_damage_modifiers"
                         placeholder="Physical Modifiers"
+                    />                                
+                </div>}
+                {/* Skill Selection */}
+                {(action==2) && <div className='flex items-center'>
+                    <h3 className='text-yellow-500/80 font-medium'>Skill:</h3>
+                    <OptionSelectionList options={availableSkills} queryKey={'Skills'} onSelectionChange={HandleSkillSelection} style='w-56' />
+                </div>}
+                {/* Effect Selection */}
+                {(action==3) && <div className='flex items-center'>
+                    <h3 className='text-yellow-500/80 font-medium'>Skill:</h3>
+                    <OptionSelectionList options={availableEffects} queryKey={'Effects'} onSelectionChange={HandleEffectSelection} style='w-56' />
+                </div>}
+                {(action==3) && <div className='flex items-center'>
+                    <h3 className='text-yellow-500/80 font-medium'>Duration:</h3>
+                    <input 
+                        {...register("duration", { required: false })}
+                        className='w-full rounded-lg p-1 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                        type="text"
+                        name="duration"
+                        placeholder="Duration"
                     />                                
                 </div>}
                 <div className='flex items-center'>

@@ -13,7 +13,7 @@ interface Effect {
 
 }
 
-interface DamageForm {
+interface ActionForm {
 	origin: number;
 	targets: number[];
     action: number;
@@ -26,6 +26,10 @@ interface DamageForm {
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
+    healing_power: number | null;
+    healing_modifiers: string | null;
+    vitality_recovery: string | null;
+    essence_recovery: string | null;
     essence_cost: number | null;
     vitality_cost: number | null;
     effects: any[];
@@ -177,17 +181,17 @@ export default function UnitsPage() {
         return physical_damage_text
     }
 
-    const HandleDamageDeal = async (damageForm: DamageForm) => {
+    const HandleAction = async (actionForm: ActionForm) => {
         // Remove Vitality and Essence from origin based on cost
         let unitList = [...units]
-        let origin = unitList.filter( (unit:any) => unit.combat_id === damageForm.origin )[0]
-        let targets = unitList.filter( (unit:any) => damageForm.targets.includes(unit.combat_id) )
+        let origin = unitList.filter( (unit:any) => unit.combat_id === actionForm.origin )[0]
+        let targets = unitList.filter( (unit:any) => actionForm.targets.includes(unit.combat_id) )
 
         
-        let vitality_cost = damageForm.vitality_cost ? damageForm.vitality_cost : 0
-        let essence_cost = damageForm.essence_cost ? damageForm.essence_cost : 0
+        let vitality_cost = actionForm.vitality_cost ? actionForm.vitality_cost : 0
+        let essence_cost = actionForm.essence_cost ? actionForm.essence_cost : 0
         unitList.forEach((unit)=>{
-            if(unit.combat_id === damageForm.origin){
+            if(unit.combat_id === actionForm.origin){
                 
                 unit.combat_status.vitality -= vitality_cost
                 unit.combat_status.essence -= essence_cost
@@ -198,45 +202,64 @@ export default function UnitsPage() {
         // Create Log
         let vitality_cost_text = vitality_cost ? `(-${vitality_cost} Vit)` : ""
         let essence_cost_text = essence_cost ? `(-${essence_cost} Ess)` : ""
-        let action_text = (damageForm.action===1) ? "Striked" : (damageForm.action===2) ? "Used" : "Inflicted"
+        let action_text = (actionForm.action===1) ? "Striked" : (actionForm.action===2) ? "Used" : "Inflicted"
         let actionLogs = []
-        actionLogs.push(`${origin.name} ${action_text} ${damageForm.skill_effect ? damageForm.skill_effect : ""} ${vitality_cost_text} ${essence_cost_text} on ${targets.map((target)=> target.name)}`)
+        actionLogs.push(`${origin.name} ${action_text} ${actionForm.skill_effect ? actionForm.skill_effect : ""} ${vitality_cost_text} ${essence_cost_text} on ${targets.map((target)=> target.name)}`)
 
         for( let target of targets ){
             let total_damage = 0
 
             // Physical Damage
-            let physical_damage_text = ""
-            if(damageForm.phisical_damage){
+            if(actionForm.phisical_damage){
                 let damageCalculationRequest: DamageCalculationRequest = {
-                    damage: damageForm.phisical_damage ? damageForm.phisical_damage : 0,
-                    hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
+                    damage: actionForm.phisical_damage ? actionForm.phisical_damage : 0,
+                    hit_chance: actionForm.hit_chance ? actionForm.hit_chance : 0,
                     armor: target.armor ? target.armor : 0,
                     evasion: target.evasion ? target.evasion : 0,
-                    damage_modifiers: damageForm.physical_damage_modifiers ? damageForm.physical_damage_modifiers.split("|") : []
+                    damage_modifiers: actionForm.physical_damage_modifiers ? actionForm.physical_damage_modifiers.split("|") : []
                 }
 
-                let response = await DamageCalculationRequest(damageCalculationRequest, target.shield, damageForm.armor_piercing ? damageForm.armor_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
+                let response = await DamageCalculationRequest(damageCalculationRequest, target.shield, actionForm.armor_piercing ? actionForm.armor_piercing : 0, actionForm.is_projectile ? actionForm.is_projectile : false)
                 total_damage += response.final_damage
 
                 actionLogs.push(GetDamageText(target.name, response, 1))
             }
 
             // Magical Damage
-            let magical_damage_text = ""
-            if(damageForm.magical_damage){
+            if(actionForm.magical_damage){
                 let damageCalculationRequest: DamageCalculationRequest = {
-                    damage: damageForm.magical_damage ? damageForm.magical_damage : 0,
-                    hit_chance: damageForm.hit_chance ? damageForm.hit_chance : 0,
+                    damage: actionForm.magical_damage ? actionForm.magical_damage : 0,
+                    hit_chance: actionForm.hit_chance ? actionForm.hit_chance : 0,
                     armor: target.magic_armor ? target.magic_armor : 0,
                     evasion: target.evasion ? target.evasion : 0,
-                    damage_modifiers: damageForm.magical_damage_modifiers ? damageForm.magical_damage_modifiers.split("|") : []
+                    damage_modifiers: actionForm.magical_damage_modifiers ? actionForm.magical_damage_modifiers.split("|") : []
                 }
 
-                let response = await DamageCalculationRequest(damageCalculationRequest, target.shield, damageForm.spell_piercing ? damageForm.spell_piercing : 0, damageForm.is_projectile ? damageForm.is_projectile : false)
+                let response = await DamageCalculationRequest(damageCalculationRequest, target.shield, actionForm.spell_piercing ? actionForm.spell_piercing : 0, actionForm.is_projectile ? actionForm.is_projectile : false)
                 total_damage += response.final_damage
 
                 actionLogs.push(GetDamageText(target.name, response, 2))
+            }
+
+            // Healing
+            console.log(actionForm)
+            if(actionForm.healing_power){
+                console.log(actionForm.healing_power)
+                let healing = actionForm.healing_modifiers ? mod_parameter_operation(actionForm.healing_modifiers, actionForm.healing_power) : actionForm.healing_power
+                target.combat_status.vitality += healing
+                actionLogs.push(`${target.name} Recovers (${Math.round(healing)} Vit)`)
+            }
+
+            // Vitality Recovery (This is direct vitality recovery a set amount, whereas healing is based on the healing power)
+            if(actionForm.vitality_recovery){
+                target.combat_status.vitality = mod_parameter_operation(actionForm.vitality_recovery, target.combat_status.vitality)
+                actionLogs.push(`${target.name} Recovers ${actionForm.vitality_recovery} Vit`)
+            }
+
+            // Essence Recovery
+            if(actionForm.essence_recovery){
+                target.combat_status.essence = mod_parameter_operation(actionForm.essence_recovery, target.combat_status.essence)
+                actionLogs.push(`${target.name} Recovers ${actionForm.essence_recovery} Ess`)
             }
             
             let unitList = [...units]
@@ -244,14 +267,18 @@ export default function UnitsPage() {
                 if(unit.combat_id === target.combat_id){
                     // Damage the unit
                     unit.combat_status.vitality -= total_damage
+                    // Vitality Limits
                     if(unit.combat_status.vitality <= 0){
                         unit.combat_status.vitality = 0
+                    }
+                    if(unit.combat_status.vitality > unit.vitality){
+                        unit.combat_status.vitality = unit.vitality
                     } 
                     actionLogs.push(`${target.name} ${Math.round(target.combat_status.vitality)} Vit (-${Math.round(total_damage)})`)
                       
                     // Apply effects
-                    if(damageForm.effects.length > 0){
-                        for(const effectNew of damageForm.effects){
+                    if(actionForm.effects.length > 0){
+                        for(const effectNew of actionForm.effects){
                             actionLogs.push(`${target.name} gets ${effectNew.effect.name} for ${effectNew.duration} turns`)    
 
                             // Separate effects similar to the new effect from the rest of the effects on the unit
@@ -350,7 +377,7 @@ export default function UnitsPage() {
                             onAddClick={HandleAddUnit}
                             styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
-            <ActionCard units={units} onActClick={HandleDamageDeal} style='my-1'/>
+            <ActionCard units={units} onActClick={HandleAction} style='my-1'/>
         </div>
 
         <div className='flex space-x-2'>

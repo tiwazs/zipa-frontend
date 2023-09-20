@@ -7,7 +7,7 @@ interface Effect {
 
 }
 
-interface DamageForm {
+interface ActionForm {
 	origin: number;
 	targets: number[];
     action: number;
@@ -20,6 +20,10 @@ interface DamageForm {
     hit_chance: number | null;
     armor_piercing: number | null;
     spell_piercing: number | null;
+    healing_power: number | null;
+    healing_modifiers: string | null;
+    vitality_recovery: string | null;
+    essence_recovery: string | null;
     essence_cost: number | null;
     vitality_cost: number | null;
     effects: any[];
@@ -39,7 +43,7 @@ const BaseActions = [
 ]
 
 export default function DamageCard({units, onActClick, style}: DamageCardProps) {
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<DamageForm>();
+    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ActionForm>();
     const [unit, setUnit] = useState<any>(undefined)
     const [action, setAction] = useState<any>(undefined)
     const [skill, setSkill] = useState<any>(undefined)
@@ -96,7 +100,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
         }
     }, [unit])
 
-    const HandleActClick:SubmitHandler<DamageForm> = async (data) => {
+    const HandleActClick:SubmitHandler<ActionForm> = async (data) => {
         if(action===1 && unit){
             data = {
                 origin: unit.combat_id,
@@ -110,6 +114,10 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 is_projectile: false,
                 hit_chance: unit.hit_chance,
                 armor_piercing: unit.armor_piercing,
+                healing_power: 0,
+                healing_modifiers: "",
+                vitality_recovery: "0",
+                essence_recovery: "0",
                 spell_piercing: 0,
                 vitality_cost: 0,
                 essence_cost: 0,
@@ -124,9 +132,11 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
 
             let physical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
             let magical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
+            let healing_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
 
             physical_modifiers = `${physical_modifiers}|${skill.physical_damage}`
             magical_modifiers = `${magical_modifiers}|${skill.magical_damage}`
+            healing_modifiers = `${healing_modifiers}|${skill.healing}`
 
             data = {
                 origin: unit.combat_id,
@@ -141,6 +151,10 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 hit_chance: unit.hit_chance,
                 armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
                 spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
+                healing_power: skill.healing ? unit.magical_damage : 0,
+                healing_modifiers: healing_modifiers,
+                vitality_recovery: skill.vitality_recovery,
+                essence_recovery: skill.essence_recovery,
                 vitality_cost: skill.vitality_cost,
                 essence_cost: skill.essence_cost,
                 effects: skill.effects ? [...skill.effects] : [],
@@ -151,8 +165,9 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
 
             for( const effect of effects){
                 effect.duration = data.duration;
-                effect.origin_magical_power = unit.magical_damage;
                 effect.origin_physical_damage = unit.physical_damage;
+                effect.origin_magical_power = unit.magical_damage;
+                effect.origin_healing_power = unit.magical_damage;
             }
 
             data = {
@@ -168,6 +183,10 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 hit_chance: 0,
                 armor_piercing: 0,
                 spell_piercing: 0,
+                healing_power: 0,
+                healing_modifiers: "",
+                vitality_recovery: "0",
+                essence_recovery: "0",
                 vitality_cost: 0,
                 essence_cost: 0,
                 effects: skill.effects ? [...skill.effects] : [],

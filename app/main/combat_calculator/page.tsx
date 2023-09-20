@@ -92,8 +92,11 @@ export default function UnitsPage() {
                     // Effect Damage or Heal
                     if(effect.effect.instant_vitality_recovery){
                         if(effect.effect.instant_vitality_recovery.includes("%")){
-                            let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.effect.origin_magical_power)
+                            console.log(effect.origin_healing_power)
+                            let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.origin_healing_power)
                             unit.combat_status.vitality += healing
+                            console.log(healing)
+                            actionLogs.push(`${unit.name} Recovers ${Math.round(healing)} Vit from ${effect.effect.name}`)
                         }else{
                             let vitality_text = effect.effect.instant_vitality_recovery.includes("+") ? "Recovers " : "Loses "
                             unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
@@ -242,7 +245,6 @@ export default function UnitsPage() {
             }
 
             // Healing
-            console.log(actionForm)
             if(actionForm.healing_power){
                 console.log(actionForm.healing_power)
                 let healing = actionForm.healing_modifiers ? mod_parameter_operation(actionForm.healing_modifiers, actionForm.healing_power) : actionForm.healing_power
@@ -251,13 +253,13 @@ export default function UnitsPage() {
             }
 
             // Vitality Recovery (This is direct vitality recovery a set amount, whereas healing is based on the healing power)
-            if(actionForm.vitality_recovery){
+            if(actionForm.vitality_recovery && actionForm.vitality_recovery !== "0"){
                 target.combat_status.vitality = mod_parameter_operation(actionForm.vitality_recovery, target.combat_status.vitality)
                 actionLogs.push(`${target.name} Recovers ${actionForm.vitality_recovery} Vit`)
             }
 
             // Essence Recovery
-            if(actionForm.essence_recovery){
+            if(actionForm.essence_recovery && actionForm.essence_recovery !== "0"){
                 target.combat_status.essence = mod_parameter_operation(actionForm.essence_recovery, target.combat_status.essence)
                 actionLogs.push(`${target.name} Recovers ${actionForm.essence_recovery} Ess`)
             }

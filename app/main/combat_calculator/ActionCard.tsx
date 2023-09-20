@@ -128,6 +128,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             skill.effects.forEach( (effect:any) => {
                 effect.origin_magical_power = unit.magical_damage;
                 effect.origin_physical_damage = unit.phisical_damage;
+                effect.origin_healing_power = unit.magical_damage;
             })
 
             let physical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""

@@ -25,7 +25,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
     
     return (
     
-    <div className="group w-96 rounded-2xl p-2 text-left shadow-xl 
+    <div className="group w-102 rounded-2xl p-2 text-left shadow-xl 
                     border-transparent border-4 dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
         <div className='flex justify-between'>
             <div>
@@ -54,70 +54,90 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                     <img src={`/gen_icons/vitality.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Vitality</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.vitality}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.vitality}{unit.combat_status.bonus_vitality>0 && <span>({unit.combat_status.bonus_vitality>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_vitality*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/strength.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Strength</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.strength}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.strength}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/dexterity.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Dexterity</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.dexterity}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.dexterity}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/mind.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Mind</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.mind}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.mind}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/faith.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Faith</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.faith}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.faith}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/essence.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Essence</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.essence}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.essence}{unit.combat_status.bonus_essence>0 && <span>({unit.combat_status.bonus_essence>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_essence*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/agility.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Agility</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.agility}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.agility}{unit.combat_status.bonus_agility>0 && <span>({unit.combat_status.bonus_agility>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_agility*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/hit_chance.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Hit Chance</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.hit_chance}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.hit_chance}{unit.combat_status.bonus_hit_chance>0 && <span>({unit.combat_status.bonus_hit_chance>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_hit_chance*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/evasion.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Evasion</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.evasion}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.evasion}{unit.combat_status.bonus_evasion>0 && <span>({unit.combat_status.bonus_evasion>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_evasion*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Movement</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.movement}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.movement}{unit.combat_status.bonus_movement>0 && <span>({unit.combat_status.bonus_movement>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_movement*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
             </div>
@@ -126,70 +146,90 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                     <img src={`/gen_icons/armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Armor</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.armor}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.armor}{unit.combat_status.bonus_armor>0 && <span>({unit.combat_status.bonus_armor>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_armor*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/magic_armor.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Magic Armor</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.magic_armor}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.magic_armor}{unit.combat_status.bonus_magic_armor>0 && <span>({unit.combat_status.bonus_magic_armor>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_magic_armor*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/hit_rate.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Hit Rate</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.hit_rate}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.hit_rate}{unit.combat_status.bonus_hit_rate>0 && <span>({unit.combat_status.bonus_hit_rate>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_hit_rate*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/shield.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Shield</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.shield}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.shield}{unit.combat_status.bonus_shield>0 && <span>({unit.combat_status.bonus_shield>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_shield*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/armor_piercing.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Armor Piercing</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.armor_piercing}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.armor_piercing}{unit.combat_status.bonus_armor_piercing>0 && <span>({unit.combat_status.bonus_armor_piercing>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_armor_piercing*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/spell_piercing.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Spell Piercing</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.spell_piercing}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.spell_piercing}{unit.combat_status.bonus_spell_piercing>0 && <span>({unit.combat_status.bonus_spell_piercing>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_spell_piercing*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/physical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Physical Damage</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.physical_damage}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.physical_damage}{unit.combat_status.bonus_physical_damage>0 && <span>({unit.combat_status.bonus_physical_damage>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_physical_damage*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/magical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Magical Damage</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.magical_damage}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.magical_damage}{unit.combat_status.bonus_magical_damage>0 && <span>({unit.combat_status.bonus_magical_damage>0 ? "+" : "-"}{Math.round(unit.combat_status.bonus_magical_damage*10)/10})</span>}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Weight</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.weight}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.weight}
+                        </h1>
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Weight Penalty</h1>
-                        <h1 className='my-2 py-1 text-orange-500 font-light'>{unit.weight_penalty}</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.weight_penalty}
+                        </h1>
                     </div>
                 </div>
             </div>

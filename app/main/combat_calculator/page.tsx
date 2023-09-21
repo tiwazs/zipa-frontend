@@ -58,13 +58,75 @@ export default function UnitsPage() {
         },
     })
 
+    const HandleEffectUnitParameters = (unitOrigin: any, effect:any, add: boolean) => {
+        let unit = {...unitOrigin}
+
+        // Apply effects Unit modifications
+        if(add){
+            unit.combat_status.bonus_physical_damage += mod_parameter_operation(effect.physical_damage, unit.physical_damage) - unit.physical_damage
+            unit.combat_status.bonus_magical_damage +=  mod_parameter_operation(effect.magical_damage, unit.magical_damage) - unit.magical_damage;
+            unit.combat_status.bonus_healing +=  mod_parameter_operation(effect.healing, unit.healing) - unit.healing;
+            unit.combat_status.bonus_armor_piercing +=  mod_parameter_operation(effect.armor_piercing, unit.armor_piercing) - unit.armor_piercing;
+            unit.combat_status.bonus_spell_piercing +=  mod_parameter_operation(effect.spell_piercing, unit.spell_piercing) - unit.spell_piercing;
+            unit.combat_status.bonus_vitality +=  mod_parameter_operation(effect.vitality, unit.vitality) - unit.vitality;
+            unit.combat_status.bonus_range +=  mod_parameter_operation(effect.range, unit.range) - unit.range;
+            unit.combat_status.bonus_damage +=  mod_parameter_operation(effect.damage, unit.damage) - unit.damage;
+            unit.combat_status.bonus_armor +=  mod_parameter_operation(effect.armor, unit.armor) - unit.armor;
+            unit.combat_status.bonus_magic_armor +=  mod_parameter_operation(effect.magic_armor, unit.magic_armor) - unit.magic_armor;
+            unit.combat_status.bonus_essence +=  mod_parameter_operation(effect.essence, unit.essence) - unit.essence;
+            unit.combat_status.bonus_agility +=  mod_parameter_operation(effect.agility, unit.agility) - unit.agility;
+            unit.combat_status.bonus_hit_chance +=  mod_parameter_operation(effect.hit_chance, unit.hit_chance) - unit.hit_chance;
+            unit.combat_status.bonus_evasion +=  mod_parameter_operation(effect.evasion, unit.evasion) - unit.evasion;
+            unit.combat_status.bonus_hit_rate +=  mod_parameter_operation(effect.hit_rate, unit.hit_rate) - unit.hit_rate;
+            unit.combat_status.bonus_movement +=  mod_parameter_operation(effect.movement, unit.movement) - unit.movement;
+            unit.combat_status.bonus_shield += mod_parameter_operation(effect.shield, unit.shield) - unit.shield;
+        }else if(!add){
+            unit.combat_status.bonus_physical_damage -= mod_parameter_operation(effect.physical_damage, unit.physical_damage) - unit.physical_damage
+            unit.combat_status.bonus_magical_damage -=  mod_parameter_operation(effect.magical_damage, unit.magical_damage) - unit.magical_damage;
+            unit.combat_status.bonus_healing -=  mod_parameter_operation(effect.healing, unit.healing) - unit.healing;
+            unit.combat_status.bonus_armor_piercing -=  mod_parameter_operation(effect.armor_piercing, unit.armor_piercing) - unit.armor_piercing;
+            unit.combat_status.bonus_spell_piercing -=  mod_parameter_operation(effect.spell_piercing, unit.spell_piercing) - unit.spell_piercing;
+            unit.combat_status.bonus_vitality -=  mod_parameter_operation(effect.vitality, unit.vitality) - unit.vitality;
+            unit.combat_status.bonus_range -=  mod_parameter_operation(effect.range, unit.range) - unit.range;
+            unit.combat_status.bonus_damage -=  mod_parameter_operation(effect.damage, unit.damage) - unit.damage;
+            unit.combat_status.bonus_armor -=  mod_parameter_operation(effect.armor, unit.armor) - unit.armor;
+            unit.combat_status.bonus_magic_armor -=  mod_parameter_operation(effect.magic_armor, unit.magic_armor) - unit.magic_armor;
+            unit.combat_status.bonus_essence -=  mod_parameter_operation(effect.essence, unit.essence) - unit.essence;
+            unit.combat_status.bonus_agility -=  mod_parameter_operation(effect.agility, unit.agility) - unit.agility;
+            unit.combat_status.bonus_hit_chance -=  mod_parameter_operation(effect.hit_chance, unit.hit_chance) - unit.hit_chance;
+            unit.combat_status.bonus_evasion -=  mod_parameter_operation(effect.evasion, unit.evasion) - unit.evasion;
+            unit.combat_status.bonus_hit_rate -=  mod_parameter_operation(effect.hit_rate, unit.hit_rate) - unit.hit_rate;
+            unit.combat_status.bonus_movement -=  mod_parameter_operation(effect.movement, unit.movement) - unit.movement;
+            unit.combat_status.bonus_shield -= mod_parameter_operation(effect.shield, unit.shield) - unit.shield;
+        }
+
+        return unit
+    }
+
     const HandleAddUnit = (unit: any) => {
         let unitDict = unit
         unitDict["combat_id"] = unitIdCounter + 1
         unitDict["combat_status"] = { 
             vitality:parseFloat(unit.vitality), 
             essence:parseFloat(unit.essence),
-            effects:[] 
+            effects:[],
+            bonus_physical_damage: 0,
+            bonus_magical_damage: 0,
+            bonus_healing: 0,
+            bonus_armor_piercing: 0,
+            bonus_spell_piercing: 0,
+            bonus_vitality: 0,
+            bonus_range: 0,
+            bonus_damage: 0,
+            bonus_armor: 0,
+            bonus_magic_armor: 0,
+            bonus_essence: 0,
+            bonus_agility: 0,
+            bonus_hit_chance: 0,
+            bonus_evasion: 0,
+            bonus_hit_rate: 0,
+            bonus_movement: 0,
+            bonus_shield: 0
         }
         
         setUnitIdCounter(unitIdCounter+1)
@@ -83,7 +145,7 @@ export default function UnitsPage() {
         let unitList = [...units]
         let actionLogs = []
 
-        for( const unit of unitList){
+        for( let unit of unitList){
             if(unit.combat_id===0 || unit.combat_id===1) continue
             
             // Apply effects
@@ -153,6 +215,9 @@ export default function UnitsPage() {
                     if(effect.duration!=="INF"){ effect.duration -= 1 }
                     
                 }
+
+                // Remove effects with duration 0 and remove their effects from the unit
+                unit.combat_status.effects.forEach((effect:any)=>{ if(effect.duration===0){ unit=HandleEffectUnitParameters(unit, effect.effect, false) } })
                 unit.combat_status.effects = unit.combat_status.effects.filter( (effect:any) => effect.duration > 0 || effect.duration==="INF" )
             }
         }
@@ -265,7 +330,7 @@ export default function UnitsPage() {
             }
             
             let unitList = [...units]
-            for(const unit of unitList){
+            for(let unit of unitList){
                 if(unit.combat_id === target.combat_id){
                     // Damage the unit
                     unit.combat_status.vitality -= total_damage
@@ -304,6 +369,7 @@ export default function UnitsPage() {
                                     effectOnUnit.stack_counter += 1
                                     if(effectOnUnit.stack_counter < effectOnUnit.effect.max_stack){
                                         unit.combat_status.effects.push(effectOnUnit)
+                                        unit = HandleEffectUnitParameters(unit, effectOnUnit.effect, true)
                                     }
                                 })
                             }else{
@@ -311,9 +377,8 @@ export default function UnitsPage() {
                                 let effectToApply = {...effectNew}
                                 effectToApply.stack_counter = 0
                                 unit.combat_status.effects.push(effectToApply)
+                                unit = HandleEffectUnitParameters(unit, effectToApply.effect, true)
                             }
-                            //
-                            // Remove effects with the same name if they exist, but only if the effect doesn't stack
 
                         }
                     }

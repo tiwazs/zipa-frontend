@@ -13,7 +13,7 @@ interface OptionSelectionProps {
 }
 
 export default function OptionSelection({options, queryKey, onSelectionChange,style}: OptionSelectionProps) {
-    const [selected, setSelected] = useState<any>(undefined)
+    const [selected, setSelected] = useState<any>(null)
 
     const HandleSelectionChange = (selection: any) => {
         setSelected(selection)
@@ -45,7 +45,7 @@ export default function OptionSelection({options, queryKey, onSelectionChange,st
                 <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {options.map((object: any) => (
                     <Listbox.Option
-                      key={object.combat_id}
+                      key={object.name}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                           active ? 'bg-purple-400/30 text-yellow-200/70' : 'text-gray-300'

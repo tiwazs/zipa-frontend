@@ -3,14 +3,16 @@ import { paintRarity, paintTier, writeTier } from '@/app/_libs/text_paint_method
 import Link from 'next/link';
 import React, { useEffect } from 'react'
 import { IoTrashOutline } from 'react-icons/io5';
+import EffectCombatCard from './EffectCombatCard';
 
 interface UnitCombatCardProps {
     combat_id: number;
     unit: any;
     onRemoveClick?: any;
+    onRemoveEffectClick?: any;
 }
 
-function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
+function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: UnitCombatCardProps) {
     const [pickedSkills, setPickedSkills] = React.useState<number[]>([]);
     useEffect(() => {
         if(unit){
@@ -21,6 +23,10 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
 
     const HandleRemoveClick = () => {
         onRemoveClick(combat_id)
+    }
+
+    const HandleRemoveEffectClick = (effect: any) => {
+        onRemoveEffectClick(combat_id, effect)
     }
     
     return (
@@ -350,17 +356,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick}: UnitCombatCardProps) {
                 </div>
                 {/* Current Effects */}
                 {unit.combat_status.effects.map((effect: any) => {
-                    return (
-                        <div key={`${effect.id}-${effect.stack_counter}`} className='mx-2 font-extralight flex items-center justify-between'>
-                            <div className='flex items-center space-x-'>
-                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.effect.id}.jpg`} alt="" className='w-8 h-8 rounded-md border-2 border-gray-500/60 ' />
-                                <h3>
-                                    <Link href={`/main/effects/${effect.effect.id}`}><span className='text-yellow-400'>{effect.effect.name}</span></Link>
-                                </h3>
-                            </div>
-                            <h3 className='text-blue-500 font-normal'>{effect.duration} T</h3>
-                        </div>
-                    )
+                    return (<EffectCombatCard key={`${effect.id}-${effect.stack_counter}`} effect={effect} onHandleRemoveEffectClick={HandleRemoveEffectClick} />)
                 })}
             </Disclosure>
         </div>

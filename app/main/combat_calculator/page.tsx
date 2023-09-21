@@ -137,6 +137,24 @@ export default function UnitsPage() {
         setUnits(unitList)
     }
 
+    const HandleRemoveEffect = (combat_id: number, effect: any) => {
+        let unitList = [...units]
+
+        for( let unit of unitList){
+            if(unit.combat_id===0 || unit.combat_id===1) continue
+            if(unit.combat_id === combat_id){
+                console.log(unit.combat_status.effects)
+                console.log(effect)
+                unit.combat_status.effects = unit.combat_status.effects.filter( (effectOnUnit:any) => effectOnUnit.effect.name !== effect.effect.name || effectOnUnit.stack_counter !== effect.stack_counter )
+                console.log(unit.combat_status.effects)
+                unit = HandleEffectUnitParameters(unit, effect, false)
+            }
+
+        }
+
+        setUnits(unitList)
+    }
+
     const HandlePhase = async () => {
         let unitList = [...units]
         let actionLogs = []
@@ -447,7 +465,7 @@ export default function UnitsPage() {
 
         <div className='flex space-x-2'>
             {units && units.map((unit) => (
-                (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} />
+                (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} onRemoveEffectClick={HandleRemoveEffect} />
             ))}
         </div>
         <div className="space-x-2 p-1 border-2 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">

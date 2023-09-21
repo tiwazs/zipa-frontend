@@ -178,7 +178,7 @@ export default function UnitsPage() {
                         let damageCalculationRequest: DamageCalculationRequest = {
                             damage: effect.origin_physical_damage,
                             hit_chance: 100,
-                            armor: unit.armor ? unit.armor : 0,
+                            armor: unit.armor ? unit.armor + unit.combat_status.bonus_armor : 0,
                             evasion: 0,
                             damage_modifiers: [effect.effect.instant_physical_damage]
                         }
@@ -194,7 +194,7 @@ export default function UnitsPage() {
                         let damageCalculationRequest: DamageCalculationRequest = {
                             damage: effect.origin_magical_power,
                             hit_chance: 100,
-                            armor: unit.magic_armor ? unit.magic_armor : 0,
+                            armor: unit.magic_armor ? unit.magic_armor + unit.combat_status.bonus_magic_armor : 0,
                             evasion: 0,
                             damage_modifiers: [effect.effect.instant_magical_damage]
                         }
@@ -282,8 +282,8 @@ export default function UnitsPage() {
                 let damageCalculationRequest: DamageCalculationRequest = {
                     damage: actionForm.phisical_damage ? actionForm.phisical_damage : 0,
                     hit_chance: actionForm.hit_chance ? actionForm.hit_chance : 0,
-                    armor: target.armor ? target.armor : 0,
-                    evasion: target.evasion ? target.evasion : 0,
+                    armor: target.armor ? target.armor + target.combat_status.bonus_armor : 0,
+                    evasion: target.evasion ? target.evasion + target.combat_status.bonus_evasion : 0,
                     damage_modifiers: actionForm.physical_damage_modifiers ? actionForm.physical_damage_modifiers.split("|") : []
                 }
 
@@ -298,8 +298,8 @@ export default function UnitsPage() {
                 let damageCalculationRequest: DamageCalculationRequest = {
                     damage: actionForm.magical_damage ? actionForm.magical_damage : 0,
                     hit_chance: actionForm.hit_chance ? actionForm.hit_chance : 0,
-                    armor: target.magic_armor ? target.magic_armor : 0,
-                    evasion: target.evasion ? target.evasion : 0,
+                    armor: target.magic_armor ? target.magic_armor + target.combat_status.bonus_magic_armor : 0,
+                    evasion: target.evasion ? target.evasion + target.combat_status.bonus_evasion : 0,
                     damage_modifiers: actionForm.magical_damage_modifiers ? actionForm.magical_damage_modifiers.split("|") : []
                 }
 
@@ -313,6 +313,8 @@ export default function UnitsPage() {
             if(actionForm.healing_power){
                 console.log(actionForm.healing_power)
                 let healing = actionForm.healing_modifiers ? mod_parameter_operation(actionForm.healing_modifiers, actionForm.healing_power) : actionForm.healing_power
+                if(target.combat_status.bonus_healing){healing += target.combat_status.bonus_healing}
+                if(target.combat_status.bonus_magical_damage){healing += target.combat_status.bonus_magical_damage}
                 target.combat_status.vitality += healing
                 actionLogs.push(`${target.name} Recovers (${Math.round(healing)} Vit)`)
             }
@@ -456,7 +458,7 @@ export default function UnitsPage() {
             <h1 className='text-center text-yellow-200/70'>Combat Log</h1>
             <div className='bg-black rounded-lg p-2 border border-yellow-900/50 flex flex-col'>
                 {phaseLog.map((Log: string, index: number) => (
-                    <p key={index} className='text-yellow-200/70 text-sm'>{Log}</p>
+                    <p key={`log-${index}`} className='text-yellow-200/70 text-sm'>{Log}</p>
                 ))}
             </div>
         </div>

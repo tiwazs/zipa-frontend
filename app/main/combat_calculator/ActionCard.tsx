@@ -3,10 +3,6 @@ import OptionSelectionList from '@/app/_components/OptionSelectionList';
 import React, { Suspense, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-interface Effect {
-
-}
-
 interface ActionForm {
 	origin: number;
 	targets: number[];
@@ -44,9 +40,9 @@ const BaseActions = [
 
 export default function DamageCard({units, onActClick, style}: DamageCardProps) {
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ActionForm>();
-    const [unit, setUnit] = useState<any>(undefined)
-    const [action, setAction] = useState<any>(undefined)
-    const [skill, setSkill] = useState<any>(undefined)
+    const [unit, setUnit] = useState<any>(null)
+    const [action, setAction] = useState<any>(null)
+    const [skill, setSkill] = useState<any>(null)
     const [availableSkills, setAvailableSkills] = useState<any[]>([])
     const [availableEffects, setAvailableEffects] = useState<any[]>([])
 
@@ -107,13 +103,13 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 targets: [data.targets.toString().split("|").map((target: string) => parseInt(target) )[0]],
                 action: 1,
                 skill_effect: null,
-                phisical_damage: unit.physical_damage,
+                phisical_damage: unit.physical_damage + unit.combat_status.bonus_physical_damage,
                 magical_damage: 0,
                 physical_damage_modifiers: data.physical_damage_modifiers,
                 magical_damage_modifiers: "",
                 is_projectile: false,
-                hit_chance: unit.hit_chance,
-                armor_piercing: unit.armor_piercing,
+                hit_chance: unit.hit_chance + unit.combat_status.bonus_hit_chance,
+                armor_piercing: unit.armor_piercing + unit.combat_status.bonus_armor_piercing,
                 healing_power: 0,
                 healing_modifiers: "",
                 vitality_recovery: "0",
@@ -126,9 +122,9 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             }
         }else if(action===2 && unit && skill){
             skill.effects.forEach( (effect:any) => {
-                effect.origin_magical_power = unit.magical_damage;
-                effect.origin_physical_damage = unit.phisical_damage;
-                effect.origin_healing_power = unit.magical_damage;
+                effect.origin_magical_power = unit.magical_damage + unit.combat_status.bonus_magical_damage;
+                effect.origin_physical_damage = unit.origin_physical_damage  + unit.combat_status.bonus_physical_damage;
+                effect.origin_healing_power = unit.magical_damage + unit.combat_status.bonus_magical_damage;
             })
 
             let physical_modifiers = data.physical_damage_modifiers ? data.physical_damage_modifiers : ""
@@ -144,15 +140,15 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
                 action: 2,
                 skill_effect: skill.name,
-                phisical_damage: skill.physical_damage ? unit.physical_damage : 0,
-                magical_damage: skill.magical_damage ? unit.magical_damage : 0,
+                phisical_damage: skill.physical_damage ? unit.physical_damage + unit.combat_status.bonus_physical_damage : 0,
+                magical_damage: skill.magical_damage ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0,
                 physical_damage_modifiers: physical_modifiers,
                 magical_damage_modifiers: magical_modifiers,
                 is_projectile: skill.projectile,
-                hit_chance: unit.hit_chance,
-                armor_piercing: skill.physical_damage ? unit.armor_piercing : 0,
-                spell_piercing: skill.magical_damage ? unit.spell_piercing : 0,
-                healing_power: skill.healing ? unit.magical_damage : 0,
+                hit_chance: unit.hit_chance + unit.combat_status.bonus_hit_chance,
+                armor_piercing: skill.physical_damage ? unit.armor_piercing + unit.combat_status.bonus_armor_piercing : 0,
+                spell_piercing: skill.magical_damage ? unit.spell_piercing + unit.combat_status.bonus_spell_piercing : 0,
+                healing_power: skill.healing ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0,
                 healing_modifiers: healing_modifiers,
                 vitality_recovery: skill.vitality_recovery,
                 essence_recovery: skill.essence_recovery,
@@ -166,9 +162,9 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
 
             for( const effect of effects){
                 effect.duration = data.duration;
-                effect.origin_physical_damage = unit.physical_damage;
-                effect.origin_magical_power = unit.magical_damage;
-                effect.origin_healing_power = unit.magical_damage;
+                effect.origin_physical_damage = unit.physical_damage + unit.combat_status.bonus_physical_damage;
+                effect.origin_magical_power = unit.magical_damage + unit.combat_status.bonus_magical_damage;
+                effect.origin_healing_power = unit.magical_damage + unit.combat_status.bonus_magical_damage;
             }
 
             data = {

@@ -20,7 +20,7 @@ export interface OjbectOptionType{
 
 export default function NewUnitDialog({user_id, styles, onAddClick}: NewUnitDialogProps) {
     let [isOpen, setIsOpen] = useState(false);
-    let [selected, setSelected] = useState<any>(undefined)
+    let [selected, setSelected] = useState<any>(null)
 
 	const HandleAddClick = () => {
 		onAddClick(selected)

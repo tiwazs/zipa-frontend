@@ -9,10 +9,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import ActionCard from './ActionCard';
 import { mod_parameter_operation } from '@/app/_libs/equations';
 
-interface Effect {
-
-}
-
 interface ActionForm {
 	origin: number;
 	targets: number[];

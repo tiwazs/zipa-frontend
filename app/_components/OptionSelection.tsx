@@ -26,7 +26,7 @@ interface OptionSelectionProps {
 
 export default function OptionSelection({endpoint, queryKey, onSelectionChange,style}: OptionSelectionProps) {
     const query = useQuery([`${queryKey}`, endpoint], () => getSelections(endpoint) );
-    const [selected, setSelected] = useState<any>(undefined)
+    const [selected, setSelected] = useState<any>(null)
     
     // List of the coded available groups
     if(query.isLoading) return <div className="text-green-700">Loading...</div>

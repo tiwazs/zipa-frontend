@@ -238,7 +238,7 @@ export default function UnitsPage() {
             ${Math.round(damage_result.result_details.deflect_probability)}% Dfl, \
             ${Math.round(damage_result.result_details.evasion_probability)}% Eva) \
             (${Math.round(damage_result.damage_after_modifiers)} Base, \
-            ${damage_result.result_details.hit_evasion_result} -> ${Math.round(damage_result.result_details.damage_after_hit_evasion)} ${damage_type}, \
+            ${damage_result.result_details.hit_evasion_result}${damage_result.result_details.block_result==="blocked" ? "|"+damage_result.result_details.block_result :""} -> ${Math.round(damage_result.result_details.damage_after_hit_evasion)} ${damage_type}, \
             ${Math.round(damage_result.result_details.armor)} ${armor_type} -> ${Math.round(damage_result.result_details.damage_after_base_armor)} ${damage_type},\
             ${Math.round(damage_result.armor_penetration)} ${piercing_type} -> ${Math.round(damage_result.result_details.damage_after_total_armor)} ${damage_type})`
         

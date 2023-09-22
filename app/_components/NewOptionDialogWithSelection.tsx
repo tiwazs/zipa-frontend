@@ -136,7 +136,7 @@ export default function NewOptionDialog({ title, description, addEndpoint, selec
                       {/* Form */}
                       <div className='flex flex-col w-full'>
                         {extraFormParams && extraFormParams.map((param: string) => {
-                            return  <div className='flex items-center'>
+                            return  <div key={param} className='flex items-center'>
                                         <h1>{param}</h1>
                                         <input className='w-full my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
                                             type="text" id={param} onChange={(e)=>{HandleExtraFormChange(e)}}/>

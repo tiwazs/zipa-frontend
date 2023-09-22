@@ -75,8 +75,8 @@ export default function ItemsPage() {
                 <p>MAGIC ARMOR (MAR): Indicates a grade of magical damage reduction, each point reduces magical damage by 5%. Units have no magical armor by deafult but get magical armor by wearing enchanted armor (and sometimes other means like traits, skills or effects)</p>
                 <p>ESSENCE (ESS): Main energy resouce for magic.</p>
                 <p>AGILITY (AGI): Indicates how quick a unit can act. units with higher agility can act first</p>
-                <p>HIT CHANCE (HIT): Indicates the probability to land a hit on an enemy. when this unit attacks this value is taken against enemy's evasion.</p>
-                <p>EVASION (EVA): Indicates the probability to avoid a hit partially or fully. when this unit is attacked this value is taken against enemy's hit chance.</p>
+                <p>HIT CHANCE (HIT): Indicates the probability to land a hit on an enemy. when this unit attacks this value is taken against enemy&apos;s evasion.</p>
+                <p>EVASION (EVA): Indicates the probability to avoid a hit partially or fully. when this unit is attacked this value is taken against enemy&apos;s hit chance.</p>
                 <p>HIT RATE (HIR): How many times a unit attacks. the damage each attack however is divided between the number of attacks</p>
                 <p>MOVEMENT (MOV): How many Mts a unit can move</p>
                 <p>PHYSICAL DAMAGE (PDG): Total physical damage a unit deals. Mainly is the sum of STR+DEX, adding the bonuses from wepons, traits, skills or effects</p>
@@ -92,7 +92,7 @@ export default function ItemsPage() {
                   which can be another 1 handed weapon as secondary weapon, consunables like potions etc, or ammulet or trinkets. keep in mind items have weight that sums and may overwhelm your STR </p>
             </InformationOption>
             <InformationOption title='COMBAT' style='w-full'>
-                <p>Before combat, each side may position their units (Unless it's an ambush)</p>
+                <p>Before combat, each side may position their units (Unless it&apos;s an ambush)</p>
                 <p>Combat is turn based. Each turn, every unit can make 2 actions, which can be either a normal action or an attack. however, each turn
                   a unit can attack only as many times as its hit Rate indicates (HIR). so for example, if a unit has a HIR of 1, it can attack only 
                   once and do a normal action, or just do 2 normal actions. if a unit has a HIR of 2, it can attack twice and do a normal action, or do 2
@@ -109,21 +109,21 @@ export default function ItemsPage() {
                 <p>Attacks can be used to attack an enemy unit. there are 2 types of attacks, physical and magical.</p>
                 <p>Attacks can be melee or ranged. melee attacks can only be used when the enemy is adjacent to the unit, and ranged attacks
                   can be used when the enemy is within range.</p>
-                <p>Physical attacks deal physical damage, and are affected by the enemy's armor (ARM) and shield (SHL).</p>
+                <p>Physical attacks deal physical damage, and are affected by the enemy&apos;s armor (ARM) and shield (SHL).</p>
                 <p>shield (SHL) is a direct probability to completly avoid ranged attacks (Physical and Magical)</p>
-                <p>Magical attacks deal magical damage, and are affected by the enemy's magical armor (MAR).</p>
+                <p>Magical attacks deal magical damage, and are affected by the enemy&apos;s magical armor (MAR).</p>
                 <div className='my-2'>
                     <h3 className={`font-bold text-yellow-200/70`}>Attacks</h3>
                 </div>
-                <p>Before an attack is made, the attacker's hit chance (HIT) is compared to the enemy's evasion (EVA) to determine if the attack lands 
+                <p>Before an attack is made, the attacker&apos;s hit chance (HIT) is compared to the enemy&apos;s evasion (EVA) to determine if the attack lands 
                   directly, critically, if its deflected, or misses.</p>
                 <p>if the attack lands, the attack power is calculated.</p>
-                <p>When an attack is made, the it power is calculated by the attacker's Damage, be it physical or magical,
-                  having into account the weapon's power, and modifications from traits, skills or effects, and finally 
+                <p>When an attack is made, the it power is calculated by the attacker&apos;s Damage, be it physical or magical,
+                  having into account the weapon&apos;s power, and modifications from traits, skills or effects, and finally 
                   modified by the skill power in case the attack is made with a skill.</p>
-                <p>Then the attack power is compared to the enemy's armor (ARM or MAR) and shield, (SHL) in case of ranged attacks, to determine the damage.</p>
+                <p>Then the attack power is compared to the enemy&apos;s armor (ARM or MAR) and shield, (SHL) in case of ranged attacks, to determine the damage.</p>
                 <p>armor and magical armor reduce the damage by 5% per point, and shield is a direct probability to completly avoid ranged attacks (Physical and Magical)</p>
-                <p>and finally the damage is applied to the enemy's vitality (VIT)</p>
+                <p>and finally the damage is applied to the enemy&apos;s vitality (VIT)</p>
                 <p>if the attack is a critical hit, the damage is increased by 80%.</p>
                 <p>if the attack is deflected, the damage is reduced by 50%.</p>
                 <p>if the attack is a miss, the damage is reduced by 100%.</p>

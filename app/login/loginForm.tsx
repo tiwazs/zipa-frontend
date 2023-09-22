@@ -64,7 +64,7 @@ const LoginForm = ({className}: LoginFormClassOptions) => {
                     </div>
                 </div>
                 <div className='px-4 my-2'>
-                    <h1 className="text-gray-400 ">Don't have an account? <span className="text-yellow-500/70 hover:text-yellow-500/90 hover:cursor-pointer" onClick={redirectToSignup}>sign-up!</span></h1>
+                    <h1 className="text-gray-400 ">Don&apos;t have an account? <span className="text-yellow-500/70 hover:text-yellow-500/90 hover:cursor-pointer" onClick={redirectToSignup}>sign-up!</span></h1>
                 </div>
             </form>
         </div>

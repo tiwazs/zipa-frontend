@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 
-function page() {
+export default function Page() {
     const router = useRouter();
     
     useEffect(() => {
@@ -13,5 +13,3 @@ function page() {
         <div>Loading ...</div>
     )
 }
-
-export default page

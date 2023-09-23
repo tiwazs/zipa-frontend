@@ -73,6 +73,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             let effects:any = []
             // Specialization Trait Effects
             if(unit.specialization){
+                // Specialization Trait Effects
                 unit.specialization.traits.forEach( (trait:any) =>{
                     if(trait.trait.effects){
                         trait.trait.effects.forEach( (effect:any) =>{
@@ -80,6 +81,16 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                         })
                     }
                 })
+
+                // Specialization Skills Effects
+                unit.specialization.skills.forEach( (skill:any) =>{
+                    if(skill.skill.effects){
+                        skill.skill.effects.forEach( (effect:any) =>{
+                            effects.push(effect.effect)
+                        })
+                    }
+                })
+
             }
             // Race Trait Effects
             if(unit.faction){
@@ -91,6 +102,7 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
                     }
                 })
             }
+            
 
             setAvailableEffects(effects);
         }

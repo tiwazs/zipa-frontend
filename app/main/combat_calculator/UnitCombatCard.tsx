@@ -341,7 +341,8 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: U
                     <div className='w-full flex justify-between items-center'>
                         <h1>Vitality</h1>
                         <h1 className='my-2 py-1 text-orange-500 font-light'>
-                            {Math.round(unit.combat_status.vitality)} / {Math.round(unit.vitality)}{unit.combat_status.bonus_vitality!==0 && <span>({unit.combat_status.bonus_vitality>0 ? "+" : ""}{Math.round(unit.combat_status.bonus_vitality*10)/10})</span>}
+                            {Math.round(unit.combat_status.vitality)}{unit.combat_status.bonus_vitality!==0 && <span>({unit.combat_status.bonus_vitality>0 ? "+" : ""}{Math.round(unit.combat_status.bonus_vitality_current.reduce((acc: number, vitality: any)=> acc+vitality.vitality,0)) })</span>} / 
+                            {Math.round(unit.vitality)}{unit.combat_status.bonus_vitality!==0 && <span>({unit.combat_status.bonus_vitality>0 ? "+" : ""}{Math.round(unit.combat_status.bonus_vitality*10)/10})</span>}
                         </h1>
                     </div>
                 </div>

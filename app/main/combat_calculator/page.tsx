@@ -64,7 +64,6 @@ export default function UnitsPage() {
             unit.combat_status.bonus_healing +=  mod_parameter_operation(effect.healing, unit.healing) - unit.healing;
             unit.combat_status.bonus_armor_piercing +=  mod_parameter_operation(effect.armor_piercing, unit.armor_piercing) - unit.armor_piercing;
             unit.combat_status.bonus_spell_piercing +=  mod_parameter_operation(effect.spell_piercing, unit.spell_piercing) - unit.spell_piercing;
-            unit.combat_status.bonus_vitality +=  mod_parameter_operation(effect.vitality, unit.vitality) - unit.vitality;
             unit.combat_status.bonus_range +=  mod_parameter_operation(effect.range, unit.range) - unit.range;
             unit.combat_status.bonus_damage +=  mod_parameter_operation(effect.damage, unit.damage) - unit.damage;
             unit.combat_status.bonus_armor +=  mod_parameter_operation(effect.armor, unit.armor) - unit.armor;
@@ -76,13 +75,15 @@ export default function UnitsPage() {
             unit.combat_status.bonus_hit_rate +=  mod_parameter_operation(effect.hit_rate, unit.hit_rate) - unit.hit_rate;
             unit.combat_status.bonus_movement +=  mod_parameter_operation(effect.movement, unit.movement) - unit.movement;
             unit.combat_status.bonus_shield += mod_parameter_operation(effect.shield, unit.shield) - unit.shield;
+
+            unit.combat_status.bonus_vitality_current.push( {effect_id: effect.id, vitality: mod_parameter_operation(effect.vitality, unit.vitality) - unit.vitality} );
+            unit.combat_status.bonus_vitality =  unit.combat_status.bonus_vitality_current.reduce((a:any, b:any) => a + b.vitality, 0);
         }else if(!add){
             unit.combat_status.bonus_physical_damage -= mod_parameter_operation(effect.physical_damage, unit.physical_damage) - unit.physical_damage
             unit.combat_status.bonus_magical_damage -=  mod_parameter_operation(effect.magical_damage, unit.magical_damage) - unit.magical_damage;
             unit.combat_status.bonus_healing -=  mod_parameter_operation(effect.healing, unit.healing) - unit.healing;
             unit.combat_status.bonus_armor_piercing -=  mod_parameter_operation(effect.armor_piercing, unit.armor_piercing) - unit.armor_piercing;
             unit.combat_status.bonus_spell_piercing -=  mod_parameter_operation(effect.spell_piercing, unit.spell_piercing) - unit.spell_piercing;
-            unit.combat_status.bonus_vitality -=  mod_parameter_operation(effect.vitality, unit.vitality) - unit.vitality;
             unit.combat_status.bonus_range -=  mod_parameter_operation(effect.range, unit.range) - unit.range;
             unit.combat_status.bonus_damage -=  mod_parameter_operation(effect.damage, unit.damage) - unit.damage;
             unit.combat_status.bonus_armor -=  mod_parameter_operation(effect.armor, unit.armor) - unit.armor;
@@ -94,6 +95,9 @@ export default function UnitsPage() {
             unit.combat_status.bonus_hit_rate -=  mod_parameter_operation(effect.hit_rate, unit.hit_rate) - unit.hit_rate;
             unit.combat_status.bonus_movement -=  mod_parameter_operation(effect.movement, unit.movement) - unit.movement;
             unit.combat_status.bonus_shield -= mod_parameter_operation(effect.shield, unit.shield) - unit.shield;
+
+            unit.combat_status.bonus_vitality_current = unit.combat_status.bonus_vitality_current.filter( (effectCurrent:any) => effectCurrent.effect_id !== effect.id );
+            unit.combat_status.bonus_vitality =  unit.combat_status.bonus_vitality_current.reduce((a:any, b:any) => a + b.vitality, 0);
         }
 
         return unit
@@ -112,6 +116,7 @@ export default function UnitsPage() {
             bonus_armor_piercing: 0,
             bonus_spell_piercing: 0,
             bonus_vitality: 0,
+            bonus_vitality_current: [],
             bonus_range: 0,
             bonus_damage: 0,
             bonus_armor: 0,
@@ -168,6 +173,7 @@ export default function UnitsPage() {
                     // Effect Damage or Heal
                     if(effect.effect.instant_vitality_recovery){
                         if(effect.effect.instant_vitality_recovery.includes("%")){
+                            // TODO: Healing should go through ApplyDamage too (Also change its name) and shoul affect the extra vitality too
                             console.log(effect.origin_healing_power)
                             let healing = mod_parameter_operation(effect.effect.instant_vitality_recovery, effect.origin_healing_power)
                             unit.combat_status.vitality += healing
@@ -175,7 +181,13 @@ export default function UnitsPage() {
                             actionLogs.push(`${unit.name} Recovers ${Math.round(healing)} Vit from ${effect.effect.name}`)
                         }else{
                             let vitality_text = effect.effect.instant_vitality_recovery.includes("+") ? "Recovers " : "Loses "
-                            unit.combat_status.vitality = mod_parameter_operation(effect.effect.instant_vitality_recovery, unit.combat_status.vitality)
+                            let vitality_change = mod_parameter_operation(effect.effect.instant_vitality_recovery, 0)
+                            // TODO: Healing should go through ApplyDamage too (Also change its name) and shoul affect the extra vitality too
+                            if(vitality_change < 0){
+                                ApplyDamage(unit, vitality_change)
+                            }else{
+                                unit.combat_status.vitality += vitality_change
+                            }
                             actionLogs.push(`${unit.name} ${vitality_text} ${Math.round(effect.effect.instant_vitality_recovery)} Vit from ${effect.effect.name}`)
                             actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (${effect.effect.instant_vitality_recovery})`)
                         }
@@ -197,7 +209,8 @@ export default function UnitsPage() {
                             damage_modifiers: [effect.effect.instant_physical_damage]
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
-                        unit.combat_status.vitality -= response.final_damage
+                        //unit.combat_status.vitality -= response.final_damage
+                        ApplyDamage(unit, response.final_damage)
 
                         actionLogs.push(`${GetDamageText(unit.name, response, 1)}  from ${effect.effect.name}`)
                         actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (-${Math.round(response.final_damage)})`)
@@ -213,15 +226,14 @@ export default function UnitsPage() {
                             damage_modifiers: [effect.effect.instant_magical_damage]
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
-                        unit.combat_status.vitality -= response.final_damage
+                        //unit.combat_status.vitality -= response.final_damage
+                        ApplyDamage(unit, response.final_damage)
 
                         actionLogs.push(`${GetDamageText(unit.name, response, 2)}  from ${effect.effect.name}`)
                         actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (-${Math.round(response.final_damage)})`)
                     }
 
                     // Max and Min values
-                    if(unit.combat_status.vitality < 0) unit.combat_status.vitality = 0
-                    if(unit.combat_status.vitality > unit.vitality) unit.combat_status.vitality = unit.vitality
                     if(unit.combat_status.essence < 0) unit.combat_status.essence = 0
                     if(unit.combat_status.essence > unit.essence) unit.combat_status.essence = unit.essence
 
@@ -261,6 +273,36 @@ export default function UnitsPage() {
             ${Math.round(damage_result.armor_penetration)} ${piercing_type} -> ${Math.round(damage_result.result_details.damage_after_total_armor)} ${damage_type})`
         
         return physical_damage_text
+    }
+
+    const ApplyDamage = (unit: any, total_damage: number) => {
+        // Extra vitality 
+        if(unit.combat_status.bonus_vitality_current.length > 0){
+            let remaining_damage = total_damage;
+            for( let extra_vitality of unit.combat_status.bonus_vitality_current ){
+                extra_vitality.vitality -= remaining_damage;
+                if(extra_vitality.vitality < 0){
+                    remaining_damage = -extra_vitality.vitality;
+                    extra_vitality.vitality = 0;
+                }else{
+                    remaining_damage = 0;
+                    break;
+                }
+            }
+            unit.combat_status.vitality -= remaining_damage
+            
+        // Normal vitality
+        }else{
+            unit.combat_status.vitality -= total_damage
+        }
+
+        // Vitality Limits
+        if(unit.combat_status.vitality <= 0){
+            unit.combat_status.vitality = 0
+        }
+        if(unit.combat_status.vitality > unit.vitality){
+            unit.combat_status.vitality = unit.vitality
+        } 
     }
 
     const HandleAction = async (actionForm: ActionForm) => {
@@ -349,14 +391,7 @@ export default function UnitsPage() {
             for(let unit of unitList){
                 if(unit.combat_id === target.combat_id){
                     // Damage the unit
-                    unit.combat_status.vitality -= total_damage
-                    // Vitality Limits
-                    if(unit.combat_status.vitality <= 0){
-                        unit.combat_status.vitality = 0
-                    }
-                    if(unit.combat_status.vitality > unit.vitality){
-                        unit.combat_status.vitality = unit.vitality
-                    } 
+                    ApplyDamage(unit, total_damage)
                     actionLogs.push(`${target.name} ${Math.round(target.combat_status.vitality)} Vit (-${Math.round(total_damage)})`)
                       
                     // Apply effects

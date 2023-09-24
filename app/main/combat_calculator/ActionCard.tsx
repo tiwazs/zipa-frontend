@@ -325,6 +325,20 @@ export default function DamageCard({units, onActClick, style, onRemoveClick}: Da
                     />                                
                 </div>
             </div>
+            <div className='flex flex-col items-center'>
+                {(action==2 && skill) && <div className='flex items-center'>
+                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.id}.jpg`} alt="" className='w-8 h-8 rounded-md border-2 border-gray-500/60 ' />
+                    <h3 className='text-yellow-500/80 font-medium'>{skill.name}</h3>
+                </div>}
+                {(action==3 && skill) && <div className='flex items-center'>
+                    {skill.effects.map( (effect:any) => {
+                        return (<>
+                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/effects/${effect.effect.id}.jpg`} alt="" className='w-8 h-8 rounded-md border-2 border-gray-500/60 ' />
+                        <h3 className='text-yellow-500/80 font-medium'>{effect.effect.name}</h3>
+                        </>)
+                    })}
+                </div>}
+            </div>
             <button className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
                                 cursor-pointer disabled:bg-black' disabled={!unit || !action}>
                                     

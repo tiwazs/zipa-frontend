@@ -157,10 +157,7 @@ export default function UnitsPage() {
         for( let unit of unitList){
             if(unit.combat_id===0 || unit.combat_id===1) continue
             if(unit.combat_id === combat_id){
-                console.log(unit.combat_status.effects)
-                console.log(effect)
                 unit.combat_status.effects = unit.combat_status.effects.filter( (effectOnUnit:any) => effectOnUnit.effect.name !== effect.effect.name || effectOnUnit.stack_counter !== effect.stack_counter )
-                console.log(unit.combat_status.effects)
                 unit = HandleEffectUnitParameters(unit, effect, false)
             }
 
@@ -192,11 +189,8 @@ export default function UnitsPage() {
                             let vitality_text = effect.effect.instant_vitality_recovery.includes("+") ? "Recovers " : "Loses "
                             let vitality_change = mod_parameter_operation(effect.effect.instant_vitality_recovery, 0)
                             // TODO: Healing should go through ApplyDamage too (Also change its name) and shoul affect the extra vitality too
-                            if(vitality_change < 0){
-                                ApplyDamage(unit, vitality_change)
-                            }else{
-                                unit.combat_status.vitality += vitality_change
-                            }
+                            ApplyDamage(unit, -vitality_change)
+
                             actionLogs.push(`${unit.name} ${vitality_text} ${Math.round(effect.effect.instant_vitality_recovery)} Vit from ${effect.effect.name}`)
                             actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (${effect.effect.instant_vitality_recovery})`)
                         }
@@ -215,7 +209,7 @@ export default function UnitsPage() {
                             hit_chance: 100,
                             armor: unit.armor ? unit.armor + unit.combat_status.bonus_armor : 0,
                             evasion: 0,
-                            damage_modifiers: [effect.effect.instant_physical_damage]
+                            damage_modifiers: effect.effect.instant_physical_damage.split("|")
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
                         //unit.combat_status.vitality -= response.final_damage
@@ -232,7 +226,7 @@ export default function UnitsPage() {
                             hit_chance: 100,
                             armor: unit.magic_armor ? unit.magic_armor + unit.combat_status.bonus_magic_armor : 0,
                             evasion: 0,
-                            damage_modifiers: [effect.effect.instant_magical_damage]
+                            damage_modifiers: effect.effect.instant_magical_damage.split("|")
                         }
                         let response = await DamageCalculationRequest(damageCalculationRequest, 0, 0, false)
                         //unit.combat_status.vitality -= response.final_damage
@@ -376,7 +370,6 @@ export default function UnitsPage() {
 
             // Healing
             if(actionForm.healing_power){
-                console.log(actionForm.healing_power)
                 let healing = actionForm.healing_modifiers ? mod_parameter_operation(actionForm.healing_modifiers, actionForm.healing_power) : actionForm.healing_power
                 if(target.combat_status.bonus_healing){healing += target.combat_status.bonus_healing}
                 if(target.combat_status.bonus_magical_damage){healing += target.combat_status.bonus_magical_damage}

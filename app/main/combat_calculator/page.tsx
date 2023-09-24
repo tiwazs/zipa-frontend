@@ -46,6 +46,7 @@ export default function UnitsPage() {
     const [phase, setPhase] = React.useState<number>(0);
     const [combatLog, setCombatLog] = React.useState<any[]>([]);
     const [phaseLog, setPhaseLog] = React.useState<any[]>([]);
+    const [actionFormCount, setActionFormCount] = React.useState<number>(1);
     // Fucking library. LET ME ADD THE GOD DAMMED USER ID TO THE SESSION TO MAKE REQUESTS
     const { data: session, status }:{update:any, data:any, status:any} = useSession({
         required: true,
@@ -53,6 +54,14 @@ export default function UnitsPage() {
             router.push('/login');
         },
     })
+
+    const HandleAddActionForm = () => {
+        setActionFormCount(actionFormCount+1);
+    }
+
+    const HandleRemoveActionForm = () => {
+        setActionFormCount(actionFormCount-1);
+    }
 
     const HandleEffectUnitParameters = (unitOrigin: any, effect:any, add: boolean) => {
         let unit = {...unitOrigin}
@@ -495,7 +504,6 @@ export default function UnitsPage() {
                             onAddClick={HandleAddUnit}
                             styles="group rounded-lg border border-transparent px-3 py-2 transition-colors border-4 hover:dark:dark:border-yellow-900/50 hover:bg-black 
                                         hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70"/>
-            <ActionCard units={units} onActClick={HandleAction} style='my-1'/>
         </div>
 
         <div className='flex space-x-2'>
@@ -503,12 +511,17 @@ export default function UnitsPage() {
                 (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} onRemoveEffectClick={HandleRemoveEffect} />
             ))}
         </div>
+        <div className='flex flex-col items-center'>  
+            {Array.from({ length: actionFormCount }).map((it, index) => <ActionCard key={index} units={units} onActClick={HandleAction} style='my-1' onRemoveClick={HandleRemoveActionForm}/>) }
+            <button className="rounded-lg border-4 border-transparent px-3 py-2 transition-colors hover:dark:dark:border-yellow-900/50 hover:bg-black 
+                                        hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 text-yellow-200/70" onClick={HandleAddActionForm}>+</button>
+        </div>
         <div className="space-x-2 p-1 border-2 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
             <h1 className='text-center text-yellow-200/70'>Combat Log</h1>
             <div className='bg-black rounded-lg p-2 border border-yellow-900/50 flex flex-col'>
                 {phaseLog.map((Log: string, index: number) => (
                     <p key={`log-${index}`} className='text-yellow-200/70 text-sm'>{Log}</p>
-                ))}
+                    ))}
             </div>
         </div>
     </main>

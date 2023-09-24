@@ -2,6 +2,7 @@ import OptionSelection from '@/app/_components/OptionSelection';
 import OptionSelectionList from '@/app/_components/OptionSelectionList';
 import React, { Suspense, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { IoTrashOutline } from 'react-icons/io5';
 
 interface ActionForm {
 	origin: number;
@@ -30,6 +31,7 @@ interface DamageCardProps {
     units: any[];
     onActClick?: any;
     style?: string;
+    onRemoveClick?: any;
 }
 
 const BaseActions = [
@@ -38,7 +40,7 @@ const BaseActions = [
     {name:"Pure Effect", id:3}
 ]
 
-export default function DamageCard({units, onActClick, style}: DamageCardProps) {
+export default function DamageCard({units, onActClick, style, onRemoveClick}: DamageCardProps) {
     const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ActionForm>();
     const [unit, setUnit] = useState<any>(null)
     const [action, setAction] = useState<any>(null)
@@ -107,6 +109,10 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
             setAvailableEffects(effects);
         }
     }, [unit])
+
+    const HandleRemoveClick = () => {
+        onRemoveClick()
+    }
 
     const HandleActClick:SubmitHandler<ActionForm> = async (data) => {
         if(action===1 && unit){
@@ -248,8 +254,13 @@ export default function DamageCard({units, onActClick, style}: DamageCardProps) 
     }
 
     return (
-    <div className={`flex flex-col items-center p-2 border-4 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')] w-2/3 ${style}`}>
-        <h2>Action</h2>
+    <div className={`group flex flex-col items-center p-2 border-4 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')] w-2/3 ${style}`}>
+        <div className='w-full flex items-center justify-between'>
+            <div></div>
+            <h2>Action</h2>
+            <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
+                        active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={HandleRemoveClick}><IoTrashOutline/></h5>
+        </div>
         <form className='w-full space-y-2' onSubmit={handleSubmit(HandleActClick)}>
             <div className='flex justify-between space-x-3'>
                 {/* Unit Selection */}

@@ -12,11 +12,11 @@ interface NewOptionDialogProps {
     title: string;
     description: string;
     selection: string;
-    factionId: string;
+    raceId: string;
     styles?: string;
 }
 
-export default function NewOptionDialog({ title, description, selection, factionId, styles}: NewOptionDialogProps) {
+export default function NewOptionDialog({ title, description, selection, raceId, styles}: Readonly<NewOptionDialogProps>) {
     let [isOpen, setIsOpen] = useState(false);        
 
   function closeModal() {
@@ -76,8 +76,8 @@ export default function NewOptionDialog({ title, description, selection, faction
                     <p className="text-sm text-gray-400">
                       {description}
                     </p>
-                    {(selection === "traits") ? <TraitSelection factionId={factionId} /> 
-                        : (selection === "specializations") ? <SpecializationSelection factionId={factionId} />
+                    {(selection === "traits") ? <TraitSelection raceId={raceId} /> 
+                        : (selection === "specializations") ? <SpecializationSelection raceId={raceId} />
                         : null }
                     <button
                       type="button"

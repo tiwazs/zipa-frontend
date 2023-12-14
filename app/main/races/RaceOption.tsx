@@ -3,7 +3,7 @@ import { useQueryClient } from 'react-query';
 import { IoTrashOutline } from 'react-icons/io5'
 import Link from 'next/link';
 
-interface FactionOptionProps {
+interface RaceOptionProps {
     id: string;
     name: string;
     description: string;
@@ -14,42 +14,42 @@ interface FactionOptionProps {
     styles: string;
 }
 
-export default function FactionOption(faction: FactionOptionProps) {
+export default function RaceOption(race: Readonly<RaceOptionProps>) {
     const queryClient = useQueryClient();
 
 
-    const deleteFaction = async () => {
+    const deleteRace = async () => {
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/factions/${faction.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/${race.id}`, {
                 method: 'DELETE',
             });
 
             console.log(`Response: ${JSON.stringify(response)}`);
 
-            queryClient.invalidateQueries('factions');
+            queryClient.invalidateQueries('races');
         }catch(e){
             console.log(`Error: ${e}`);
         }
     };
 
     return (
-    <div className={`${faction.styles}`}>
+    <div className={`${race.styles}`}>
         <div className='flex items-center justify-between'>
         <div className='w-full'>
-            <Link href={`/main/factions/${faction.id}`}>
+            <Link href={`/main/races/${race.id}`}>
                 <div className='my-2'>
-                    <h3 className={`font-bold text-yellow-200/70`}>{faction.name}</h3>
+                    <h3 className={`font-bold text-yellow-200/70`}>{race.name}</h3>
                 </div>
             </Link>
             <div className='w-full flex items-center justify-between'>
                 <div>
-                    <p className='my-1 text-gray-100 '>{faction.description}</p>
-                    {/* Faction Tratis*/}
-                    { (faction.traits && faction.traits.length > 0) && 
+                    <p className='my-1 text-gray-100 '>{race.description}</p>
+                    {/* Race Tratis*/}
+                    { (race.traits && race.traits.length > 0) && 
                     <p className='italic font-light'>
                         Traits:
                     </p>}
-                    {faction.traits.map((trait: any) => {
+                    {race.traits.map((trait: any) => {
                         return (
                         <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                             <div className='flex items-center space-x-3'>
@@ -74,7 +74,7 @@ export default function FactionOption(faction: FactionOptionProps) {
         </div>
         <div>
             <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
-                                 active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteFaction}><IoTrashOutline/></h5>
+                                 active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteRace}><IoTrashOutline/></h5>
         </div>
         </div>
     </div>

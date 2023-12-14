@@ -14,7 +14,7 @@ export default function Home() {
 
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
         <MainOptionCard title="General" description="General description for battle, units spells and combat rules" link="/main/general" />
-        <MainOptionCard title="Factions" description="Playable factions, their cultures, traits, units and more" link="/main/factions" />
+        <MainOptionCard title="Races" description="Playable Races, their cultures, traits, units and more" link="/main/races" />
         <MainOptionCard title="Specializations" description="Unit martial training routes" link="/main/specializations" />
         <MainOptionCard title="Traits" description="All the available Traits" link="/main/traits" />
         <MainOptionCard title="Skills" description="All The available abilities" link="/main/skills" />

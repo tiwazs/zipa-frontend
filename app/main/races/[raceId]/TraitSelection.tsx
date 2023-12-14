@@ -18,10 +18,10 @@ const getTraits = async () => {
 }
 
 interface SkillSelectionProps {
-    factionId: string;
+    raceId: string;
 }
 
-export default function SkillSelection({factionId}: SkillSelectionProps) {
+export default function SkillSelection({raceId}: Readonly<SkillSelectionProps>) {
     const query = useQuery(["traits", getTraits], getTraits);
     const [selected, setSelected] = useState<any>(undefined)
 
@@ -30,7 +30,7 @@ export default function SkillSelection({factionId}: SkillSelectionProps) {
     const onAddSkill = async () => {
       // Not setting the content type. aparently the browser will do that for us, including the boundary
       try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/factions/add_trait/${factionId}?trait_id=${selected.id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/add_trait/${raceId}?trait_id=${selected.id}`, {
             method: "PUT",
             headers: {
               'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ export default function SkillSelection({factionId}: SkillSelectionProps) {
         });
         console.log(`Response: ${JSON.stringify(response)}`);
       
-        queryClient.invalidateQueries('faction');
+        queryClient.invalidateQueries('race');
     }catch(e){
         console.log(`Error: ${e}`);
     }

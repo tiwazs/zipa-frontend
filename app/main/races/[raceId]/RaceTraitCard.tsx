@@ -3,25 +3,25 @@ import React from 'react'
 import { IoTrashOutline } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
 
-interface FactionTraitCardProps {
-    factionId: string;
-    factiontrait: any;
+interface RaceTraitCardProps {
+    raceId: string;
+    racetrait: any;
     editable: boolean;
 }
 
-export default function FactionTraitCard({ factionId, factiontrait, editable }: FactionTraitCardProps) {
-    const trait = factiontrait.trait;
+export default function RaceTraitCard({ raceId, racetrait, editable }: Readonly<RaceTraitCardProps>) {
+    const trait = racetrait.trait;
     const queryClient = useQueryClient();
 
     const deleteTrait = async () => {
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/factions/remove_trait/${factionId}?trait_id=${trait.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/remove_trait/${raceId}?trait_id=${trait.id}`, {
                 method: 'PUT',
             });
 
             console.log(`Response: ${JSON.stringify(response)}`);
 
-            queryClient.invalidateQueries('faction');
+            queryClient.invalidateQueries('race');
         }catch(e){
             console.log(`Error: ${e}`);
         }
@@ -31,9 +31,9 @@ export default function FactionTraitCard({ factionId, factiontrait, editable }: 
         <div className='group my-2 px-4 py-2 font-light dark:border-2 rounded-md dark:border-yellow-900/50 flex items-center justify-between '>
             <div>
             <div className='flex items-center space-x-2'>
-                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${factiontrait.trait.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
+                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${racetrait.trait.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
                 <p>
-                    <Link href={`/main/traits/${factiontrait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.name}</span></Link>
+                    <Link href={`/main/traits/${racetrait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.name}</span></Link>
                 </p>
             </div>
             <p>

@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';  
 
-interface CreateFactionFormOptions {
+interface CreateRaceFormOptions {
     name: string;
     description: string;
     identity: string;
@@ -15,22 +15,22 @@ interface CreateFactionFormOptions {
     traits?: string[];
 }
 
-interface NewFactionDialogProps {
+interface NewRaceDialogProps {
     styles?: string;
 }
 
-export default function NewFactionDialog({styles}: NewFactionDialogProps) {
+export default function NewRaceDialog({styles}: Readonly<NewRaceDialogProps>) {
     let [isOpen, setIsOpen] = useState(false);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<CreateFactionFormOptions>();
+    const { register, handleSubmit } = useForm<CreateRaceFormOptions>();
     
     const queryClient = useQueryClient();
     
-    const onSubmit: SubmitHandler<CreateFactionFormOptions> = async data => {
+    const onSubmit: SubmitHandler<CreateRaceFormOptions> = async data => {
         console.log(data);
 
         // Not setting the content type. aparently the browser will do that for us, including the boundary
         try{
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/factions/`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -42,7 +42,7 @@ export default function NewFactionDialog({styles}: NewFactionDialogProps) {
 
           // TODO: Remove this once use hook is fixed
           //router.refresh();        
-          queryClient.invalidateQueries('factions');
+          queryClient.invalidateQueries('races');
       }catch(e){
           console.log(`Error: ${e}`);
           setIsOpen(false);

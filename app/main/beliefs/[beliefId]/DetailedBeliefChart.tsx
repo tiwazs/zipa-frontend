@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQuery, useQueryClient } from 'react-query';
 import BeliefTraitCard from './BeliefTraitCard';
 import NewBeliefOptionDialog from './NewBeliefOptionDialog';
-//import BeliefUnitsDisclosure from './BeliefUnitsDisclosure';
+import BeliefUnitsDisclosure from './BeliefUnitsDisclosure';
 
 interface Belief {
     id: string;
@@ -40,14 +40,14 @@ export default function DetailedBeliefChart({belief, styles}: DetailedBeliefChar
     const [ editing, setEditing ] = useState(false);
     let [ unitsOrganized, setUnitsOrganized ] = useState<any>(undefined);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Belief>();
-    //const query = useQuery([`beliefSpecializations`, belief.id], () => getBeliefUnitSpecializations(belief.id) );
+    const query = useQuery([`beliefSpecializations`, belief.id], () => getBeliefUnitSpecializations(belief.id) );
     const queryClient = useQueryClient();
 
-    //useEffect(() => {
-    //    if(query.data){
-    //        organizeSpecializations(query.data)
-    //    }
-    //}, [query.data])
+    useEffect(() => {
+        if(query.data){
+            organizeSpecializations(query.data)
+        }
+    }, [query.data])
 
     const onCancel = () => {
         reset();
@@ -74,24 +74,24 @@ export default function DetailedBeliefChart({belief, styles}: DetailedBeliefChar
         }
     }
 
-    //const organizeSpecializations = (specializations: any) => {
-    //    let tier_i_list = query.data.filter( (unit: any) => unit.tier === 1 )
-    //    let tier_ii_list = query.data.filter( (unit: any) => unit.tier === 2 )
-    //    let tier_iii_list = query.data.filter( (unit: any) => unit.tier === 3 )
-    //    let tier_iv_list = query.data.filter( (unit: any) => unit.tier === 4 )
-    //    let tier_v_list = query.data.filter( (unit: any) => unit.tier === 5 )
-    //    setUnitsOrganized( 
-    //        [
-    //            {title: 1, information: tier_i_list},
-    //            {title: 2, information: tier_ii_list},
-    //            {title: 3, information: tier_iii_list},
-    //            {title: 4, information: tier_iv_list},
-    //            {title: 5, information: tier_v_list},
-    //        ]
-    //    )
-    //}
+    const organizeSpecializations = (specializations: any) => {
+        let tier_i_list = query.data.filter( (unit: any) => unit.tier === 1 )
+        let tier_ii_list = query.data.filter( (unit: any) => unit.tier === 2 )
+        let tier_iii_list = query.data.filter( (unit: any) => unit.tier === 3 )
+        let tier_iv_list = query.data.filter( (unit: any) => unit.tier === 4 )
+        let tier_v_list = query.data.filter( (unit: any) => unit.tier === 5 )
+        setUnitsOrganized( 
+            [
+                {title: 1, information: tier_i_list},
+                {title: 2, information: tier_ii_list},
+                {title: 3, information: tier_iii_list},
+                {title: 4, information: tier_iv_list},
+                {title: 5, information: tier_v_list},
+            ]
+        )
+    }
 
-    //if (query.isLoading) return <h2>Loading...</h2>
+    if (query.isLoading) return <h2>Loading...</h2>
 
     return (
         <div className="transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
@@ -144,8 +144,21 @@ export default function DetailedBeliefChart({belief, styles}: DetailedBeliefChar
                             return <BeliefTraitCard key={trait.trait.id} belieftrait={trait} beliefId={belief.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
+                    { /* Faction Specializations Title. The Specialization list is ouside this div, in the Disclosure */ }
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <div className='flex space-x-2'>
+                            <h1>Faction Specializations</h1>
+                            {editing && <NewBeliefOptionDialog beliefId={belief.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                                title={'Add Specializations'}
+                                description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
+                                selection={'specializations'}/>}
+                        </div>
+                    </div>
 
                 </div>
+                {(query.isLoading) ?  <h2>Loading...</h2>
+                    : <BeliefUnitsDisclosure disclosureInformationList={unitsOrganized} beliefId={belief.id}  />
+                }
                 <div className="mt-4 flex justify-between">
                     <button
                         type="button"

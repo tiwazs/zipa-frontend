@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQuery, useQueryClient } from 'react-query';
 import CultureTraitCard from './CultureTraitCard';
 import NewCultureOptionDialog from './NewCultureOptionDialog';
-//import CultureUnitsDisclosure from './CultureUnitsDisclosure';
+import CultureUnitsDisclosure from './CultureUnitsDisclosure';
 
 interface Culture {
     id: string;
@@ -40,14 +40,14 @@ export default function DetailedCultureChart({culture, styles}: DetailedCultureC
     const [ editing, setEditing ] = useState(false);
     let [ unitsOrganized, setUnitsOrganized ] = useState<any>(undefined);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Culture>();
-    //const query = useQuery([`cultureSpecializations`, culture.id], () => getCultureUnitSpecializations(culture.id) );
+    const query = useQuery([`cultureSpecializations`, culture.id], () => getCultureUnitSpecializations(culture.id) );
     const queryClient = useQueryClient();
 
-    //useEffect(() => {
-    //    if(query.data){
-    //        organizeSpecializations(query.data)
-    //    }
-    //}, [query.data])
+    useEffect(() => {
+        if(query.data){
+            organizeSpecializations(query.data)
+        }
+    }, [query.data])
 
     const onCancel = () => {
         reset();
@@ -74,24 +74,24 @@ export default function DetailedCultureChart({culture, styles}: DetailedCultureC
         }
     }
 
-    //const organizeSpecializations = (specializations: any) => {
-    //    let tier_i_list = query.data.filter( (unit: any) => unit.tier === 1 )
-    //    let tier_ii_list = query.data.filter( (unit: any) => unit.tier === 2 )
-    //    let tier_iii_list = query.data.filter( (unit: any) => unit.tier === 3 )
-    //    let tier_iv_list = query.data.filter( (unit: any) => unit.tier === 4 )
-    //    let tier_v_list = query.data.filter( (unit: any) => unit.tier === 5 )
-    //    setUnitsOrganized( 
-    //        [
-    //            {title: 1, information: tier_i_list},
-    //            {title: 2, information: tier_ii_list},
-    //            {title: 3, information: tier_iii_list},
-    //            {title: 4, information: tier_iv_list},
-    //            {title: 5, information: tier_v_list},
-    //        ]
-    //    )
-    //}
+    const organizeSpecializations = (specializations: any) => {
+        let tier_i_list = query.data.filter( (unit: any) => unit.tier === 1 )
+        let tier_ii_list = query.data.filter( (unit: any) => unit.tier === 2 )
+        let tier_iii_list = query.data.filter( (unit: any) => unit.tier === 3 )
+        let tier_iv_list = query.data.filter( (unit: any) => unit.tier === 4 )
+        let tier_v_list = query.data.filter( (unit: any) => unit.tier === 5 )
+        setUnitsOrganized( 
+            [
+                {title: 1, information: tier_i_list},
+                {title: 2, information: tier_ii_list},
+                {title: 3, information: tier_iii_list},
+                {title: 4, information: tier_iv_list},
+                {title: 5, information: tier_v_list},
+            ]
+        )
+    }
 
-    //if (query.isLoading) return <h2>Loading...</h2>
+    if (query.isLoading) return <h2>Loading...</h2>
 
     return (
         <div className="transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
@@ -144,8 +144,21 @@ export default function DetailedCultureChart({culture, styles}: DetailedCultureC
                             return <CultureTraitCard key={trait.trait.id} culturetrait={trait} cultureId={culture.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
+                    { /* Faction Specializations Title. The Specialization list is ouside this div, in the Disclosure */ }
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <div className='flex space-x-2'>
+                            <h1>Faction Specializations</h1>
+                            {editing && <NewCultureOptionDialog cultureId={culture.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                                title={'Add Specializations'}
+                                description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
+                                selection={'specializations'}/>}
+                        </div>
+                    </div>
 
                 </div>
+                {(query.isLoading) ?  <h2>Loading...</h2>
+                    : <CultureUnitsDisclosure disclosureInformationList={unitsOrganized} cultureId={culture.id}  />
+                }
                 <div className="mt-4 flex justify-between">
                     <button
                         type="button"

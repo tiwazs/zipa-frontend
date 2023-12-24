@@ -10,7 +10,7 @@ import { AiFillEdit } from 'react-icons/ai';
 
 interface CreateUnitFormOptions {
     user_id: string;
-    faction_id: string;
+    race_id: string;
     specialization_id: string;
     name: string;
     title?: string;
@@ -51,7 +51,9 @@ const genUnitValues = async () => {
 
 function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
     const query = useQuery(["unitvalues", genUnitValues], genUnitValues);
-    let [faction, setFaction] = React.useState<any>(undefined)
+    let [race, setRace] = React.useState<any>(undefined)
+    let [culture, setCulture] = React.useState<any>(undefined)
+    let [belief, setBelief] = React.useState<any>(undefined)
     let [specialization, setSpecialization] = React.useState<any>(undefined)
 
     let [editVitality, setEditVitality] = React.useState<boolean>(false)
@@ -68,9 +70,9 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
 
     // useState is async, so we need to use useEffect to set the value for the Form after the state is set
     useEffect(() => {
-        setValue("faction_id", faction?.id)
+        setValue("race_id", race?.id)
         setValue("specialization_id", specialization?.id)
-    }, [faction, specialization])
+    }, [race, specialization])
 
     const queryClient = useQueryClient();
 
@@ -109,8 +111,16 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
       }
     };
 
-    const handleFactionChange = (faction: any) => {
-        setFaction(faction)
+    const handleRaceChange = (race: any) => {
+        setRace(race)
+    }
+
+    const handleCultureChange = (race: any) => {
+        setCulture(culture)
+    }
+
+    const handleBeliefChange = (race: any) => {
+        setBelief(belief)
     }
 
     const handleSpecializationChange = (specialization: any) => {
@@ -125,18 +135,30 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
         <>
             {/* Background Card*/}
             <InformationOption >
-                {/* Faction Selection */}
                 <Suspense fallback={<div className="text-green-700">Loading...</div>}>
+                    {/* Race Selection */}
                     <div className='flex items-center'>
-                        <p className='text-yellow-500/80 font-medium'>Faction:</p>
-                        <OptionSelection endpoint='/factions/' queryKey='factions' onSelectionChange={handleFactionChange} style='' />
+                        <p className='text-yellow-500/80 font-medium'>Race:</p>
+                        <OptionSelection endpoint='/races/' queryKey='races' onSelectionChange={handleRaceChange} style='' />
+                    </div>
+
+                    {/* Culture Selection */}
+                    <div className='flex items-center'>
+                        <p className='text-yellow-500/80 font-medium'>Culture:</p>
+                        <OptionSelection endpoint='/cultures/' queryKey='cultures' onSelectionChange={handleRaceChange} style='' />
+                    </div>
+
+                    {/* Belief Selection */}
+                    <div className='flex items-center'>
+                        <p className='text-yellow-500/80 font-medium'>Belief:</p>
+                        <OptionSelection endpoint='/beliefs/' queryKey='beliefs' onSelectionChange={handleRaceChange} style='' />
                     </div>
 
                     {/* Specialization Selection */}
                     <Suspense fallback={<div className="text-green-700">Loading...</div>}>
-                        {faction && <div className='flex items-center'>
+                        {(race && culture && belief) && <div className='flex items-center'>
                                 <p className='text-yellow-500/80 font-medium'>Specialization:</p>
-                                <OptionSelection endpoint={`/specializations/faction/${faction.id}`} queryKey='specializations' onSelectionChange={handleSpecializationChange} style='' />
+                                <OptionSelection endpoint={`/specializations/race/${race.id}`} queryKey='specializations' onSelectionChange={handleSpecializationChange} style='' />
                             </div>}
                     </Suspense>
                 </Suspense>
@@ -153,9 +175,9 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
                     </div>
                     <div>
                         <input 
-                            {...register("faction_id", {required: true})}
+                            {...register("race_id", {required: true})}
                             type="hidden"
-                            name="faction_id"
+                            name="race_id"
                         />
                     </div>
                     <div>

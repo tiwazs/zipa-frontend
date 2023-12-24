@@ -72,9 +72,9 @@ export default function EffectList({user_id}: EffectListProps) {
                     items={unit.items}
                     rank={unit.rank}
                     user_id={session?.user_id}
-                    faction_id={unit.faction_id}
+                    race_id={unit.race_id}
                     specialization_id={unit.specialization_id}
-                    faction={unit.faction}
+                    race={unit.race}
                     specialization={unit.specialization}
                     removeEndpoint='/units/'
                     endpointMethod='DELETE'

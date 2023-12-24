@@ -10,7 +10,7 @@ import { FaArrowAltCircleRight } from 'react-icons/fa';
 interface Unit {
     id: string;
     user_id: string;
-    faction_id: string;
+    race_id: string;
     specialization_id: string;
     name: string;
     title?: string;
@@ -28,7 +28,7 @@ interface Unit {
     skill_picks?: string;
     rank: number;
     items?: any[];
-    faction: any;
+    race: any;
     specialization: any;
     vitality: number;
     strength: number;
@@ -432,9 +432,9 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                             <h1>Traits</h1>
                         </div>
                         
-                        {/* Faction Traits */}
-                        {(unit.faction.traits && unit.faction.traits.length > 0) ? unit.faction.traits.map((trait: any) => {
-                            return <TraitCard key={trait.trait.id} specializationtrait={trait} specializationId={unit.faction.id} editable={false} sub_title='Race Trait' />
+                        {/* Race Traits */}
+                        {(unit.race.traits && unit.race.traits.length > 0) ? unit.race.traits.map((trait: any) => {
+                            return <TraitCard key={trait.trait.id} specializationtrait={trait} specializationId={unit.race.id} editable={false} sub_title='Race Trait' />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
 
                         {/* Specialization Traits */}

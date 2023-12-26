@@ -11,6 +11,8 @@ import { AiFillEdit } from 'react-icons/ai';
 interface CreateUnitFormOptions {
     user_id: string;
     race_id: string;
+    culture_id: string;
+    belief_id: string;
     specialization_id: string;
     name: string;
     title?: string;
@@ -71,8 +73,10 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
     // useState is async, so we need to use useEffect to set the value for the Form after the state is set
     useEffect(() => {
         setValue("race_id", race?.id)
+        setValue("culture_id", culture?.id)
+        setValue("belief_id", belief?.id)
         setValue("specialization_id", specialization?.id)
-    }, [race, specialization])
+    }, [race, culture, belief, specialization])
 
     const queryClient = useQueryClient();
 
@@ -115,11 +119,11 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
         setRace(race)
     }
 
-    const handleCultureChange = (race: any) => {
+    const handleCultureChange = (culture: any) => {
         setCulture(culture)
     }
 
-    const handleBeliefChange = (race: any) => {
+    const handleBeliefChange = (belief: any) => {
         setBelief(belief)
     }
 
@@ -145,20 +149,20 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
                     {/* Culture Selection */}
                     <div className='flex items-center'>
                         <p className='text-yellow-500/80 font-medium'>Culture:</p>
-                        <OptionSelection endpoint='/cultures/' queryKey='cultures' onSelectionChange={handleRaceChange} style='' />
+                        <OptionSelection endpoint='/cultures/' queryKey='cultures' onSelectionChange={handleCultureChange} style='' />
                     </div>
 
                     {/* Belief Selection */}
                     <div className='flex items-center'>
                         <p className='text-yellow-500/80 font-medium'>Belief:</p>
-                        <OptionSelection endpoint='/beliefs/' queryKey='beliefs' onSelectionChange={handleRaceChange} style='' />
+                        <OptionSelection endpoint='/beliefs/' queryKey='beliefs' onSelectionChange={handleBeliefChange} style='' />
                     </div>
 
                     {/* Specialization Selection */}
                     <Suspense fallback={<div className="text-green-700">Loading...</div>}>
                         {(race && culture && belief) && <div className='flex items-center'>
                                 <p className='text-yellow-500/80 font-medium'>Specialization:</p>
-                                <OptionSelection endpoint={`/specializations/race/${race.id}`} queryKey='specializations' onSelectionChange={handleSpecializationChange} style='' />
+                                <OptionSelection endpoint={`/specializations/group?culture_id=${culture.id}&belief_id=${belief.id}`} queryKey='specializations' onSelectionChange={handleSpecializationChange} style='' />
                             </div>}
                     </Suspense>
                 </Suspense>
@@ -178,6 +182,20 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
                             {...register("race_id", {required: true})}
                             type="hidden"
                             name="race_id"
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            {...register("culture_id", {required: true})}
+                            type="hidden"
+                            name="culture_id"
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            {...register("belief_id", {required: true})}
+                            type="hidden"
+                            name="belief_id"
                         />
                     </div>
                     <div>

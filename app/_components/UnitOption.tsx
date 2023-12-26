@@ -9,7 +9,7 @@ import { value_multiplier } from '../_libs/equations';
 interface UnitOptionProps {
     id: string;
     user_id: string;
-    faction_id: string;
+    race_id: string;
     specialization_id: string;
     name: string;
     title?: string;
@@ -38,7 +38,7 @@ interface UnitOptionProps {
     skill_picks?: string;
     rank: number;
     items?: any[];
-    faction: any;
+    race: any;
     specialization: any;
     removeEndpoint: string;
     endpointMethod: string;
@@ -95,8 +95,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                     <p className='italic font-light'>
                         Traits:
                     </p>}
-                    {/* Faction Tratis*/}
-                    {unit.faction.traits.map((trait: any) => {
+                    {/* Race Tratis*/}
+                    {unit.race.traits.map((trait: any) => {
                         return (
                         <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                             <div className='flex items-center space-x-3'>

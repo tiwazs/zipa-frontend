@@ -48,6 +48,7 @@ interface Unit {
     shield: number;
     physical_damage: number;
     magical_damage: number;
+    load_capacity: number;
     weight: number;
     weight_penalty: number;
     ascended: boolean;
@@ -363,6 +364,11 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 <img src={`/gen_icons/magical_damage.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                                 <h1>Magical Damage</h1>
                                 <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.magical_damage}</h1>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                                <h1>Load Capacity</h1>
+                                <h1 className='my-2 py-3 text-orange-500 font-light'>{unit.specialization.load_capacity + (unit.strength*0.25)}</h1>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />

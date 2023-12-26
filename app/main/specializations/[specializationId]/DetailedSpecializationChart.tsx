@@ -25,6 +25,7 @@ interface Specialization {
     hit_chance?: number;
     evasion?: number;
     hit_rate?: number;
+    load_capacity?: number;
     movement?: number;
     weapon_proficiencies?: string;
     tier?: number;
@@ -254,6 +255,18 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                             disabled={!editing}
                             placeholder={(specialization.hit_rate && specialization.hit_rate !== 0 ) ? specialization.hit_rate?.toString() : "0"}
                         /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.hit_rate && specialization.hit_rate !== 0 ) ? specialization.hit_rate?.toString() : "0"}</h1>}                           
+                    </div>
+                    <div className='flex items-center space-x-2'>
+                        <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                        <h1>Load Capacity</h1>
+                        {editing ? <input 
+                            {...register("load_capacity", { required: false, valueAsNumber: true })}
+                            className={`my-2 rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : ""}`}
+                            type="number"
+                            name="load_capacity"
+                            disabled={!editing}
+                            placeholder={(specialization.load_capacity && specialization.load_capacity !== 0 ) ? specialization.load_capacity?.toString() : "0"}
+                        /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(specialization.load_capacity && specialization.load_capacity !== 0 ) ? specialization.load_capacity?.toString() : "0"}</h1>}                           
                     </div>
                     <div className='flex items-center space-x-2'>
                         <img src={`/gen_icons/movement.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />

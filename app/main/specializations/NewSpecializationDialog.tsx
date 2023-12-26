@@ -23,6 +23,7 @@ interface CreateSpecializationFormOptions {
     hit_chance: number;
     evasion: number;
     hit_rate: number;
+    load_capacity: number;
     movement: number;
     weapon_proficiencies: string;
     tier: number;
@@ -332,6 +333,15 @@ export default function NewSpecializationDialog({styles}: NewSpecializationDialo
                                     type="number"
                                     name="hit_rate"
                                     placeholder="Hit Rate"
+                                />                                
+                            </div>
+                            <div>
+                                <input 
+                                    {...register("load_capacity", { required: true, valueAsNumber: true })}
+                                    className='my-4 w-full rounded-lg p-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none border dark:border-yellow-900/50'
+                                    type="number"
+                                    name="load_capacity"
+                                    placeholder="Load Capacity"
                                 />                                
                             </div>
                             <div>

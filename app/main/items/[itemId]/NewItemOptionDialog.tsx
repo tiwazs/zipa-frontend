@@ -7,15 +7,17 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IoAddSharp } from 'react-icons/io5'
 import { useQueryClient } from 'react-query';
 import SkillSelection from './SkillSelection';
+import TraitSelection from './TraitSelection';
 
 interface NewEffectDialogProps {
     title: string;
     description: string;
+    selection: string;
     itemId: string;
     styles?: string;
 }
 
-export default function NewEffectDialog({ title, description, itemId, styles}: NewEffectDialogProps) {
+export default function NewEffectDialog({ title, description, selection, itemId, styles}: NewEffectDialogProps) {
     let [isOpen, setIsOpen] = useState(false);        
 
   function closeModal() {
@@ -75,7 +77,10 @@ export default function NewEffectDialog({ title, description, itemId, styles}: N
                     <p className="text-sm text-gray-400">
                       {description}
                     </p>
-                      <SkillSelection itemId={itemId} />
+                    {(selection === "traits") ? <TraitSelection itemId={itemId} /> 
+                        : (selection === "skills") ? <SkillSelection itemId={itemId} />
+                        : null }
+                      
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 px-4 py-2 text-sm font-medium text-gray-400  focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-200 focus-visible:ring-offset-2"

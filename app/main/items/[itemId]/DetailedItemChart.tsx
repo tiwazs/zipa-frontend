@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query';
 import NewItemOptionDialog from './NewItemOptionDialog';
 import ItemSkillCard from './ItemSkillCard';
 import { paintRarity } from '@/app/_libs/text_paint_methods';
+import ItemTraitCard from './ItemTraitCard';
 
 interface Item {
     id: string;
@@ -40,6 +41,7 @@ interface Item {
     faith_requirement?: number;
     weight?: number;
     skills: any[];
+    traits: any[];
     icon?: File[];
 }
 
@@ -478,13 +480,25 @@ export default function DetailedItemChart({item, styles}: DetailedItemChartProps
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
                             <h1>Skills</h1>
-                            {editing && <NewItemOptionDialog itemId={item.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
+                            {editing && <NewItemOptionDialog itemId={item.id} selection='skills' styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' 
                                     title={'Add Skills'} 
                                     description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
                             />}
                         </div>
                         {(item.skills && item.skills.length > 0) ? item.skills.map((skill: any) => {
                             return <ItemSkillCard key={skill.skill.id} itemskill={skill} itemId={item.id} editable={editing} />       
+                        }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                    </div>
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <div className='flex space-x-2'>
+                            <h1>Traits</h1>
+                            {editing && <NewItemOptionDialog itemId={item.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                                title={'Add Traits'}
+                                description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
+                                selection={'traits'}/>}
+                        </div>
+                        {(item.traits && item.traits.length > 0) ? item.traits.map((trait: any) => {
+                            return <ItemTraitCard key={trait.trait.id} itemtrait={trait} itemId={item.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='flex items-center space-x-2 col-span-3'>

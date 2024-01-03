@@ -76,7 +76,7 @@ export default function ItemCard({ OwnerItem, deleteEndpoint, invaildateQueryKey
                     <DisplayValue value={item.shield} after_text=' Shield' />
                 </div>
                 <div className='px-4'>
-                    <p>Weight: <span className='text-orange-500 font-light'>{(item.weight && item.weight !== 0 ) ? item.weight?.toString() : "0"}</span> </p>
+                    <p>Weight: <span className='text-orange-500 font-light'>{(item.weight && item.weight !== 0 ) ? (OwnerItem.quantity > 1 ? `${Math.round(item.weight*OwnerItem.quantity)} (${item.weight} x ${OwnerItem.quantity})`:item.weight) : "0"}</span> </p>
                     {((item.dexterity_requirement !==0) || 
                         (item.strength_requirement!==0) || 
                         (item.mind_requirement!==0) || 

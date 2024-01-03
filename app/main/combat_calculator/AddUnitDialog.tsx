@@ -86,7 +86,7 @@ export default function NewUnitDialog({user_id, styles, onAddClick}: NewUnitDial
                   	</Dialog.Title>
 
                   	{/* Dialog Content */}
-                  	<OptionSelection  endpoint={`/units/user/extended/${user_id}?include_items=true&include_race=true&include_specialization=true`}
+                  	<OptionSelection  endpoint={`/units/user/extended/${user_id}?include_items=true&include_race=true&include_specialization=true&include_culture=true&include_belief=true`}
                                     queryKey={'units'} 
                                     onSelectionChange={HandleSelectionChange} />
 

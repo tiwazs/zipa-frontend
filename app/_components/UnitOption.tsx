@@ -39,6 +39,8 @@ interface UnitOptionProps {
     rank: number;
     items?: any[];
     race: any;
+    culture: any;
+    belief: any;
     specialization: any;
     removeEndpoint: string;
     endpointMethod: string;
@@ -81,9 +83,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         {unit.prefix_title &&  <span className=' font-normal '> {unit.prefix_title} </span>}
                         {unit.name} <span className='font-extralight italic text-orange-500'> {unit.title ? unit.title : ""} </span>
                     </h3>
-                    <div className='flex items-center italic font-light text-sm'>
+                    <div className='flex items-center italic font-medium text-sm'>
                         <h3 className={`text-yellow-200/70 `}>{unit.specialization.name}</h3>
                         <p className={`mx-2 ${paintTier(unit.specialization.tier)} font-extrabold font-serif`}>{`${writeTier(unit.specialization.tier)}`}</p>
+                    </div>
+                    <div className='flex items-center italic font-light text-sm'>
+                        <h3 className={`text-yellow-200/70 `}> <span className=' font-medium '> {unit.race.name}</span>,  {unit.culture.name} | {unit.belief.name}</h3>
                     </div>
                 </div>
             </Link>

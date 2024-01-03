@@ -45,9 +45,12 @@ export default function UnitPage({ params: { unitId } }: UnitPageProps) {
                                 -&gt;
                             </span>
                         </div>
-                        <div className='flex items-center italic font-light text-2xl'>
+                        <div className='flex items-center italic font-medium text-2xl'>
                             <span className='italic'>{query.data.specialization.name}</span>
-                            <p className={`mx-2 ${paintTier(query.data.specialization.tier)} font-extrabold font-serif`}>{`${writeTier(query.data.specialization.tier)}`}</p>
+                            <h3 className={`mx-2 ${paintTier(query.data.specialization.tier)} font-extrabold font-serif`}>{`${writeTier(query.data.specialization.tier)}`}</h3>
+                        </div>
+                        <div className='flex flex-col italic font-light text-lg'>
+                            <h3><span className=' font-medium '>{query.data.race.name}, </span>{query.data.culture.name} | {query.data.Belief.name}</h3>
                         </div>
                     </h2>
                 </div>

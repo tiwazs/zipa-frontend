@@ -75,6 +75,8 @@ export default function EffectList({user_id}: EffectListProps) {
                     race_id={unit.race_id}
                     specialization_id={unit.specialization_id}
                     race={unit.race}
+                    culture={unit.culture}
+                    belief={unit.Belief}
                     specialization={unit.specialization}
                     removeEndpoint='/units/'
                     endpointMethod='DELETE'

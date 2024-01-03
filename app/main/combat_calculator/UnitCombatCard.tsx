@@ -245,8 +245,8 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: U
             <Disclosure title={'Traits'} >
             {/* Unit Tratis*/}
             { (unit.specialization.traits && unit.specialization.traits.length > 0)}
-            {/* Faction Tratis*/}
-            {unit.faction.traits.map((trait: any) => {
+            {/* Race Tratis*/}
+            {unit.race.traits.map((trait: any) => {
                 return (
                 <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                     <div className='flex items-center space-x-3'>

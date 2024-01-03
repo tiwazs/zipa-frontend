@@ -95,8 +95,8 @@ export default function DamageCard({units, onActClick, style, onRemoveClick}: Da
 
             }
             // Race Trait Effects
-            if(unit.faction){
-                unit.faction.traits.forEach( (trait:any) =>{
+            if(unit.race){
+                unit.race.traits.forEach( (trait:any) =>{
                     if(trait.trait.effects){
                         trait.trait.effects.forEach( (effect:any) =>{
                             effects.push(effect.effect)

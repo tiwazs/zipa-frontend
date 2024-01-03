@@ -52,7 +52,7 @@ export default function NewOptionDialog({ title, description, addEndpoint, selec
             data = {...extraFormValues};
         }else if(!selectionIdOnEndpoint && extraFormValues){
             data = {
-                [`${selectionKey}_id`]: selected.id,
+                [`${selectionKey}_id`]: selectionIdOnEndpoint ? selected.id : "",
                 ...extraFormValues
             }
         }

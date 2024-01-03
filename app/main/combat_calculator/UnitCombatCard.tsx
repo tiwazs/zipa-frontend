@@ -322,9 +322,12 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: U
                 <div key={item.item.id} className='px-4 font-light italic m-1'>
                     <div className='flex items-center space-x-3'>
                         <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
-                        <p>
-                            <Link href={`/main/items/${item.item.id}`}><span className={`font-normal ${paintRarity(item.item.rarity)}`}>{item.item.name}</span></Link>
-                        </p>
+                        <div>
+                            <h4>
+                                <Link href={`/main/items/${item.item.id}`}><span className={`font-normal ${paintRarity(item.item.rarity)}`}>{item.item.name}</span></Link>
+                            </h4>
+                            <h4 className={` text-sm font-light  ${item.equipped ? "" : "text-red-500"}`}>{item.equipped ? "Equipped" : "Unequipped"}</h4>
+                        </div>
                     </div>
                     <p>
                         <span className='px-4 text-gray-400 font-light'>{item.item.description}</span>

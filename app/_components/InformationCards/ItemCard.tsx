@@ -3,16 +3,19 @@ import { paintRarity } from '@/app/_libs/text_paint_methods';
 import Link from 'next/link';
 import React from 'react'
 import { IoTrashOutline } from 'react-icons/io5';
+import { MdEdit } from "react-icons/md";
 import { useQueryClient } from 'react-query';
+import NewOptionDialogWithSelection from '../NewOptionDialogWithSelection';
 
 interface ItemCardProps {
     OwnerItem: any;
     deleteEndpoint: string;
     invaildateQueryKey: string;
     editable: boolean;
+    ownerId?: string;
 }
 
-export default function ItemCard({ OwnerItem, deleteEndpoint, invaildateQueryKey, editable }: ItemCardProps) {
+export default function ItemCard({ OwnerItem, deleteEndpoint, invaildateQueryKey, editable, ownerId }: ItemCardProps) {
     const item = OwnerItem.item;
     const queryClient = useQueryClient();
 
@@ -36,11 +39,14 @@ export default function ItemCard({ OwnerItem, deleteEndpoint, invaildateQueryKey
             <div className='flex items-center space-x-2'>
                 <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${OwnerItem.item.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
                 <p>
-                    <Link href={`/main/items/${OwnerItem.item.id}`}><span className='text-yellow-400 font-normal'>{item.name}</span></Link>
+                    <Link href={`/main/items/${OwnerItem.item.id}`}><span className='text-yellow-400 font-normal'>{item.name}</span> {OwnerItem.quantity > 1 ? `x ${OwnerItem.quantity}`:""}</Link>
                     <div className={`px-4 flex space-x-1 text-xs italic font-light ${paintRarity(item.rarity)}`}>
                         <h4>{item.rarity}</h4>
                         <h4>|</h4>
                         <h4>{item.object_type}</h4>
+                    </div>
+                    <div className={`px-4 flex space-x-1 text-xs italic font-light ${OwnerItem.equipped ? "" : "text-red-500"}`}>
+                        <h4>{OwnerItem.equipped ? "Equipped" : "Unequipped"}</h4>
                     </div>
                 </p>
             </div>
@@ -84,7 +90,19 @@ export default function ItemCard({ OwnerItem, deleteEndpoint, invaildateQueryKey
                 </div> 
             </p>
             </div>
-            <div>
+            <div className='flex'>
+                {editable && <NewOptionDialogWithSelection 
+                                selectionEndpoint={'/items/'} 
+                                selecttionQueryKey={'items'}
+                                selectionKey='new_item'
+                                selectionIdOnEndpoint={false}
+                                addEndpoint={`/units/update_item/${ownerId}?item_id=${item.id}`}
+                                invalidationKey={`unit`} 
+                                extraFormParams={['quantity', 'equipped']}
+                                title={'Add Items'}
+                                description={'Some items are imbued with ancient arts and magic which allows the wielder to use special skills, old spells and magic to aid them in battle.'} 
+                                styles='invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
+                                active:translate-y-1 text-xl cursor-pointer text-yellow-200/70'/>}
                 {editable && <h5 className="invisible group-hover:visible mx-1 rounded-lg px-3 py-1 bg-black border hover:bg-purple-300/10 border-yellow-900/50
                                     active:translate-y-1 text-xl cursor-pointer text-yellow-200/70 " onClick={deleteItem}><IoTrashOutline/></h5>}
             </div>

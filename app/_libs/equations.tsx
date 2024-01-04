@@ -6,7 +6,7 @@ export const value_multiplier = (base_value: number, multiplier: number, offset:
     return Math.round(result * 10) / 10
 }
 
-export const mod_parameter_operation = (mod_parameter_string: string, parameter: number) => {
+export const mod_parameter_operation = (mod_parameter_string: string, parameter: number, to_equip = true) => {
     const regex = /(?<sign>[+-])?(?<value>([\d+.]+|ND|MD|HP))?(?<porcentage>\s*%)?(?<max>\s*max)?/gm
     const match = regex.exec(mod_parameter_string);
     const sign = match?.groups?.sign;
@@ -19,13 +19,29 @@ export const mod_parameter_operation = (mod_parameter_string: string, parameter:
     let result = parameter;
 
     if(porcentage && sign === '+'){
-            result += result * (parseFloat(value) / 100);
+            if(to_equip){
+                 result += result * (parseFloat(value) / 100);
+            }else{
+                result -= result * (parseFloat(value) / 100);
+            }
     }else if(porcentage && sign === '-'){
-            result -= result * (parseFloat(value) / 100);
+            if(to_equip){
+                 result -= result * (parseFloat(value) / 100);
+            }else{
+                result += result * (parseFloat(value) / 100);
+            }
     }else if(sign === '+'){
-            result += parseFloat(value);
+            if(to_equip){
+                 result += parseFloat(value);
+            }else{
+                result -= parseFloat(value);
+            }
     }else if(sign === '-'){
-            result -= parseFloat(value);
+            if(to_equip){
+                 result -= parseFloat(value);
+            }else{
+                result += parseFloat(value);
+            }
     }else if(porcentage){
             result = result * (parseFloat(value) / 100);
     }
@@ -49,6 +65,8 @@ export class UnitParameters{
 
     public armor: number = 0;
     public magic_armor: number = 0;
+    public armor_piercing: number = 0;
+    public magic_armor_piercing: number = 0;
 
     public hit_rate: number = 0;
     public movement: number = 0;
@@ -97,6 +115,8 @@ export class UnitParameters{
         this.magical_damage += unit.items.reduce((acc: number, item: any) => mod_parameter_operation(item.item.magical_damage, acc), 0);
         this.armor += unit.items.reduce((acc: number, item: any) => mod_parameter_operation(item.item.armor, acc), 0);
         this.magic_armor += unit.items.reduce((acc: number, item: any) => mod_parameter_operation(item.item.magic_armor, acc), 0);
+        this.armor_piercing += unit.items.reduce((acc: number, item: any) => mod_parameter_operation(item.item.armor_piercing, acc), 0);
+        this.magic_armor_piercing += unit.items.reduce((acc: number, item: any) => mod_parameter_operation(item.item.magic_armor_piercing, acc), 0);
 
         this.shield += unit.items.reduce((acc: number, item: any) => mod_parameter_operation(item.item.shield, acc), 0);
 

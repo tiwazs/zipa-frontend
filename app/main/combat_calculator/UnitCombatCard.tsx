@@ -10,16 +10,23 @@ interface UnitCombatCardProps {
     unit: any;
     onRemoveClick?: any;
     onRemoveEffectClick?: any;
+    onHandleItemEquipToggleClick?: any;
 }
 
-function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: UnitCombatCardProps) {
+function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick, onHandleItemEquipToggleClick}: UnitCombatCardProps) {
     const [pickedSkills, setPickedSkills] = React.useState<number[]>([]);
+    const [equppedItems, setEquippedItems] = React.useState<boolean[]>([]);
     useEffect(() => {
         if(unit){
             //setPickedSkills(unit.skill_picks ? parseInt(unit.skill_picks.split("|")) : []);
             setPickedSkills(unit.skill_picks ? unit.skill_picks.split("|").map((skill: string) => parseInt(skill)-1) : []);
+            setEquippedItems(unit.items ? unit.items.map((item: any) => item.equipped ) : []);
         }
     }, [])
+
+    const HandleItemEquipToggleClick = (item: any) => {
+        onHandleItemEquipToggleClick(combat_id, item)        
+    }
 
     const HandleRemoveClick = () => {
         onRemoveClick(combat_id)
@@ -383,11 +390,11 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: U
             })}
             </Disclosure>
             <Disclosure title={'Items'} >
-            {/* Unit Initial Items*/}
+            {/* Unit Items*/}
             { (unit.items && unit.items.length > 0)}
-            {unit.items!.map((item: any) => {
+            {unit.items!.map((item: any, index: number) => {
                 return (
-                <div key={item.item.id} className='px-4 font-light italic m-1'>
+                <div key={item.item.id} className='flex items-center justify-between px-4 font-light italic m-1'>
                     <div className='flex items-center space-x-3'>
                         <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
                         <div>
@@ -397,14 +404,8 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick}: U
                             <h4 className={` text-sm font-light  ${item.equipped ? "" : "text-red-500"}`}>{item.equipped ? "Equipped" : "Unequipped"}</h4>
                         </div>
                     </div>
-                    <p>
-                        <span className='px-4 text-gray-400 font-light'>{item.item.description}</span>
-                    </p>
-                    <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                        { (item.item.essence_cost && item.item.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{item.item.essence_cost}</span> P</p>}
-                        { (item.item.vitality_cost && item.item.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{item.item.vitality_cost}</span> V</p>}
-                        { (item.item.cooldown && item.item.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{item.item.cooldown}</span> T </p>}
-                    </div>
+                    <button className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg py-1 px-1 h-10 bg-black hover:bg-purple-300/10
+                                cursor-pointer disabled:bg-black text-sm' onClick={() => HandleItemEquipToggleClick(item)}>{item.equipped ? "Unequip" : "Equip"}</button>
                 </div>
                 )
             })}

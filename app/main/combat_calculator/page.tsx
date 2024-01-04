@@ -166,6 +166,41 @@ export default function UnitsPage() {
         setUnits(unitList)
     }
 
+    const HandleItemToggle = (combat_id: number, item: any) => {
+        let unitList = [...units]
+
+        for( let unit of unitList){
+            if(unit.combat_id===0 || unit.combat_id===1) continue
+            if(unit.combat_id === combat_id){
+                unit.items.map((itemOnUnit:any) => {
+                    if(itemOnUnit.id === item.id){
+                        itemOnUnit.equipped = !itemOnUnit.equipped
+
+                        unit.vitality = mod_parameter_operation(item.item.vitality, unit.vitality, itemOnUnit.equipped);
+                        unit.strength = mod_parameter_operation(item.item.strength, unit.strength, itemOnUnit.equipped);
+                        unit.dexterity = mod_parameter_operation(item.item.dexterity, unit.dexterity, itemOnUnit.equipped);
+                        unit.mind = mod_parameter_operation(item.item.mind, unit.mind, itemOnUnit.equipped);
+                        unit.faith = mod_parameter_operation(item.item.faith, unit.faith, itemOnUnit.equipped);
+                        unit.essence = mod_parameter_operation(item.item.essence, unit.essence, itemOnUnit.equipped);
+                        unit.hit_chance = mod_parameter_operation(item.item.hit_chance, unit.hit_chance, itemOnUnit.equipped);
+                        unit.evasion = mod_parameter_operation(item.item.evasion, unit.evasion, itemOnUnit.equipped);
+                        unit.physical_damage = mod_parameter_operation(item.item.physical_damage, unit.physical_damage, itemOnUnit.equipped);
+                        unit.magical_damage = mod_parameter_operation(item.item.magical_damage, unit.magical_damage, itemOnUnit.equipped);
+                        unit.armor = mod_parameter_operation(item.item.armor, unit.armor, itemOnUnit.equipped);
+                        unit.magic_armor = mod_parameter_operation(item.item.magic_armor, unit.magic_armor, itemOnUnit.equipped);
+                        unit.armor_piercing = mod_parameter_operation(item.item.armor_piercing, unit.armor_piercing, itemOnUnit.equipped);
+                        unit.magic_armor_piercing = mod_parameter_operation(item.item.magic_armor_piercing, unit.magic_armor_piercing, itemOnUnit.equipped);
+                        unit.shield = mod_parameter_operation(item.item.shield, unit.shield, itemOnUnit.equipped);
+                    }
+                })
+
+            }
+        }
+
+
+        setUnits(unitList)
+    }
+
     const HandlePhase = async () => {
         let unitList = [...units]
         let actionLogs = []
@@ -501,7 +536,7 @@ export default function UnitsPage() {
 
         <div className='flex space-x-2'>
             {units && units.map((unit) => (
-                (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} onRemoveEffectClick={HandleRemoveEffect} />
+                (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} onRemoveEffectClick={HandleRemoveEffect} onHandleItemEquipToggleClick={HandleItemToggle} />
             ))}
         </div>
         <div className='flex flex-col items-center'>  

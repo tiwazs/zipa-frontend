@@ -13,7 +13,7 @@ type UnitPageProps = {
 const getUnit = async (unitId: string) => {
 
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/units/extended/${unitId}?include_items=true&include_race=true&include_specialization=true`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/units/extended/${unitId}?include_items=true&include_race=true&include_specialization=true&include_culture=true&include_belief=true`, {
             method: 'GET',
         });
         console.log(`Response: ${JSON.stringify(response)}`);

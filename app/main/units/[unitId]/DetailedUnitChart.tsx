@@ -29,6 +29,8 @@ interface Unit {
     rank: number;
     items?: any[];
     race: any;
+    culture: any;
+    Belief: any;
     specialization: any;
     vitality: number;
     strength: number;
@@ -440,13 +442,27 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                         
                         {/* Race Traits */}
                         {(unit.race.traits && unit.race.traits.length > 0) ? unit.race.traits.map((trait: any) => {
-                            return <TraitCard key={trait.trait.id} specializationtrait={trait} specializationId={unit.race.id} editable={false} sub_title='Race Trait' />
-                        }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
-
+                            return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={unit.race.id} editable={false} sub_title='Race Trait' />
+                        }) : <h1 className='px-4 text-gray-400'></h1>}
+                        {/* Culture Traits */}
+                        {(unit.culture.traits && unit.culture.traits.length > 0) ? unit.culture.traits.map((trait: any) => {
+                            return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={unit.culture.id} editable={false} sub_title='Culture Trait' />
+                        }) : <h1 className='px-4 text-gray-400'></h1>}
+                        {/* Belief Traits */}
+                        {(unit.Belief.traits && unit.Belief.traits.length > 0) ? unit.Belief.traits.map((trait: any) => {
+                            return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={unit.Belief.id} editable={false} sub_title='Belief Trait' />
+                        }) : <h1 className='px-4 text-gray-400'></h1>}
                         {/* Specialization Traits */}
                         {(unit.specialization.traits && unit.specialization.traits.length > 0) ? unit.specialization.traits.map((trait: any) => {
-                            return <TraitCard key={trait.trait.id} specializationtrait={trait} specializationId={unit.specialization.id} editable={false} />
-                        }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                            return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={unit.specialization.id} editable={false} />
+                        }) : <h1 className='px-4 text-gray-400'></h1>}
+                        {/* Item Traits */}
+                        {(unit.items && unit.items.length > 0) ? unit.items.map((item: any) => {
+                            let item_name = item.item.name;
+                            return item.item.traits.map((trait: any) => {
+                                return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={item.item.id} editable={false} sub_title={`Item Trait | ${item_name}`} />
+                            })
+                        }) : <h1 className='px-4 text-gray-400'></h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>

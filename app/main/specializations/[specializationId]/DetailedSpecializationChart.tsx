@@ -323,7 +323,7 @@ export default function DetailedSpecializationChart({specialization, styles}: De
                                     styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md' />}
                         </div>
                         {(specialization.traits && specialization.traits.length > 0) ? specialization.traits.map((trait: any) => {
-                            return <TraitCard key={trait.trait.id} specializationtrait={trait} specializationId={specialization.id} editable={editing} />
+                            return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={specialization.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>

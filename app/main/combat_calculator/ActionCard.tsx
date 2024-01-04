@@ -104,6 +104,40 @@ export default function DamageCard({units, onActClick, style, onRemoveClick}: Da
                     }
                 })
             }
+            // Culture Trait Effects
+            if(unit.culture){
+                unit.culture.traits.forEach( (trait:any) =>{
+                    if(trait.trait.effects){
+                        trait.trait.effects.forEach( (effect:any) =>{
+                            effects.push(effect.effect)
+                        })
+                    }
+                })
+            }
+            // Belief Trait Effects
+            if(unit.belief){
+                unit.belief.traits.forEach( (trait:any) =>{
+                    if(trait.trait.effects){
+                        trait.trait.effects.forEach( (effect:any) =>{
+                            effects.push(effect.effect)
+                        })
+                    }
+                })
+            }
+            // Item Trait Effects
+            if(unit.items){
+                unit.items.forEach( (item:any) =>{
+                    if(item.item.traits){
+                        item.item.traits.forEach( (trait:any) =>{
+                            if(trait.trait.effects){
+                                trait.trait.effects.forEach( (effect:any) =>{
+                                    effects.push(effect.effect)
+                                })
+                            }
+                        })
+                    }
+                })
+            }
             
 
             setAvailableEffects(effects);

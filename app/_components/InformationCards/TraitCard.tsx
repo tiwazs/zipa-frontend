@@ -3,14 +3,14 @@ import React from 'react'
 import { IoTrashOutline } from 'react-icons/io5';
 import { useQueryClient } from 'react-query';
 
-interface traitCardProps {
+interface TraitCardProps {
     ownerId?: string;
     ownerTrait: any;
     editable: boolean;
     sub_title?: string;
 }
 
-export default function traitCard({ ownerId, ownerTrait, editable, sub_title }: traitCardProps) {
+export default function TraitCard({ ownerId, ownerTrait, editable, sub_title }: TraitCardProps) {
     const trait = ownerTrait.trait;
     const queryClient = useQueryClient();
 

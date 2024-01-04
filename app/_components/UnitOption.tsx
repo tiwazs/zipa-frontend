@@ -195,9 +195,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                                         <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                     </p>
                                 </div>
-                                <p>
+                                <h3>
                                     <span className='px-4 text-gray-400 font-light'>{trait.trait.description}</span>
-                                </p>
+                                </h3>
                                 <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
                                     { (trait.trait.essence_cost && trait.trait.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{trait.trait.essence_cost}</span> P</p>}
                                     { (trait.trait.vitality_cost && trait.trait.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{trait.trait.vitality_cost}</span> V</p>}

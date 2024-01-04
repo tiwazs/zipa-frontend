@@ -121,6 +121,7 @@ export default function UnitOption(unit: UnitOptionProps) {
                         </div>
                         )
                     })}
+                    {/* Spec Tratis*/}
                     {unit.specialization.traits.map((trait: any) => {
                         return (
                         <div key={trait.trait.id} className='px-4 font-light italic m-1'>
@@ -141,6 +142,72 @@ export default function UnitOption(unit: UnitOptionProps) {
                         </div>
                         )
                     })}
+                    {/* Culture Tratis*/}
+                    {unit.culture.traits.map((trait: any) => {
+                        return (
+                        <div key={trait.trait.id} className='px-4 font-light italic m-1'>
+                            <div className='flex items-center space-x-3'>
+                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                <p>
+                                    <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
+                                </p>
+                            </div>
+                            <p>
+                                <span className='px-4 text-gray-400 font-light'>{trait.trait.description}</span>
+                            </p>
+                            <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                { (trait.trait.essence_cost && trait.trait.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{trait.trait.essence_cost}</span> P</p>}
+                                { (trait.trait.vitality_cost && trait.trait.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{trait.trait.vitality_cost}</span> V</p>}
+                                { (trait.trait.cooldown && trait.trait.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{trait.traits.cooldown}</span> T </p>}
+                            </div>
+                        </div>
+                        )
+                    })}
+                    {/* Belief Tratis*/}
+                    {unit.belief.traits.map((trait: any) => {
+                        return (
+                        <div key={trait.trait.id} className='px-4 font-light italic m-1'>
+                            <div className='flex items-center space-x-3'>
+                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                <p>
+                                    <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
+                                </p>
+                            </div>
+                            <p>
+                                <span className='px-4 text-gray-400 font-light'>{trait.trait.description}</span>
+                            </p>
+                            <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                { (trait.trait.essence_cost && trait.trait.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{trait.trait.essence_cost}</span> P</p>}
+                                { (trait.trait.vitality_cost && trait.trait.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{trait.trait.vitality_cost}</span> V</p>}
+                                { (trait.trait.cooldown && trait.trait.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{trait.traits.cooldown}</span> T </p>}
+                            </div>
+                        </div>
+                        )
+                    })}
+                    {/* Item Tratis*/}
+                    { unit.items?.map((item: any) => {
+                        return item.item.traits.map((trait: any) => {
+                            return (
+                            <div key={trait.trait.id} className='px-4 font-light italic m-1'>
+                                <div className='flex items-center space-x-3'>
+                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <p>
+                                        <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
+                                    </p>
+                                </div>
+                                <p>
+                                    <span className='px-4 text-gray-400 font-light'>{trait.trait.description}</span>
+                                </p>
+                                <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                    { (trait.trait.essence_cost && trait.trait.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{trait.trait.essence_cost}</span> P</p>}
+                                    { (trait.trait.vitality_cost && trait.trait.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{trait.trait.vitality_cost}</span> V</p>}
+                                    { (trait.trait.cooldown && trait.trait.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{trait.traits.cooldown}</span> T </p>}
+                                </div>
+                            </div>
+                            )
+                        })
+                    })}
+
                     {/* Unit Skills*/}
                     { (unit.specialization.skills && unit.specialization.skills.length > 0) && 
                     <p className='italic font-light'>

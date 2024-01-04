@@ -460,7 +460,7 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                         {(unit.items && unit.items.length > 0) ? unit.items.map((item: any) => {
                             let item_name = item.item.name;
                             return item.item.traits.map((trait: any) => {
-                                return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={item.item.id} editable={false} sub_title={`Item Trait | ${item_name}`} />
+                                return <TraitCard key={trait.trait.id} ownerTrait={trait} ownerId={item.item.id} editable={false} sub_title={`${item_name}`} />
                             })
                         }) : <h1 className='px-4 text-gray-400'></h1>}
                     </div>

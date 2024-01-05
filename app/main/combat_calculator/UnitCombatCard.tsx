@@ -231,6 +231,15 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick, on
                     </div>
                 </div>
                 <div className='w-full flex items-center space-x-2'>
+                    <img src={`/gen_icons/range.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                    <div className='w-full flex justify-between items-center'>
+                        <h1>Range</h1>
+                        <h1 className='my-2 py-1 text-orange-500 font-light'>
+                            {unit.range}{unit.combat_status.bonus_range!==0 && <span>({unit.combat_status.bonus_range>0 ? "+" : ""}{Math.round(unit.combat_status.bonus_range*10)/10})</span>}
+                        </h1>
+                    </div>
+                </div>
+                <div className='w-full flex items-center space-x-2'>
                     <img src={`/gen_icons/weight.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
                     <div className='w-full flex justify-between items-center'>
                         <h1>Weight</h1>

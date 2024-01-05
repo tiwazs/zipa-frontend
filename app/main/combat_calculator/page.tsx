@@ -8,6 +8,7 @@ import UnitCombatCard from './UnitCombatCard';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ActionCard from './ActionCard';
 import { mod_parameter_operation } from '@/app/_libs/equations';
+import { parse } from 'path';
 
 interface ActionForm {
 	origin: number;
@@ -191,6 +192,7 @@ export default function UnitsPage() {
                         unit.armor_piercing = mod_parameter_operation(item.item.armor_piercing, unit.armor_piercing, itemOnUnit.equipped);
                         unit.magic_armor_piercing = mod_parameter_operation(item.item.magic_armor_piercing, unit.magic_armor_piercing, itemOnUnit.equipped);
                         unit.shield = mod_parameter_operation(item.item.shield, unit.shield, itemOnUnit.equipped);
+                        unit.range = unit.items.reduce((acc: number, item: any) => item.item.range!=='' && parseInt(item.item.range) > 0 && item.equipped && acc === 0 ? parseInt(item.item.range) : acc, 0);
                     }
                 })
 

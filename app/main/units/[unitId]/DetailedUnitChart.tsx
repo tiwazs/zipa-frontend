@@ -6,6 +6,7 @@ import SkillCard from '@/app/_components/InformationCards/SkillCard';
 import ItemCard from '@/app/_components/InformationCards/ItemCard';
 import NewOptionDialogWithSelection from '../../../_components/NewOptionDialogWithSelection';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
+import { writeTier } from '@/app/_libs/text_paint_methods';
 
 interface Unit {
     id: string;
@@ -268,7 +269,7 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                     name="rank"
                                     disabled={!editing}
                                     placeholder={(unit.rank && unit.rank !== 0 ) ? unit.rank?.toString() : "0"}
-                                /> : <h1 className='my-2 py-3 text-orange-500 font-light'>{(unit.rank && unit.rank !== 0 ) ? unit.rank?.toString() : "0"}</h1>}
+                                /> : <h1 className='my-2 py-3 text-orange-400 font-extrabold font-serif'>{(unit.rank && unit.rank !== 0 ) ? writeTier(unit.rank) : "0"}</h1>}
                             </div>
                         </div>
                         <div className='flex items-center px-8'>

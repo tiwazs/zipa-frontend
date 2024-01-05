@@ -50,6 +50,7 @@ function UnitCombatCard({combat_id, unit, onRemoveClick, onRemoveEffectClick, on
                 <div className='flex items-center italic font-light text-sm'>
                     <h3 className={`text-yellow-200/70 `}>{unit.specialization.name}</h3>
                     <p className={`mx-2 ${paintTier(unit.specialization.tier)} font-extrabold font-serif`}>{`${writeTier(unit.specialization.tier)}`}</p>
+                    <h3 className={`text-yellow-200/70 font-extrabold font-serif `}>( {writeTier(unit.rank)} )</h3>
                 </div>
                 <div className='flex-col items-center italic font-light text-sm'>
                     <h3 className={`text-yellow-200/70 `}> <span className='font-medium'>{unit.race.name},</span> ψ {unit.culture.name} | ☥ {unit.Belief.name}</h3>

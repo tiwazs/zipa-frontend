@@ -116,7 +116,7 @@ export default function DamageCard({units, onActClick, style, onRemoveClick}: Da
             }
             // Belief Trait Effects
             if(unit.Belief){
-                unit.belief.traits.forEach( (trait:any) =>{
+                unit.Belief.traits.forEach( (trait:any) =>{
                     if(trait.trait.effects){
                         trait.trait.effects.forEach( (effect:any) =>{
                             effects.push(effect.effect)

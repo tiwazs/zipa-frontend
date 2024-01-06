@@ -14,6 +14,7 @@ export default function Home() {
 
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
         <MainOptionCard title="General" description="General description for battle, units spells and combat rules" link="/main/general" />
+        <MainOptionCard title="Race Groups" description="Playable Races, their cultures, traits, units and more" link="/main/race_groups" />
         <MainOptionCard title="Races" description="Playable Races, their cultures, traits, units and more" link="/main/races" />
         <MainOptionCard title="Cultures" description="Playable Cultures, their cultures, traits, units and more" link="/main/cultures" />
         <MainOptionCard title="Beliefs" description="Playable Beliefs, their cultures, traits, units and more" link="/main/beliefs" />

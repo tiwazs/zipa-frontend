@@ -3,16 +3,21 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useQuery, useQueryClient } from 'react-query';
 import RaceTraitCard from './RaceTraitCard';
 import NewRaceOptionDialog from './NewRaceOptionDialog';
+import NewOptionDialog from '@/app/_components/NewOptionDialog';
+import SimpleReducedCard from '@/app/_components/InformationCards/SimpleReducedCard';
 //import RaceUnitsDisclosure from './RaceUnitsDisclosure';
 
 interface Race {
     id: string;
+    race_group_id: string;
     name: string;
     description: string;
     identity: string;
     aspects: string;
     unit_specializations?: string[];
     traits?: string[];
+    available_cultures?: string[];
+    available_beliefs?: string[];
 }
 
 type DetailedRaceChartProps = {
@@ -58,7 +63,7 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
         console.log(`Submitting data:  ${JSON.stringify(data)}`);
 
         try{
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/update/${race.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/${race.id}`, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data)
@@ -101,6 +106,16 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
             </h2>
             <form className='rounded-2xl' onSubmit={handleSubmit(onSubmit)}>
                 <div className='mx-2 lg:grid lg:grid-cols-4'>
+                    <div className='flex items-center space-x-2 col-span-4'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Race Group Id</h1>
+                        <input 
+                            {...register("race_group_id", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
+                            name="race_group_id"
+                            disabled={!editing}
+                            placeholder={ race.race_group_id ? race.race_group_id : "Race Group Id" }
+                        />                                
+                    </div>
 
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>
@@ -143,6 +158,24 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                         {(race.traits && race.traits.length > 0) ? race.traits.map((trait: any) => {
                             return <RaceTraitCard key={trait.trait.id} racetrait={trait} raceId={race.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                    </div>
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <div className='flex space-x-2'>
+                            <h1>Available Cultures</h1>
+                            {editing && <NewOptionDialog raceId={race.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                                title={'Add Cultures'}
+                                description={'Cultures.'} 
+                                selection_endpoint={`/cultures/`}
+                                queryKey={'cultures'}
+                                invalidateKey={'race'}
+                                add_endpoint={`/races/add_culture/${race.id}?culture_id=`} />
+                                }
+                        </div>
+                        <div className='flex space-x-2'>
+                            {(race.available_cultures && race.available_cultures.length > 0) ? race.available_cultures.map((culture: any) => {
+                                return <SimpleReducedCard object_info={culture.culture} object_query_key={'race'} redirect_endpoint={`/main/cultures/`} icon_endpoint={''} remove_endpoint={`/races/remove_culture/${race.id}?culture_id=`} editable={editing} />
+                            }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                        </div>
                     </div>
 
                 </div>

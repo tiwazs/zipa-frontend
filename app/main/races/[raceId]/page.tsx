@@ -12,7 +12,7 @@ type RacePageProps = {
 const getRace = async (raceId: string) => {
 
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/${raceId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/races/${raceId}?include_traits=true&include_cultures=true&include_beliefs=true`, {
             method: 'GET',
         });
         console.log(`Response: ${JSON.stringify(response)}`);

@@ -140,31 +140,33 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
             {/* Background Card*/}
             <InformationOption >
                 <Suspense fallback={<div className="text-green-700">Loading...</div>}>
+                    <div className=''>
                     {/* Race Selection */}
-                    <div className='flex items-center'>
+                    <div className='flex items-center justify-between'>
                         <p className='text-yellow-500/80 font-medium'>Race:</p>
-                        <OptionSelection endpoint='/races/' queryKey='races' onSelectionChange={handleRaceChange} style='' />
+                        <OptionSelection endpoint='/races/' queryKey='races' onSelectionChange={handleRaceChange} style='z-40' />
                     </div>
 
                     {/* Culture Selection */}
-                    <div className='flex items-center'>
+                    <div className='flex items-center justify-between'>
                         <p className='text-yellow-500/80 font-medium'>Culture:</p>
-                        <OptionSelection endpoint='/cultures/' queryKey='cultures' onSelectionChange={handleCultureChange} style='' />
+                        <OptionSelection endpoint='/cultures/' queryKey='cultures' onSelectionChange={handleCultureChange} style='z-30' />
                     </div>
 
                     {/* Belief Selection */}
-                    <div className='flex items-center'>
+                    <div className='flex items-center justify-between'>
                         <p className='text-yellow-500/80 font-medium'>Belief:</p>
-                        <OptionSelection endpoint='/beliefs/' queryKey='beliefs' onSelectionChange={handleBeliefChange} style='' />
+                        <OptionSelection endpoint='/beliefs/' queryKey='beliefs' onSelectionChange={handleBeliefChange} style='z-20' />
                     </div>
 
                     {/* Specialization Selection */}
-                    <Suspense fallback={<div className="text-green-700">Loading...</div>}>
+                    <Suspense fallback={<div className="text-green-700 justify-between">Loading...</div>}>
                         {(race && culture && belief) && <div className='flex items-center'>
-                                <p className='text-yellow-500/80 font-medium'>Specialization:</p>
-                                <OptionSelection endpoint={`/specializations/group?culture_id=${culture.id}&belief_id=${belief.id}`} queryKey='specializations' onSelectionChange={handleSpecializationChange} style='' />
+                                <p className='text-yellow-500/80 font-medium z-20 '>Specialization:</p>
+                                <OptionSelection endpoint={`/specializations/group?culture_id=${culture.id}&belief_id=${belief.id}`} queryKey='specializations' onSelectionChange={handleSpecializationChange} style='z-10' />
                             </div>}
                     </Suspense>
+                    </div>
                 </Suspense>
 
                 {/* Form */}

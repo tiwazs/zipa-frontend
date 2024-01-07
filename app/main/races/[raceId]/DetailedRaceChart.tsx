@@ -173,7 +173,7 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                         </div>
                         <div className='flex space-x-2'>
                             {(race.available_cultures && race.available_cultures.length > 0) ? race.available_cultures.map((culture: any) => {
-                                return <SimpleReducedCard object_info={culture.culture} object_query_key={'race'} redirect_endpoint={`/main/cultures/`} icon_endpoint={''} remove_endpoint={`/races/remove_culture/${race.id}?culture_id=`} editable={editing} />
+                                return <SimpleReducedCard key={culture.culture.id} object_info={culture.culture} object_query_key={'race'} redirect_endpoint={`/main/cultures/`} icon_endpoint={''} remove_endpoint={`/races/remove_culture/${race.id}?culture_id=`} editable={editing} />
                             }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                         </div>
                     </div>
@@ -191,7 +191,7 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                         </div>
                         <div className='flex space-x-2'>
                             {(race.available_beliefs && race.available_beliefs.length > 0) ? race.available_beliefs.map((belief: any) => {
-                                return <SimpleReducedCard object_info={belief.belief} object_query_key={'race'} redirect_endpoint={`/main/beliefs/`} icon_endpoint={''} remove_endpoint={`/races/remove_belief/${race.id}?belief_id=`} editable={editing} />
+                                return <SimpleReducedCard key={belief.belief.id} object_info={belief.belief} object_query_key={'race'} redirect_endpoint={`/main/beliefs/`} icon_endpoint={''} remove_endpoint={`/races/remove_belief/${race.id}?belief_id=`} editable={editing} />
                             }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                         </div>
                     </div>

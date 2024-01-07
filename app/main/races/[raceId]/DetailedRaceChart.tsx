@@ -177,7 +177,24 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                             }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                         </div>
                     </div>
-
+                    <div className='items-center space-x-2 col-span-4 my-4'>
+                        <div className='flex space-x-2'>
+                            <h1>Available Beliefs</h1>
+                            {editing && <NewOptionDialog raceId={race.id} styles='bg-black hover:bg-purple-300/10 border dark:border-yellow-900/50 rounded-md'
+                                title={'Add Beliefs'}
+                                description={'Beliefs.'} 
+                                selection_endpoint={`/beliefs/`}
+                                queryKey={'beliefs'}
+                                invalidateKey={'race'}
+                                add_endpoint={`/races/add_belief/${race.id}?belief_id=`} />
+                                }
+                        </div>
+                        <div className='flex space-x-2'>
+                            {(race.available_beliefs && race.available_beliefs.length > 0) ? race.available_beliefs.map((belief: any) => {
+                                return <SimpleReducedCard object_info={belief.belief} object_query_key={'race'} redirect_endpoint={`/main/beliefs/`} icon_endpoint={''} remove_endpoint={`/races/remove_belief/${race.id}?belief_id=`} editable={editing} />
+                            }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                        </div>
+                    </div>
                 </div>
                 <div className="mt-4 flex justify-between">
                     <button

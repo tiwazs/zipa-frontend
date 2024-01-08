@@ -30,11 +30,11 @@ export default function SimpleReducedCard({ object_info, object_query_key, redir
     };
 
     return (
-        <div className='group py-1 h-28 w-32 font-light dark:border-2 rounded-md dark:border-yellow-900/50'>
+        <div className='border-yellow-400/50 bg-black group py-1 h-28 w-32 font-light dark:border-2 rounded-md'>
             <div className='w-full h-full flex flex-col items-center justify-center'>
                 <img src={`${process.env.NEXT_PUBLIC_API_URL}${icon_endpoint}`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-1' />
                 <h3 className='text-center'>
-                    <Link href={`${redirect_endpoint}${object_info.id}`}><span className='mx-1 text-yellow-400 font-normal'>{object_info.name}</span></Link>
+                    <Link href={`${redirect_endpoint}${object_info.id}`}><span className='mx-1 text-yellow-200/70 font-normal'>{object_info.name}</span></Link>
                 </h3>
             </div>
             <div>

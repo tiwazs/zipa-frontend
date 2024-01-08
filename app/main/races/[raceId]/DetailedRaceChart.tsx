@@ -59,20 +59,23 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
     const queryClient = useQueryClient();
 
     useEffect(() => {
-        setSpecializationsList( () =>  [
+        let newList = [
             {title: 1, information: {}},
             {title: 2, information: {}},
             {title: 3, information: {}},
             {title: 4, information: {}},
             {title: 5, information: {}},
-        ] );
-
+        ];
+    
         if(query_spec_cultures.data){
-            setSpecializationsList( () => organizeSpecializations(specializationList, query_spec_cultures.data, "cultures" ) );
+            newList = organizeSpecializations(newList, query_spec_cultures.data, "cultures");
         }
         if(query_spec_beliefs.data){
-            setSpecializationsList( () => organizeSpecializations(specializationList, query_spec_beliefs.data, "beliefs" ) );
+            newList = organizeSpecializations(newList, query_spec_beliefs.data, "beliefs");
         }
+        
+        // Calling useState only one time to avoid multiple re-renders and because of useState's async nature
+        setSpecializationsList(newList);
     }, [query_spec_cultures.data, query_spec_beliefs.data])
 
     const handleCultureChange = (selection: any) => {

@@ -5,6 +5,8 @@ import RaceTraitCard from './RaceTraitCard';
 import NewRaceOptionDialog from './NewRaceOptionDialog';
 import NewOptionDialog from '@/app/_components/NewOptionDialog';
 import SimpleReducedCard from '@/app/_components/InformationCards/SimpleReducedCard';
+import OptionSelection from '@/app/_components/OptionSelection';
+import { paintTier, writeTier } from '@/app/_libs/text_paint_methods';
 //import RaceUnitsDisclosure from './RaceUnitsDisclosure';
 
 interface Race {
@@ -24,11 +26,14 @@ type DetailedRaceChartProps = {
     race: Race;
     styles?: string;
 }
-
-const getRaceUnitSpecializations = async (raceId: string) => {
+///
+const getUnitSpecializations = async (endpoint: string, ownerId: string | undefined) => {
+    if(!ownerId){
+        return [];
+    }
 
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/specializations/race/${raceId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}${ownerId}`, {
             method: 'GET',
         });
         console.log(`Response: ${JSON.stringify(response)}`);
@@ -43,16 +48,44 @@ const getRaceUnitSpecializations = async (raceId: string) => {
 
 export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps) {
     const [ editing, setEditing ] = useState(false);
-    let [ unitsOrganized, setUnitsOrganized ] = useState<any>(undefined);
+    const [ cultureSelected, setCultureSelected ] = useState({id: undefined, name: undefined});
+    const [ beliefSelected, setBeliefSelected ] = useState({id: undefined, name: undefined});
+    const [ specializationList, setSpecializationsList ] = useState<any>(undefined);
+    //let [ cultureSpecsOrganized, setCultureSpecsOrganized ] = useState<any>(undefined);
+    //let [ beliefSpecsOrganized, setBeliefSpecsOrganized ] = useState<any>(undefined);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Race>();
-    //const query = useQuery([`raceSpecializations`, race.id], () => getRaceUnitSpecializations(race.id) );
+    const query_spec_cultures = useQuery([`cultureSpecializations`, cultureSelected.id], () => getUnitSpecializations("/specializations/culture/", cultureSelected.id) );
+    const query_spec_beliefs = useQuery([`beliefSpecializations`, beliefSelected.id], () => getUnitSpecializations("/specializations/belief/", beliefSelected.id) );
     const queryClient = useQueryClient();
 
-    //useEffect(() => {
-    //    if(query.data){
-    //        organizeSpecializations(query.data)
-    //    }
-    //}, [query.data])
+    useEffect(() => {
+        setSpecializationsList( () =>  [
+            {title: 1, information: {}},
+            {title: 2, information: {}},
+            {title: 3, information: {}},
+            {title: 4, information: {}},
+            {title: 5, information: {}},
+        ] );
+
+        if(query_spec_cultures.data){
+            setSpecializationsList( () => organizeSpecializations(specializationList, query_spec_cultures.data, "cultures" ) );
+        }
+        if(query_spec_beliefs.data){
+            setSpecializationsList( () => organizeSpecializations(specializationList, query_spec_beliefs.data, "beliefs" ) );
+        }
+    }, [query_spec_cultures.data, query_spec_beliefs.data])
+
+    const handleCultureChange = (selection: any) => {
+        setCultureSelected(selection);
+        
+        queryClient.invalidateQueries(`cultureSpecializations`);
+    }        
+
+    const handleBeliefChange = (selection: any) => {
+        setBeliefSelected(selection);
+
+        queryClient.invalidateQueries(`beliefSpecializations`);
+    }
 
     const onCancel = () => {
         reset();
@@ -79,24 +112,31 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
         }
     }
 
-    //const organizeSpecializations = (specializations: any) => {
-    //    let tier_i_list = query.data.filter( (unit: any) => unit.tier === 1 )
-    //    let tier_ii_list = query.data.filter( (unit: any) => unit.tier === 2 )
-    //    let tier_iii_list = query.data.filter( (unit: any) => unit.tier === 3 )
-    //    let tier_iv_list = query.data.filter( (unit: any) => unit.tier === 4 )
-    //    let tier_v_list = query.data.filter( (unit: any) => unit.tier === 5 )
-    //    setUnitsOrganized( 
-    //        [
-    //            {title: 1, information: tier_i_list},
-    //            {title: 2, information: tier_ii_list},
-    //            {title: 3, information: tier_iii_list},
-    //            {title: 4, information: tier_iv_list},
-    //            {title: 5, information: tier_v_list},
-    //        ]
-    //    )
-    //}
+    //return  [
+    //    {title: 1, information: {group:tier_i_list}},
+    //    {title: 2, information: {group:tier_ii_list}},
+    //    {title: 3, information: {group:tier_iii_list}},
+    //    {title: 4, information: {group:tier_iv_list}},
+    //    {title: 5, information: {group:tier_v_list}},
+    //]
 
-    //if (query.isLoading) return <h2>Loading...</h2>
+    const organizeSpecializations = (data: any, new_data: any, group: string) => {
+        if(!new_data){
+            return data;
+        }
+        let tier_i_list = new_data.filter( (unit: any) => unit.tier === 1 );
+        let tier_ii_list = new_data.filter( (unit: any) => unit.tier === 2 );
+        let tier_iii_list = new_data.filter( (unit: any) => unit.tier === 3 );
+        let tier_iv_list = new_data.filter( (unit: any) => unit.tier === 4 );
+        let tier_v_list = new_data.filter( (unit: any) => unit.tier === 5 );
+        data[0]['information'][group] = tier_i_list;
+        data[1]['information'][group] = tier_ii_list;
+        data[2]['information'][group] = tier_iii_list;
+        data[3]['information'][group] = tier_iv_list;
+        data[4]['information'][group] = tier_v_list;
+
+        return data;
+    }
 
     return (
         <div className="transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
@@ -159,6 +199,8 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                             return <RaceTraitCard key={trait.trait.id} racetrait={trait} raceId={race.id} editable={editing} />
                         }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                     </div>
+                </div>
+                <div className='flex justify-between px-10'>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
                             <h1>Available Cultures</h1>
@@ -210,6 +252,34 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                     </div>}
                 </div>
             </form>
+            <div className='flex items-center justify-evenly '>
+                <OptionSelection endpoint={`/cultures/?by_race_id=${race.id}&include_traits=true&include_units=true`} queryKey='culture' onSelectionChange={handleCultureChange} style='z-30' />
+                <OptionSelection endpoint={`/beliefs/?by_race_id=${race.id}&include_traits=true&include_units=true`} queryKey='belief' onSelectionChange={handleBeliefChange} style='z-30' />
+            </div>
+            <div className={`${specializationList ? "" : "h-40"}`} >
+                {specializationList && specializationList.map((specs_tier: any) => {
+                    return (
+                        <div key={specs_tier.title} className='flex flex-col items-center my-5'>
+                            <span className={`text-2xl font-extrabold  divide-y font-serif ${(typeof(specs_tier.title) === "number") ? paintTier(specs_tier.title) : specs_tier.title}`}>
+                                {(typeof(specs_tier.title) === "number") ? writeTier(specs_tier.title) : specs_tier.title}
+                            </span>
+                            <hr className='w-20 border-yellow-500/50 ' />
+                            <div className='w-full flex items-center justify-evenly my-5'>
+                                <div className='flex space-x-2'>
+                                    {(specs_tier.information.cultures && specs_tier.information.cultures.length > 0) ? specs_tier.information.cultures.map((spec: any) => {
+                                        return <SimpleReducedCard key={spec.id} object_info={spec} object_query_key={'Specialization'} redirect_endpoint={`/main/specializations/`} icon_endpoint={''} remove_endpoint={``} editable={editing} />
+                                    }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                                </div>
+                                <div className='flex space-x-2'>
+                                    {(specs_tier.information.beliefs && specs_tier.information.beliefs.length > 0) ? specs_tier.information.beliefs.map((spec: any) => {
+                                        return <SimpleReducedCard key={spec.id} object_info={spec} object_query_key={'Specialization'} redirect_endpoint={`/main/specializations/`} icon_endpoint={''} remove_endpoint={``} editable={editing} />
+                                    }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }

@@ -120,7 +120,7 @@ export default function NewOptionDialog({ title, description, addEndpoint, selec
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl p-6 text-left shadow-xl transition-all 
+                <Dialog.Panel className="w-full max-w-md transform rounded-2xl p-6 text-left shadow-xl transition-all 
                                             group border-transparent border-4 dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
                   <Dialog.Title
                     as="h3"

@@ -51,12 +51,14 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
     const [ cultureSelected, setCultureSelected ] = useState({id: undefined, name: undefined});
     const [ beliefSelected, setBeliefSelected ] = useState({id: undefined, name: undefined});
     const [ specializationList, setSpecializationsList ] = useState<any>(undefined);
-    //let [ cultureSpecsOrganized, setCultureSpecsOrganized ] = useState<any>(undefined);
-    //let [ beliefSpecsOrganized, setBeliefSpecsOrganized ] = useState<any>(undefined);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Race>();
+    const query_race_group_cultures = useQuery([`cultures`, race.race_group_id], () => getUnitSpecializations("/cultures/?by_race_group_id=", race.race_group_id) );
+    const query_race_group_beliefs = useQuery([`beliefs`, race.race_group_id], () => getUnitSpecializations("/beliefs/?by_race_group_id=", race.race_group_id) );
     const query_spec_cultures = useQuery([`cultureSpecializations`, cultureSelected.id], () => getUnitSpecializations("/specializations/culture/", cultureSelected.id) );
     const query_spec_beliefs = useQuery([`beliefSpecializations`, beliefSelected.id], () => getUnitSpecializations("/specializations/belief/", beliefSelected.id) );
     const queryClient = useQueryClient();
+    const culture_ids = race.available_cultures?.map((culture: any) => culture.culture.id);
+    const belief_ids = race.available_beliefs?.map((belief: any) => belief.belief.id);
 
     useEffect(() => {
         let newList = [
@@ -221,6 +223,13 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                                 return <SimpleReducedCard key={culture.culture.id} object_info={culture.culture} object_query_key={'race'} redirect_endpoint={`/main/cultures/`} icon_endpoint={''} remove_endpoint={`/races/remove_culture/${race.id}?culture_id=`} editable={editing} />
                             }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                         </div>
+                        <h1 className='my-1 text-gray-500 font-light italic'>Unvailable Cultures</h1>
+                        <div className='flex space-x-2'>
+                            {(culture_ids && query_race_group_cultures.data && query_race_group_cultures.data.length > 0) ? query_race_group_cultures.data.map((culture: any) => {
+                                return !culture_ids.includes( culture.id) && <SimpleReducedCard key={culture.id} object_info={culture} object_query_key={'race'} redirect_endpoint={`/main/cultures/`} icon_endpoint={''} remove_endpoint={`/races/remove_belief/${race.id}?belief_id=`} editable={editing} 
+                                        style=' text-xs font-light italic w-24 h-24 border-gray-500 text-gray-500'/>
+                            }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                        </div>
                     </div>
                     <div className='items-center space-x-2 col-span-4 my-4'>
                         <div className='flex space-x-2'>
@@ -237,6 +246,13 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                         <div className='flex space-x-2'>
                             {(race.available_beliefs && race.available_beliefs.length > 0) ? race.available_beliefs.map((belief: any) => {
                                 return <SimpleReducedCard key={belief.belief.id} object_info={belief.belief} object_query_key={'race'} redirect_endpoint={`/main/beliefs/`} icon_endpoint={''} remove_endpoint={`/races/remove_belief/${race.id}?belief_id=`} editable={editing} />
+                            }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
+                        </div>
+                        <h1 className='my-1 text-gray-500 font-light italic'>Unvailable Beliefs</h1>
+                        <div className='flex space-x-2'>
+                            {(belief_ids && query_race_group_beliefs.data && query_race_group_beliefs.data.length > 0) ? query_race_group_beliefs.data.map((belief: any) => {
+                                return !belief_ids.includes( belief.id) && <SimpleReducedCard key={belief.id} object_info={belief} object_query_key={'race'} redirect_endpoint={`/main/beliefs/`} icon_endpoint={''} remove_endpoint={`/races/remove_belief/${race.id}?belief_id=`} editable={editing} 
+                                        style=' text-xs font-light italic w-24 h-24 border-gray-500 text-gray-500'/>
                             }) : <h1 className='px-4 text-gray-400'>N/A</h1>}
                         </div>
                     </div>

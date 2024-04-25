@@ -2,9 +2,9 @@ import React from 'react'
 import { useQuery } from 'react-query';
 import ItemOption from './ItemOption';
 
-const getItems = async () => {
+const getItems = async (queryParams: string) => {
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/?include_skills=true&?include_traits=true`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items/?include_skills=true&?include_traits=true${queryParams ? queryParams : ""}`, {
             method: 'GET',
         });
 
@@ -15,8 +15,12 @@ const getItems = async () => {
     }
 }
 
-export default function EffectList() {
-    const query = useQuery(["items", getItems], getItems);
+interface ItemListProps {
+    queryParams?: any;
+}
+
+export default function ItemList({queryParams}: ItemListProps) {
+    const query = useQuery(["items", queryParams], () => getItems(queryParams) );
 
     if (query.isLoading) {
         return <h2>Loading...</h2>;

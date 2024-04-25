@@ -161,7 +161,16 @@ export default function DetailedRaceChart({race, styles}: DetailedRaceChartProps
                             placeholder={ race.race_group_id ? race.race_group_id : "Race Group Id" }
                         />                                
                     </div>
-
+                    <div className='flex items-center space-x-2 col-span-4'>
+                        <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>
+                        <input 
+                            {...register("name", { required: false })}
+                            className={`my-2 w-full rounded-lg py-3 text-gray-400 text-md bg-[#2b2532] bg-opacity-10 focus:bg-opacity-30 focus:outline-none ${editing ? "border dark:border-yellow-900/50" : "hidden"}`}
+                            name="name"
+                            disabled={!editing}
+                            placeholder={ race.name ? race.name : "Description" }
+                        />                                
+                    </div>
                     <div className='flex items-center space-x-2 col-span-4'>
                         <h1 className={`${editing ? "" : "hidden"}`}>Description</h1>
                         <textarea 

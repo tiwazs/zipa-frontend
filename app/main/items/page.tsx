@@ -5,7 +5,7 @@ import ItemList from './ItemList'
 import NewItemDialog from './NewItemDialog'
 import OptionSelectionList from '@/app/_components/OptionSelectionList'
 
-export const ItemTypes = [
+const ItemTypes = [
     {name:"OTHER", id: 1},
     {name:"CURVED_SWORD_1H", id: 2},
     {name:"CURVED_SWORD_2H", id: 3},

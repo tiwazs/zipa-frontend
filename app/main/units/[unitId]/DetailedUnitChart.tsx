@@ -7,7 +7,38 @@ import ItemCard from '@/app/_components/InformationCards/ItemCard';
 import NewOptionDialogWithSelection from '../../../_components/NewOptionDialogWithSelection';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { writeTier } from '@/app/_libs/text_paint_methods';
-import { ItemTypes } from '../../items/page';
+
+const ItemTypes = [
+    {name:"OTHER", id: 1},
+    {name:"CURVED_SWORD_1H", id: 2},
+    {name:"CURVED_SWORD_2H", id: 3},
+    {name:"STRAIGHT_SWORD_1H", id: 4},
+    {name:"STRAIGHT_SWORD_2H", id: 5},
+    {name:"AXE_1H", id: 6},
+    {name:"AXE_2H", id: 7},
+    {name:"HAMMER_1H", id: 8},
+    {name:"HAMMER_2H", id: 9},
+    {name:"SPEAR_1H", id: 10},
+    {name:"SPEAR_2H", id: 11},
+    {name:"JAVELIN_1H", id: 12},
+    {name:"STAFF_1H", id: 13},
+    {name:"STAFF_2H", id: 14},
+    {name:"BOW_2H", id: 15},
+    {name:"CROSSBOW_2H", id: 16},
+    {name:"DAGGER_1H", id: 17},
+    {name:"SMALL_SHIELD", id: 18},
+    {name:"MEDIUM_SHIELD", id: 19},
+    {name:"LARGE_SHIELD", id: 20},
+    {name:"LIGHT_ARMOR", id: 21},
+    {name:"MEDIUM_ARMOR", id: 22},
+    {name:"HEAVY_ARMOR", id: 23},
+    {name:"AMULET", id: 24},
+    {name:"TRINKET", id: 25},
+    {name:"RING", id: 26},
+    {name:"CONSUMABLE", id: 27},
+    {name:"MATERIAL", id: 28},
+    {name:"KEY", id: 29}
+]
 
 interface Unit {
     id: string;

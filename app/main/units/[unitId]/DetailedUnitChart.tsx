@@ -7,6 +7,7 @@ import ItemCard from '@/app/_components/InformationCards/ItemCard';
 import NewOptionDialogWithSelection from '../../../_components/NewOptionDialogWithSelection';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { writeTier } from '@/app/_libs/text_paint_methods';
+import { ItemTypes } from '../../items/page';
 
 interface Unit {
     id: string;
@@ -488,6 +489,8 @@ export default function DetailedUnitChart({unit, styles}: DetailedUnitChartProps
                                 selecttionQueryKey={'items'}
                                 selectionKey='item'
                                 selectionIdOnEndpoint={false}
+                                extraParamKey='by_type'
+                                extraParamOptions={ItemTypes}
                                 addEndpoint={`/units/add_item/${unit.id}?item_id=`}
                                 invalidationKey={`unit`} 
                                 extraFormParams={['quantity']}

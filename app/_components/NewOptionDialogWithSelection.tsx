@@ -5,6 +5,7 @@ import { Fragment, use, useEffect, useState } from 'react';
 import { IoAddSharp } from 'react-icons/io5';
 import OptionSelection from './OptionSelection';
 import { useQueryClient } from 'react-query'
+import OptionSelectionList from './OptionSelectionList';
 
 interface NewOptionDialogProps {
     title: string;
@@ -14,14 +15,17 @@ interface NewOptionDialogProps {
     selecttionQueryKey: string;
     selectionKey: string;
     selectionIdOnEndpoint: boolean;
+    extraParamKey?: string;
+    extraParamOptions?: any[];
     invalidationKey?: string;
     extraFormParams?: string[];
     styles?: string;
 }
 
-export default function NewOptionDialog({ title, description, addEndpoint, selectionEndpoint, selecttionQueryKey, selectionKey, selectionIdOnEndpoint , invalidationKey, extraFormParams, styles}: NewOptionDialogProps) {
+export default function NewOptionDialog({ title, description, addEndpoint, selectionEndpoint, selecttionQueryKey, selectionKey, selectionIdOnEndpoint, extraParamKey, extraParamOptions, invalidationKey, extraFormParams, styles}: NewOptionDialogProps) {
     let [isOpen, setIsOpen] = useState(false);
     let [selected, setSelected] = useState<any>(undefined)
+    let [extraParamSelection, setExtraParamSelection] = useState<any>(undefined)
     let [extraFormValues, setExtraFormValues] = useState<any>(undefined)
     useEffect(() => {
         if(extraFormParams){
@@ -38,6 +42,10 @@ export default function NewOptionDialog({ title, description, addEndpoint, selec
 
     const HandleSelectionChange = (selection: any) => {
         setSelected(selection)
+    }
+
+    const HandleExtraParamSelectionChange = (selection: any) => {
+        setExtraParamSelection(selection)
     }
 
     const HandleExtraFormChange = (e: any) => {
@@ -132,7 +140,10 @@ export default function NewOptionDialog({ title, description, addEndpoint, selec
                       <p className="text-sm text-gray-400">
                           {description}
                       </p>
-                      <OptionSelection endpoint={selectionEndpoint} queryKey={selecttionQueryKey} onSelectionChange={HandleSelectionChange} style='' /> 
+                      <div className='flex space-x-2'>
+                        <OptionSelection endpoint={`${selectionEndpoint}${extraParamSelection ? `?${extraParamKey}\=${extraParamSelection.name}` : "" }`} queryKey={selecttionQueryKey} onSelectionChange={HandleSelectionChange} style='' /> 
+                        {(extraParamKey && extraParamOptions) && <OptionSelectionList options={extraParamOptions!} queryKey={extraParamKey!} onSelectionChange={HandleExtraParamSelectionChange} style='w-40' /> }
+                      </div>
                       {/* Form */}
                       <div className='flex flex-col w-full'>
                         {extraFormParams && extraFormParams.map((param: string) => {

@@ -2,9 +2,9 @@ import React from 'react'
 import { useQuery } from 'react-query';
 import SpecializationOption from '../../_components/SpecializationOption';
 
-const getSpecializations = async () => {
+const getSpecializations = async (url: string) => {
     try{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/specializations/?include_traits=true&include_skills=true&include_items=true`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
             method: 'GET',
         });
 
@@ -15,8 +15,12 @@ const getSpecializations = async () => {
     }
 }
 
-export default function EffectList() {
-    const query = useQuery(["specializations", getSpecializations], getSpecializations);
+interface SpecializationListProps {
+    url: string;        
+}
+
+export default function SpecializationList({url}: SpecializationListProps) {
+    const query = useQuery(["specializations", url], () => getSpecializations(url));
 
     if (query.isLoading) {
         return <h2>Loading...</h2>;

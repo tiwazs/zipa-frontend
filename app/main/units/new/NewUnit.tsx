@@ -150,13 +150,13 @@ function NewUnit({user_id, onCreate, onClose}: NewUnitProps) {
                     {/* Culture Selection */}
                     <div className='flex items-center justify-between'>
                         <p className='text-yellow-500/80 font-medium'>Culture:</p>
-                        <OptionSelection endpoint='/cultures/' queryKey='cultures' onSelectionChange={handleCultureChange} style='z-30' />
+                        {race && <OptionSelection endpoint={`/cultures/?by_race_id=${race?.id}`} queryKey='cultures' onSelectionChange={handleCultureChange} style='z-30' />}
                     </div>
 
                     {/* Belief Selection */}
                     <div className='flex items-center justify-between'>
                         <p className='text-yellow-500/80 font-medium'>Belief:</p>
-                        <OptionSelection endpoint='/beliefs/' queryKey='beliefs' onSelectionChange={handleBeliefChange} style='z-20' />
+                        {race && <OptionSelection endpoint={`/beliefs/?by_race_id=${race?.id}`} queryKey='beliefs' onSelectionChange={handleBeliefChange} style='z-20' />}
                     </div>
 
                     {/* Specialization Selection */}

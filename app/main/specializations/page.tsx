@@ -12,11 +12,16 @@ export default function SpecializationsPage() {
     let [belief, setBelief] = React.useState<any>(undefined) 
     
     useEffect(() => {
+        let race_section = race ? `race_id=${race.id}&` : ''
         let culture_section = culture ? `culture_id=${culture.id}&` : ''
         let belief_section = belief ? `belief_id=${belief.id}&` : ''
-        let either_section = culture_section || belief_section ? 'group?' : '?'
+        let either_section = race_section || culture_section || belief_section ? 'group?' : '?'
 
-        setBaseUrl(`/specializations/${either_section}${culture_section}${belief_section}`)
+        if(culture_section || belief_section) {
+            race_section = ''
+        }
+
+        setBaseUrl(`/specializations/${either_section}${race_section}${culture_section}${belief_section}`)
 
         
     }, [race, culture, belief])

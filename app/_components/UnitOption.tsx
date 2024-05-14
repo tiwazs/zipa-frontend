@@ -45,6 +45,7 @@ interface UnitOptionProps {
     removeEndpoint: string;
     endpointMethod: string;
     queryInvalidateKey?: string;
+    vertical?: boolean;
     styles: string;
 }
 
@@ -78,6 +79,7 @@ export default function UnitOption(unit: UnitOptionProps) {
         <div className='flex items-center justify-between'>
         <div className='w-full'>
             <Link href={`/main/units/${unit.id}`}>
+                <div className='flex items-center justify-between'>
                 <div className='my-2'>
                     <h3 className={`font-bold text-yellow-200/70`}>
                         {unit.prefix_title &&  <span className=' font-normal '> {unit.prefix_title} </span>}
@@ -91,8 +93,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <h3 className={`text-yellow-200/70 `}> <span className=' font-medium '> {unit.race.name}</span>,  {unit.culture.name} | {unit.belief.name}</h3>
                     </div>
                 </div>
+                <div>
+                    <p className={`px-3 ${paintTier(unit.rank)} text-2xl font-extrabold font-serif`}>{writeTier(unit.rank)}</p>
+                </div>
+                </div>
             </Link>
-            <div className='w-full flex items-center justify-between'>
+            <div className={`w-full flex justify-between ${unit.vertical ? "items-start" : "items-center" }`}>
                 <div>
                     <p className='my-1 text-gray-100 '>{unit.description}</p>
                     {/* Unit Tratis*/}
@@ -261,29 +267,30 @@ export default function UnitOption(unit: UnitOptionProps) {
                 </div>
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>
-                    <p className={`px-3 ${paintTier(unit.rank)} text-2xl font-extrabold font-serif`}>{writeTier(unit.rank)}</p>
-                    <div className='flex flex-col items-center'>
-                    <div className='flex space-x-3 items-center'>
-                        <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={ unit.vitality } />
-                        <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={ unit.strength } />
-                        <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={ unit.dexterity } />
-                        <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={ unit.mind } />
-                        <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={ unit.faith } />
-                        <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={ unit.essence } />
-                        <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={ unit.agility } />                        
-                        <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={ unit.evasion } />
-                        <StatsSummary icon="/gen_icons/armor.png" name={'Arm'} value={ unit.armor } />
-                        <StatsSummary icon="/gen_icons/magic_armor.png" name={'Mar'} value={ unit.magic_armor } />
-                        <StatsSummary icon="/gen_icons/shield.png" name={'Shd'} value={ unit.shield } />
-                        <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.movement } />
+                    <div className={`flex ${unit.vertical ? "" : "flex-col" } space-x-3 items-center`}>
+                    <div className={`flex ${unit.vertical ? "flex-col" : "" } space-x-3 items-center`}>
+                        <div></div>
+                        <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={ unit.vitality } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={ unit.strength } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={ unit.dexterity } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={ unit.mind } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={ unit.faith } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={ unit.essence } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={ unit.agility } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={ unit.evasion } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/armor.png" name={'Arm'} value={ unit.armor } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/magic_armor.png" name={'Mar'} value={ unit.magic_armor } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/shield.png" name={'Shd'} value={ unit.shield } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.movement } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
                     </div>
-                    <div className='flex space-x-3 items-center'>
-                        <StatsSummary icon="/gen_icons/physical_damage.png" name={'Pdg'} value={ unit.physical_damage } />
-                        <StatsSummary icon="/gen_icons/magical_damage.png" name={'Mdg'} value={ unit.magical_damage } />
-                        <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ unit.hit_chance  } />
-                        <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.hit_rate } />
-                        <StatsSummary icon="/gen_icons/armor_piercing.png" name={'Arp'} value={ unit.armor_piercing } />
-                        <StatsSummary icon="/gen_icons/spell_piercing.png" name={'Spp'} value={ unit.spell_piercing } />
+                    <div className={`flex ${unit.vertical ? "flex-col" : "" } space-x-3 items-center`}>
+                        <div></div>
+                        <StatsSummary icon="/gen_icons/physical_damage.png" name={'Pdg'} value={ unit.physical_damage } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/magical_damage.png" name={'Mdg'} value={ unit.magical_damage } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={ unit.hit_chance  } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={ unit.hit_rate } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/armor_piercing.png" name={'Arp'} value={ unit.armor_piercing } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
+                        <StatsSummary icon="/gen_icons/spell_piercing.png" name={'Spp'} value={ unit.spell_piercing } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
                     </div>
                     </div>
                 </div>

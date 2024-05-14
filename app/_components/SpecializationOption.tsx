@@ -30,6 +30,7 @@ interface SpecializationOptionProps {
     removeEndpoint: string;
     endpointMethod: string;
     queryInvalidateKey?: string;
+    vertical?: boolean;
     styles: string;
 }
 
@@ -56,8 +57,12 @@ export default function SpecializationOption(specialization: SpecializationOptio
         <div className='flex items-center justify-between'>
         <div className='w-full'>
             <Link href={`/main/specializations/${specialization.id}`}>
-                <div className='my-2'>
+                <div className='my-2 flex items-center justify-between'>
                     <h3 className={`font-bold text-yellow-200/70`}>{specialization.name}</h3>
+                    <div className='flex items-center space-x-1'>
+                        <img src={`/gen_icons/tier.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
+                        <p className={`${paintTier(specialization.tier)} text-2xl font-extrabold font-serif`}>{writeTier(specialization.tier)}</p>
+                    </div>
                 </div>
             </Link>
             <div className='w-full flex items-center justify-between'>
@@ -140,20 +145,19 @@ export default function SpecializationOption(specialization: SpecializationOptio
                     })}
                 </div>
                 {/*Stats*/}
-                <div className='flex space-x-3 items-center'>
-                    <img src={`/gen_icons/tier.png`} alt="" className='w-7 h-7 rounded-full border border-yellow-500/60 my-2' />
-                    <p className={`px-3 ${paintTier(specialization.tier)} text-2xl font-extrabold font-serif`}>{writeTier(specialization.tier)}</p>
-                    <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={specialization.vitality} />
-                    <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={specialization.strength} />
-                    <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={specialization.dexterity} />
-                    <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={specialization.mind} />
-                    <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={specialization.faith} />
-                    <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={specialization.essence} />
-                    <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={specialization.agility} />                        
-                    <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={specialization.hit_chance} />
-                    <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={specialization.evasion} />
-                    <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={specialization.hit_rate} />
-                    <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={specialization.movement} />
+                <div className={`flex ${specialization.vertical ? "flex-col" : "" } space-x-3 items-center`}>
+                    <div></div>
+                    <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={specialization.vitality} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={specialization.strength} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/dexterity.png" name={'Dex'} value={specialization.dexterity} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/mind.png" name={'Min'} value={specialization.mind} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/faith.png" name={'Fth'} value={specialization.faith} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/essence.png" name={'Ess'} value={specialization.essence} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/agility.png" name={'Agi'} value={specialization.agility} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />                        
+                    <StatsSummary icon="/gen_icons/hit_chance.png" name={'Hit'} value={specialization.hit_chance} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/evasion.png" name={'Eva'} value={specialization.evasion} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/hit_rate.png" name={'Hir'} value={specialization.hit_rate} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
+                    <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={specialization.movement} style={`${specialization.vertical ? 'flex space-x-1' : ''}`} />
                 </div>
             </div>
         </div>

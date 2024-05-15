@@ -43,9 +43,9 @@ export default function OptionSelection({options, queryKey, onSelectionChange,st
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-black py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  {options.map((object: any) => (
+                  {options.map((object: any, index: any) => (
                     <Listbox.Option
-                      key={object.name}
+                      key={`${queryKey}-${object.name}-${index}`}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                           active ? 'bg-purple-400/30 text-yellow-200/70' : 'text-gray-300'

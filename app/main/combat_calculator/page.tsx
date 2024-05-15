@@ -226,7 +226,13 @@ export default function UnitsPage() {
                             let vitality_text = effect.effect.instant_vitality_recovery.includes("+") ? "Recovers " : "Loses "
                             let vitality_change = mod_parameter_operation(effect.effect.instant_vitality_recovery, 0)
                             // TODO: Healing should go through ApplyDamage too (Also change its name) and shoul affect the extra vitality too
-                            ApplyDamage(unit, -vitality_change)
+                            if(effect.effect.instant_vitality_recovery.includes("+")){
+                                unit.combat_status.vitality += vitality_change
+                                unit.combat_status.vitality = unit.combat_status.vitality > unit.vitality ? unit.vitality : unit.combat_status.vitality
+                            }else{
+                                // Apply damage doesn't work with healing for some reason
+                                ApplyDamage(unit, -vitality_change)
+                            }
 
                             actionLogs.push(`${unit.name} ${vitality_text} ${Math.round(effect.effect.instant_vitality_recovery)} Vit from ${effect.effect.name}`)
                             actionLogs.push(`${unit.name} ${Math.round(unit.combat_status.vitality)} Vit (${effect.effect.instant_vitality_recovery})`)

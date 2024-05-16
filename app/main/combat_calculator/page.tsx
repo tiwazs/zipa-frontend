@@ -47,7 +47,7 @@ export default function UnitsPage() {
     const [phase, setPhase] = React.useState<number>(0);
     const [combatLog, setCombatLog] = React.useState<any[]>([]);
     const [phaseLog, setPhaseLog] = React.useState<any[]>([]);
-    const [actionFormCount, setActionFormCount] = React.useState<number>(1);
+    const [actionFormCount, setActionFormCount] = React.useState<number>(4);
     // Fucking library. LET ME ADD THE GOD DAMMED USER ID TO THE SESSION TO MAKE REQUESTS
     const { data: session, status }:{update:any, data:any, status:any} = useSession({
         required: true,
@@ -546,6 +546,15 @@ export default function UnitsPage() {
             {units && units.map((unit) => (
                 (unit.combat_id!==0) && <UnitCombatCard key={unit.combat_id} combat_id={unit.combat_id} unit={unit} onRemoveClick={HandleRemoveUnit} onRemoveEffectClick={HandleRemoveEffect} onHandleItemEquipToggleClick={HandleItemToggle} />
             ))}
+        </div>
+        <div className='absolute right-0'>
+            <div className="flex items-center space-x-2 p-1 border-2 rounded-lg dark:dark:border-yellow-900/50 text-yellow-200/70 dark:bg-[url('/bg1.jpg')]">
+                <h1>phase {phase} </h1>
+                <button className='inline-flex justify-center hover:text-gray-200 border dark:border-yellow-900/50 shadow-md rounded-lg px-4 py-2 bg-black hover:bg-purple-300/10
+                                cursor-pointer disabled:bg-black' onClick={HandlePhase}>
+                -&gt;
+                </button>
+            </div>
         </div>
         <div className='flex flex-col items-center'>  
             {Array.from({ length: actionFormCount }).map((it, index) => <ActionCard key={index} units={units} onActClick={HandleAction} style='my-1' onRemoveClick={HandleRemoveActionForm}/>) }

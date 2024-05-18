@@ -36,12 +36,12 @@ export default function CultureOption(culture: Readonly<CultureOptionProps>) {
     <div className={`${culture.styles}`}>
         <div className='flex items-center justify-between'>
         <div className='w-full'>
-            <Link href={`/main/cultures/${culture.id}`}>
+            <Link href={`/main/cultures/${culture.id}`} className='w-14 h-14'>
                 <div className='my-2'>
                     <h3 className={`font-bold text-yellow-200/70`}>{culture.name}</h3>
                 </div>
             </Link>
-            <div className='w-full flex items-center justify-between'>
+            <div className='w-full flex justify-between'>
                 <div>
                     <p className='my-1 text-gray-100 '>{culture.description}</p>
                     {/* Culture Tratis*/}

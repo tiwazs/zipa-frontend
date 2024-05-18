@@ -36,12 +36,12 @@ export default function RaceOption(race: Readonly<RaceOptionProps>) {
     <div className={`${race.styles}`}>
         <div className='flex items-center justify-between'>
         <div className='w-full'>
-            <Link href={`/main/races/${race.id}`}>
+            <Link href={`/main/races/${race.id}`} className='w-14 h-14'>
                 <div className='my-2'>
                     <h3 className={`font-bold text-yellow-200/70`}>{race.name}</h3>
                 </div>
             </Link>
-            <div className='w-full flex items-center justify-between'>
+            <div className='w-full flex justify-between'>
                 <div>
                     <p className='my-1 text-gray-100 '>{race.description}</p>
                     {/* Race Tratis*/}

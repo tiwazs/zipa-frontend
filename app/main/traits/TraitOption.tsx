@@ -30,10 +30,10 @@ export default function TraitOption(trait: TraitOptionProps) {
 
     return (
     <div className={`${trait.styles} flex space-x-3`}>
-        <Link href={`/main/effects/${trait.id}`}>
+        <Link href={`/main/effects/${trait.id}`} className='w-14 h-14'>
             <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.id}.jpg`} alt="" className='w-12 h-12 rounded-md border-2 border-gray-500/60 my-2' />
         </Link>
-        <div className='flex items-center justify-between'>
+        <div className='w-full flex justify-between'>
         <div>
             <Link href={`/main/traits/${trait.id}`}>
                 <h3 className='font-bold my-2 text-yellow-200/70'>{trait.name}</h3>

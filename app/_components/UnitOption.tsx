@@ -105,17 +105,18 @@ export default function UnitOption(unit: UnitOptionProps) {
                 <div>
                     <p className='my-1 text-gray-100 '>{unit.description}</p>
                     {/* Unit Tratis*/}
-                    { (unit.specialization.traits && unit.specialization.traits.length > 0) && 
                     <p className='italic font-light'>
                         Traits:
-                    </p>}
+                    </p>
                     {/* Race Tratis*/}
                     <div className={`${unit.detailedTraits ? "" : "flex mx-4 space-x-2"}`}>
                     {unit.detailedTraits ? unit.race.traits.map((trait: any) => {
                         return (
                             <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                                 <div className='flex items-center space-x-3'>
-                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <Link href={`/main/traits/${trait.trait.id}`}>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    </Link>
                                     <p>
                                         <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                     </p>
@@ -134,8 +135,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         :
                         <div className='flex space-x-2'>
                             {unit.race.traits.map((trait: any) => {
-                                return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                return (
+                                        <Link href={`/main/traits/${trait.trait.id}`}>
+                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                        </Link>
+                                    )
                             })}
                         </div>
                     }
@@ -144,7 +149,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                         return (
                                 <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                                     <div className='flex items-center space-x-3'>
-                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <Link href={`/main/traits/${trait.trait.id}`}>
+                                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        </Link>
                                         <p>
                                             <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                         </p>
@@ -163,8 +170,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         :
                         <div className='flex space-x-2'>
                             {unit.specialization.traits.map((trait: any) => {
-                                return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                return(
+                                        <Link href={`/main/traits/${trait.trait.id}`}>
+                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                        </Link>
+                                    )
                             })}
                         </div>
                     }
@@ -173,7 +184,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                         return (
                                 <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                                     <div className='flex items-center space-x-3'>
-                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <Link href={`/main/traits/${trait.trait.id}`}>
+                                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        </Link>
                                         <p>
                                             <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                         </p>
@@ -192,8 +205,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         :
                         <div className='flex space-x-2'>
                             {unit.culture.traits.map((trait: any) => {
-                                return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                return ( 
+                                        <Link href={`/main/traits/${trait.trait.id}`}>   
+                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                        </Link>
+                                        )
                             })}
                         </div>
                     }
@@ -202,7 +219,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                         return (
                                     <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                                         <div className='flex items-center space-x-3'>
-                                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                            <Link href={`/main/traits/${trait.trait.id}`}>
+                                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                            </Link>
                                             <p>
                                                 <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                             </p>
@@ -221,8 +240,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         :
                         <div className='flex space-x-2'>
                             {unit.belief.traits.map((trait: any) => {
-                                return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                return (
+                                        <Link href={`/main/traits/${trait.trait.id}`}>
+                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                        </Link>
+                                    )
                             })}
                         </div>
                     }
@@ -232,7 +255,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                             return (
                                         <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                                             <div className='flex items-center space-x-3'>
-                                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                                <Link href={`/main/traits/${trait.trait.id}`}>
+                                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                                </Link>
                                                 <p>
                                                     <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                                 </p>
@@ -253,8 +278,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <div className='flex space-x-2'>
                             {unit.items?.map((item: any) => {
                                 return item.item.traits.map((trait: any) => {
-                                    return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                    return (
+                                            <Link href={`/main/traits/${trait.trait.id}`}>
+                                                <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                            </Link>
+                                        )
                                 })
                             })}
                         </div>
@@ -270,7 +299,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                         return  (
                                 pickedSkills.includes(index) && <div key={skill.skill.id} className='px-4 font-light italic m-1'>
                                     <div className='flex items-center space-x-3'>
-                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <Link href={`/main/skills/${skill.skill.id}`}>
+                                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        </Link>
                                         <p>
                                             <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
                                         </p>
@@ -289,8 +320,13 @@ export default function UnitOption(unit: UnitOptionProps) {
                         :
                         <div className='mx-4 flex space-x-2'>
                             {unit.specialization.skills.map((skill: any, index: number) => {
-                                return pickedSkills.includes(index) && <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                return (
+                                    pickedSkills.includes(index) && 
+                                    <Link href={`/main/skills/${skill.skill.id}`}>
+                                        <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                         src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
+                                    </Link>
+                                    )
                             })}
                         </div>
                     }
@@ -303,7 +339,9 @@ export default function UnitOption(unit: UnitOptionProps) {
                         return (
                                 <div key={item.item.id} className='px-4 font-light italic m-1'>
                                     <div className='flex items-center space-x-3'>
-                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <Link href={`/main/items/${item.item.id}`}>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    </Link>
                                     <p>
                                         <Link href={`/main/items/${item.item.id}`}><span className={`font-normal ${paintRarity(item.item.rarity)}`}>{item.item.name}</span></Link>
                                     </p>
@@ -322,8 +360,12 @@ export default function UnitOption(unit: UnitOptionProps) {
                         :
                         <div className='mx-4 flex space-x-2'>
                             {unit.items!.map((item: any) => {
-                                return <img key={item.item.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" />
+                                return (
+                                        <Link href={`/main/items/${item.item.id}`}>
+                                            <img key={item.item.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" />
+                                        </Link>
+                                    )
                             })}
                         </div>
                     }
@@ -331,7 +373,7 @@ export default function UnitOption(unit: UnitOptionProps) {
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>
                     <div className={`flex ${unit.vertical ? "" : "flex-col" } space-x-3 items-center`}>
-                    <div className={`flex ${unit.vertical ? "flex-col" : "" } space-x-3 items-center`}>
+                    <div className={`flex ${unit.vertical ? "flex-col" : "" } space-x-3 `}>
                         <div></div>
                         <StatsSummary icon="/gen_icons/vitality.png" name={'Vit'} value={ unit.vitality } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
                         <StatsSummary icon="/gen_icons/strength.png" name={'Str'} value={ unit.strength } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
@@ -346,7 +388,7 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <StatsSummary icon="/gen_icons/shield.png" name={'Shd'} value={ unit.shield } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
                         <StatsSummary icon="/gen_icons/movement.png" name={'Mov'} value={ unit.movement } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
                     </div>
-                    <div className={`flex ${unit.vertical ? "flex-col" : "" } space-x-3 items-center`}>
+                    <div className={`flex ${unit.vertical ? "flex-col" : "" } space-x-3 `}>
                         <div></div>
                         <StatsSummary icon="/gen_icons/physical_damage.png" name={'Pdg'} value={ unit.physical_damage } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />
                         <StatsSummary icon="/gen_icons/magical_damage.png" name={'Mdg'} value={ unit.magical_damage } style={`${unit.vertical ? 'flex space-x-1' : ''}`} />

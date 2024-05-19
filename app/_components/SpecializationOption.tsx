@@ -79,7 +79,9 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         return (
                             <div key={trait.trait.id} className='px-4 font-light italic m-1'>
                                 <div className='flex items-center space-x-3'>
-                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <Link href={`/main/traits/${trait.trait.id}`}>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    </Link>
                                     <p>
                                         <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
                                     </p>
@@ -98,8 +100,12 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         :
                         <div className='flex mx-4 space-x-2'>
                             {specialization.traits.map((trait: any) => {
-                                return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                return (
+                                        <Link href={`/main/traits/${trait.trait.id}`}>
+                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                                        </Link>
+                                    )
                             })}
                         </div>
                     }
@@ -112,7 +118,9 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         return (
                                 <div key={skill.skill.id} className='px-4 font-light italic m-1'>
                                     <div className='flex items-center space-x-3'>
-                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <Link href={`/main/skills/${skill.skill.id}`}>
+                                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        </Link>
                                         <p>
                                             <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
                                         </p>
@@ -131,8 +139,12 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         :
                         <div className='flex mx-4 space-x-2'>
                             {specialization.skills.map((skill: any) => {
-                                return <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
-                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
+                                    return(
+                                            <Link href={`/main/skills/${skill.skill.id}`}>
+                                                <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                                src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
+                                            </Link>
+                                        )
                             })}
                         </div>
                     }
@@ -145,7 +157,9 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         return (
                         <div key={item.item.id} className='px-4 font-light italic m-1'>
                             <div className='flex items-center space-x-3'>
-                               <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                <Link href={`/main/items/${item.item.id}`}>
+                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                </Link>
                                <p>
                                    <Link href={`/main/items/${item.item.id}`}><span className={`font-normal ${paintRarity(item.item.rarity)}`}>{item.item.name}</span></Link>
                                </p>

@@ -48,6 +48,7 @@ interface UnitOptionProps {
     vertical?: boolean;
     detailedTraits?: boolean;
     detailedSkills?: boolean;
+    detailedItems?: boolean;
     styles: string;
 }
 
@@ -265,51 +266,67 @@ export default function UnitOption(unit: UnitOptionProps) {
                     <p className='italic font-light'>
                         Skills:
                     </p>}
-                    {unit.specialization.skills.map((skill: any, index: number) => {
+                    {unit.detailedSkills ? unit.specialization.skills.map((skill: any, index: number) => {
                         return  (
-                            pickedSkills.includes(index) && <div key={skill.skill.id} className='px-4 font-light italic m-1'>
-                                <div className='flex items-center space-x-3'>
-                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                pickedSkills.includes(index) && <div key={skill.skill.id} className='px-4 font-light italic m-1'>
+                                    <div className='flex items-center space-x-3'>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <p>
+                                            <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
+                                        </p>
+                                    </div>
                                     <p>
-                                        <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
+                                        <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
                                     </p>
+                                    <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                        { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
+                                        { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
+                                        { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
+                                    </div>
                                 </div>
-                                <p>
-                                    <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
-                                </p>
-                                <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                                    { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
-                                    { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
-                                    { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
-                                </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })
+                        :
+                        <div className='mx-4 flex space-x-2'>
+                            {unit.specialization.skills.map((skill: any, index: number) => {
+                                return pickedSkills.includes(index) && <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
+                            })}
+                        </div>
+                    }
                     {/* Unit Initial Items*/}
                     { (unit.items && unit.items.length > 0) && 
                     <p className='italic font-light'>
                         Items:
                     </p>}
-                    {unit.items!.map((item: any) => {
+                    {unit.detailedItems ? unit.items!.map((item: any) => {
                         return (
-                        <div key={item.item.id} className='px-4 font-light italic m-1'>
-                            <div className='flex items-center space-x-3'>
-                               <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
-                               <p>
-                                   <Link href={`/main/items/${item.item.id}`}><span className={`font-normal ${paintRarity(item.item.rarity)}`}>{item.item.name}</span></Link>
-                               </p>
-                            </div>
-                            <p>
-                                <span className='px-4 text-gray-400 font-light'>{item.item.description}</span>
-                            </p>
-                            <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                                { (item.item.essence_cost && item.item.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{item.item.essence_cost}</span> P</p>}
-                                { (item.item.vitality_cost && item.item.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{item.item.vitality_cost}</span> V</p>}
-                                { (item.item.cooldown && item.item.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{item.item.cooldown}</span> T </p>}
-                            </div>
+                                <div key={item.item.id} className='px-4 font-light italic m-1'>
+                                    <div className='flex items-center space-x-3'>
+                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <p>
+                                        <Link href={`/main/items/${item.item.id}`}><span className={`font-normal ${paintRarity(item.item.rarity)}`}>{item.item.name}</span></Link>
+                                    </p>
+                                    </div>
+                                    <p>
+                                        <span className='px-4 text-gray-400 font-light'>{item.item.description}</span>
+                                    </p>
+                                    <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                        { (item.item.essence_cost && item.item.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{item.item.essence_cost}</span> P</p>}
+                                        { (item.item.vitality_cost && item.item.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{item.item.vitality_cost}</span> V</p>}
+                                        { (item.item.cooldown && item.item.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{item.item.cooldown}</span> T </p>}
+                                    </div>
+                                </div>
+                            )
+                        })
+                        :
+                        <div className='mx-4 flex space-x-2'>
+                            {unit.items!.map((item: any) => {
+                                return <img key={item.item.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" />
+                            })}
                         </div>
-                        )
-                    })}
+                    }
                 </div>
                 {/*Stats*/}
                 <div className='flex space-x-3 items-center'>

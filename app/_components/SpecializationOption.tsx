@@ -31,6 +31,8 @@ interface SpecializationOptionProps {
     endpointMethod: string;
     queryInvalidateKey?: string;
     vertical?: boolean;
+    detailedTraits?: boolean;
+    detailedSkills?: boolean;
     styles: string;
 }
 
@@ -65,7 +67,7 @@ export default function SpecializationOption(specialization: SpecializationOptio
                     </div>
                 </div>
             </Link>
-            <div className='w-full flex items-center justify-between'>
+            <div className='w-full flex justify-between'>
                 <div>
                     <p className='my-1 text-gray-100 '>{specialization.description}</p>
                     {/* Specialization Tratis*/}
@@ -73,51 +75,67 @@ export default function SpecializationOption(specialization: SpecializationOptio
                     <p className='italic font-light'>
                         Traits:
                     </p>}
-                    {specialization.traits.map((trait: any) => {
+                    {specialization.detailedTraits ? specialization.traits.map((trait: any) => {
                         return (
-                        <div key={trait.trait.id} className='px-4 font-light italic m-1'>
-                            <div className='flex items-center space-x-3'>
-                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                            <div key={trait.trait.id} className='px-4 font-light italic m-1'>
+                                <div className='flex items-center space-x-3'>
+                                    <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                    <p>
+                                        <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
+                                    </p>
+                                </div>
                                 <p>
-                                    <Link href={`/main/traits/${trait.trait.id}`}><span className='text-yellow-400 font-normal'>{trait.trait.name}</span></Link>
+                                    <span className='px-4 text-gray-400 font-light'>{trait.trait.description}</span>
                                 </p>
+                                <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                    { (trait.trait.essence_cost && trait.trait.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{trait.trait.essence_cost}</span> P</p>}
+                                    { (trait.trait.vitality_cost && trait.trait.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{trait.trait.vitality_cost}</span> V</p>}
+                                    { (trait.trait.cooldown && trait.trait.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{trait.traits.cooldown}</span> T </p>}
+                                </div>
                             </div>
-                            <p>
-                                <span className='px-4 text-gray-400 font-light'>{trait.trait.description}</span>
-                            </p>
-                            <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                                { (trait.trait.essence_cost && trait.trait.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{trait.trait.essence_cost}</span> P</p>}
-                                { (trait.trait.vitality_cost && trait.trait.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{trait.trait.vitality_cost}</span> V</p>}
-                                { (trait.trait.cooldown && trait.trait.cooldown !== 0) && <p>CD <span className='text-purple-400 font-light'>{trait.traits.cooldown}</span> T </p>}
-                            </div>
+                            )
+                        })
+                        :
+                        <div className='flex mx-4 space-x-2'>
+                            {specialization.traits.map((trait: any) => {
+                                return <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
+                            })}
                         </div>
-                        )
-                    })}
+                    }
                     {/* Specialization Skills*/}
                     { (specialization.skills && specialization.skills.length > 0) && 
                     <p className='italic font-light'>
                         Skills:
                     </p>}
-                    {specialization.skills.map((skill: any) => {
+                    {specialization.detailedSkills ? specialization.skills.map((skill: any) => {
                         return (
-                        <div key={skill.skill.id} className='px-4 font-light italic m-1'>
-                            <div className='flex items-center space-x-3'>
-                                <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
-                                <p>
-                                    <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
-                                </p>
-                            </div>
-                            <p>
-                                <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
-                            </p>
-                            <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
-                                { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
-                                { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
-                                { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
-                            </div>
+                                <div key={skill.skill.id} className='px-4 font-light italic m-1'>
+                                    <div className='flex items-center space-x-3'>
+                                        <img src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2' />
+                                        <p>
+                                            <Link href={`/main/skills/${skill.skill.id}`}><span className='text-yellow-400 font-normal'>{skill.skill.name}</span></Link>
+                                        </p>
+                                    </div>
+                                    <p>
+                                        <span className='px-4 text-gray-400 font-light'>{skill.skill.description}</span>
+                                    </p>
+                                    <div className='px-4 flex font-light text-gray-400 text-sm space-x-2'>
+                                        { (skill.skill.essence_cost && skill.skill.essence_cost !== "0") && <p>Cost <span className='text-blue-500 font-light'>{skill.skill.essence_cost}</span> E</p>}
+                                        { (skill.skill.vitality_cost && skill.skill.vitality_cost !== "0") && <p>Cost <span className='text-red-500 font-light'>{skill.skill.vitality_cost}</span> V</p>}
+                                        { (skill.skill.cooldown && skill.skill.cooldown !== "0") && <p>CD <span className='text-purple-400 font-light'>{skill.skill.cooldown}</span> T </p>}
+                                    </div>
+                                </div>
+                                )
+                        })
+                        :
+                        <div className='flex mx-4 space-x-2'>
+                            {specialization.skills.map((skill: any) => {
+                                return <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
+                            })}
                         </div>
-                        )
-                    })}
+                    }
                     {/* Specialization Initial Items*/}
                     { (specialization.items && specialization.items.length > 0) && 
                     <p className='italic font-light'>

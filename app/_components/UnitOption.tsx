@@ -136,8 +136,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <div className='flex space-x-2'>
                             {unit.race.traits.map((trait: any) => {
                                 return (
-                                        <Link href={`/main/traits/${trait.trait.id}`}>
-                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        <Link key={trait.trait.id} href={`/main/traits/${trait.trait.id}`}>
+                                            <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
                                         </Link>
                                     )
@@ -171,8 +171,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <div className='flex space-x-2'>
                             {unit.specialization.traits.map((trait: any) => {
                                 return(
-                                        <Link href={`/main/traits/${trait.trait.id}`}>
-                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        <Link key={trait.trait.id} href={`/main/traits/${trait.trait.id}`}>
+                                            <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
                                         </Link>
                                     )
@@ -206,8 +206,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <div className='flex space-x-2'>
                             {unit.culture.traits.map((trait: any) => {
                                 return ( 
-                                        <Link href={`/main/traits/${trait.trait.id}`}>   
-                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        <Link key={trait.trait.id} href={`/main/traits/${trait.trait.id}`}>   
+                                            <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
                                         </Link>
                                         )
@@ -241,8 +241,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <div className='flex space-x-2'>
                             {unit.belief.traits.map((trait: any) => {
                                 return (
-                                        <Link href={`/main/traits/${trait.trait.id}`}>
-                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        <Link key={trait.trait.id} href={`/main/traits/${trait.trait.id}`}>
+                                            <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
                                         </Link>
                                     )
@@ -279,8 +279,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                             {unit.items?.map((item: any) => {
                                 return item.item.traits.map((trait: any) => {
                                     return (
-                                            <Link href={`/main/traits/${trait.trait.id}`}>
-                                                <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            <Link  key={trait.trait.id} href={`/main/traits/${trait.trait.id}`}>
+                                                <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                                 src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
                                             </Link>
                                         )
@@ -322,8 +322,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                             {unit.specialization.skills.map((skill: any, index: number) => {
                                 return (
                                     pickedSkills.includes(index) && 
-                                    <Link href={`/main/skills/${skill.skill.id}`}>
-                                        <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                    <Link  key={skill.skill.id} href={`/main/skills/${skill.skill.id}`}>
+                                        <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                         src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
                                     </Link>
                                     )
@@ -361,8 +361,8 @@ export default function UnitOption(unit: UnitOptionProps) {
                         <div className='mx-4 flex space-x-2'>
                             {unit.items!.map((item: any) => {
                                 return (
-                                        <Link href={`/main/items/${item.item.id}`}>
-                                            <img key={item.item.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        <Link  key={item.item.id} href={`/main/items/${item.item.id}`}>
+                                            <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/items/${item.item.id}.jpg`} alt="" />
                                         </Link>
                                     )

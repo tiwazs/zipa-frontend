@@ -101,8 +101,8 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         <div className='flex mx-4 space-x-2'>
                             {specialization.traits.map((trait: any) => {
                                 return (
-                                        <Link href={`/main/traits/${trait.trait.id}`}>
-                                            <img key={trait.trait.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                        <Link  key={trait.trait.id} href={`/main/traits/${trait.trait.id}`}>
+                                            <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                             src={`${process.env.NEXT_PUBLIC_API_URL}/static/traits/${trait.trait.id}.jpg`} alt="" />
                                         </Link>
                                     )
@@ -140,8 +140,8 @@ export default function SpecializationOption(specialization: SpecializationOptio
                         <div className='flex mx-4 space-x-2'>
                             {specialization.skills.map((skill: any) => {
                                     return(
-                                            <Link href={`/main/skills/${skill.skill.id}`}>
-                                                <img key={skill.skill.id} className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
+                                            <Link  key={skill.skill.id} href={`/main/skills/${skill.skill.id}`}>
+                                                <img className='w-10 h-10 rounded-md border-2 border-gray-500/60 my-2'
                                                 src={`${process.env.NEXT_PUBLIC_API_URL}/static/skills/${skill.skill.id}.jpg`} alt="" />
                                             </Link>
                                         )

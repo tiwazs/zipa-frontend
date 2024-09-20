@@ -187,20 +187,21 @@ export default function DamageCard({units, onActClick, style, onRemoveClick}: Da
             magical_modifiers = `${magical_modifiers}|${skill.magical_damage}`
             healing_modifiers = `${healing_modifiers}|${skill.healing}`
 
+            console.log(skill.magical_damage && skill.magical_damage!=='0' ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0)
             data = {
                 origin: unit.combat_id,
                 targets: data.targets.toString().split("|").map((target: string) => parseInt(target) ),
                 action: 2,
                 skill_effect: skill.name,
-                phisical_damage: skill.physical_damage ? unit.physical_damage + unit.combat_status.bonus_physical_damage : 0,
-                magical_damage: skill.magical_damage ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0,
+                phisical_damage: (skill.physical_damage&&skill.physical_damage!=='0') ? unit.physical_damage + unit.combat_status.bonus_physical_damage : 0,
+                magical_damage: (skill.magical_damage&&skill.magical_damage!=='0') ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0,
                 physical_damage_modifiers: physical_modifiers,
                 magical_damage_modifiers: magical_modifiers,
                 is_projectile: skill.projectile,
                 hit_chance: unit.hit_chance + unit.combat_status.bonus_hit_chance,
-                armor_piercing: skill.physical_damage ? unit.armor_piercing + unit.combat_status.bonus_armor_piercing : 0,
-                spell_piercing: skill.magical_damage ? unit.spell_piercing + unit.combat_status.bonus_spell_piercing : 0,
-                healing_power: skill.healing ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0,
+                armor_piercing: (skill.physical_damage&&skill.physical_damage!=='0') ? unit.armor_piercing + unit.combat_status.bonus_armor_piercing : 0,
+                spell_piercing: (skill.magical_damage&&skill.magical_damage!=='0') ? unit.spell_piercing + unit.combat_status.bonus_spell_piercing : 0,
+                healing_power: (skill.healing&&skill.healing!=='0') ? unit.magical_damage + unit.combat_status.bonus_magical_damage : 0,
                 healing_modifiers: healing_modifiers,
                 vitality_recovery: skill.vitality_recovery,
                 essence_recovery: skill.essence_recovery,

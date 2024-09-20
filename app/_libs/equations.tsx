@@ -49,6 +49,52 @@ export const mod_parameter_operation = (mod_parameter_string: string, parameter:
     return result;
 }
 
+export const apply_modifiers = (parameter: number, modifiers: string[], to_equip = true) => {
+    if(!modifiers) return parameter
+    let result = parameter;
+    for(const mod_parameter_string of modifiers){
+        let regex = /(?<sign>[+-])?(?<value>([\d+.]+|ND|MD|HP))?(?<porcentage>\s*%)?(?<max>\s*max)?/gm
+        let match = regex.exec(mod_parameter_string);
+        let sign = match?.groups?.sign;
+        let max = match?.groups?.max;
+        let value = match?.groups?.value;
+        let porcentage = match?.groups?.porcentage;
+
+        if(!value) continue
+
+        if(porcentage && sign === '+'){
+                if(to_equip){
+                     result += result * (parseFloat(value) / 100);
+                }else{
+                    result -= result * (parseFloat(value) / 100);
+                }
+        }else if(porcentage && sign === '-'){
+                if(to_equip){
+                     result -= result * (parseFloat(value) / 100);
+                }else{
+                    result += result * (parseFloat(value) / 100);
+                }
+        }else if(sign === '+'){
+                if(to_equip){
+                     result += parseFloat(value);
+                }else{
+                    result -= parseFloat(value);
+                }
+        }else if(sign === '-'){
+                if(to_equip){
+                     result -= parseFloat(value);
+                }else{
+                    result += parseFloat(value);
+                }
+        }else if(porcentage){
+                result = result * (parseFloat(value) / 100);
+        }
+        
+    }
+
+    return result;
+}
+
 export class UnitParameters{
     public vitality: number = 0;
     public strength: number = 0;

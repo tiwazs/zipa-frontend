@@ -7,7 +7,7 @@ import AddUnitDialog from './AddUnitDialog';
 import UnitCombatCard from './UnitCombatCard';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ActionCard from './ActionCard';
-import { mod_parameter_operation } from '@/app/_libs/equations';
+import { mod_parameter_operation, apply_modifiers } from '@/app/_libs/equations';
 import { parse } from 'path';
 
 interface ActionForm {
@@ -397,6 +397,7 @@ export default function UnitsPage() {
 
             // Magical Damage
             if(actionForm.magical_damage){
+                console.log(actionForm.magical_damage)
                 let damageCalculationRequest: DamageCalculationRequest = {
                     damage: actionForm.magical_damage ? actionForm.magical_damage : 0,
                     hit_chance: actionForm.hit_chance ? actionForm.hit_chance : 0,
@@ -413,7 +414,8 @@ export default function UnitsPage() {
 
             // Healing
             if(actionForm.healing_power){
-                let healing = actionForm.healing_modifiers ? mod_parameter_operation(actionForm.healing_modifiers, actionForm.healing_power) : actionForm.healing_power
+                let modifiers = actionForm.healing_modifiers!.split("|")
+                let healing = actionForm.healing_modifiers ? apply_modifiers(actionForm.healing_power, modifiers) : actionForm.healing_power
                 if(target.combat_status.bonus_healing){healing += target.combat_status.bonus_healing}
                 if(target.combat_status.bonus_magical_damage){healing += target.combat_status.bonus_magical_damage}
                 target.combat_status.vitality += healing

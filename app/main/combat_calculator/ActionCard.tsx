@@ -159,7 +159,7 @@ export default function DamageCard({units, onActClick, style, onRemoveClick}: Da
                 magical_damage: 0,
                 physical_damage_modifiers: data.physical_damage_modifiers,
                 magical_damage_modifiers: "",
-                is_projectile: false,
+                is_projectile: unit.range > 1 ? true : false,
                 hit_chance: unit.hit_chance + unit.combat_status.bonus_hit_chance,
                 armor_piercing: unit.armor_piercing + unit.combat_status.bonus_armor_piercing,
                 healing_power: 0,

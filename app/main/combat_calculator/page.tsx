@@ -158,8 +158,8 @@ export default function UnitsPage() {
         for( let unit of unitList){
             if(unit.combat_id===0 || unit.combat_id===1) continue
             if(unit.combat_id === combat_id){
+                unit = HandleEffectUnitParameters(unit, effect.effect, false)
                 unit.combat_status.effects = unit.combat_status.effects.filter( (effectOnUnit:any) => effectOnUnit.effect.name !== effect.effect.name || effectOnUnit.stack_counter !== effect.stack_counter )
-                unit = HandleEffectUnitParameters(unit, effect, false)
             }
 
         }
